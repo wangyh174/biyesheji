@@ -162,7 +162,7 @@ def init_fairdiffusion(model_id: str):
     except ImportError as e:
         raise RuntimeError(
             "Fair-Diffusion mode requires semdiffusers. "
-            "Install: pip install git+https://github.com/ml-research/semantic-image-editing.git"
+            "Install: pip install -e ./semantic-image-editing-main/semantic-image-editing-main"
         ) from e
 
     device = "cuda" if torch.cuda.is_available() else "cpu"

@@ -4,6 +4,8 @@ Pillow
 scikit-learn
 torch
 torchvision
-diffusers
-transformers
-accelerate
+diffusers==0.27.2
+transformers==4.36.2
+accelerate==0.29.3
+huggingface_hub==0.22.2
+peft==0.10.0

@@ -21,7 +21,7 @@ uploaded = files.upload()  # 上传 project.zip
 ## 3. 安装依赖
 ```python
 !pip -q install -r requirements-colab.txt
-!pip -q install git+https://github.com/ml-research/semantic-image-editing.git
+!pip -q install -e ./semantic-image-editing-main/semantic-image-editing-main
 ```
 
 ## 4. 运行（mock 快速）

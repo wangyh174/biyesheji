@@ -65,6 +65,22 @@ def compute_clip_scores(
     model.eval()
 
     scores: List[float] = []
+
+    def as_feature_tensor(x):
+        # transformers versions may return either a Tensor or a model output object
+        # (e.g. BaseModelOutputWithPooling). Normalize to a 2D feature tensor.
+        if isinstance(x, torch.Tensor):
+            return x
+        if hasattr(x, "pooler_output") and x.pooler_output is not None:
+            return x.pooler_output
+        if hasattr(x, "image_embeds") and x.image_embeds is not None:
+            return x.image_embeds
+        if hasattr(x, "text_embeds") and x.text_embeds is not None:
+            return x.text_embeds
+        if hasattr(x, "last_hidden_state") and x.last_hidden_state is not None:
+            return x.last_hidden_state[:, 0, :]
+        raise TypeError(f"Unsupported feature output type: {type(x)}")
+
     with torch.no_grad():
         for i in range(0, len(image_paths), batch_size):
             batch_paths = image_paths[i : i + batch_size]
@@ -72,10 +88,10 @@ def compute_clip_scores(
             images = [Image.open(p).convert("RGB") for p in batch_paths]
             inputs = processor(text=batch_texts, images=images, return_tensors="pt", padding=True)
             inputs = {k: v.to(device) for k, v in inputs.items()}
-            img_feat = model.get_image_features(pixel_values=inputs["pixel_values"])
-            txt_feat = model.get_text_features(
+            img_feat = as_feature_tensor(model.get_image_features(pixel_values=inputs["pixel_values"]))
+            txt_feat = as_feature_tensor(model.get_text_features(
                 input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"]
-            )
+            ))
             img_feat = img_feat / img_feat.norm(dim=-1, keepdim=True)
             txt_feat = txt_feat / txt_feat.norm(dim=-1, keepdim=True)
             sim = (img_feat * txt_feat).sum(dim=-1)
