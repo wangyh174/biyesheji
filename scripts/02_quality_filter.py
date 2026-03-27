@@ -1,0 +1,202 @@
+"""
+Step 2: CLIP-based filtering + quality control + group mean alignment.
+
+Pipeline:
+1) compute quality score
+2) compute CLIP image-text score
+3) threshold filtering
+4) per-label group balancing with CLIP-mean alignment
+"""
+
+from __future__ import annotations
+
+import argparse
+import shutil
+from pathlib import Path
+from typing import List
+
+import numpy as np
+import pandas as pd
+import torch
+from PIL import Image
+from transformers import CLIPModel, CLIPProcessor
+
+
+def parse_args() -> argparse.Namespace:
+    root = Path(__file__).resolve().parents[1]
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--project-root", type=Path, default=root)
+    parser.add_argument("--metadata-in", type=Path, default=root / "data" / "metadata_raw.csv")
+    parser.add_argument("--metadata-out", type=Path, default=root / "data" / "metadata_balanced.csv")
+    parser.add_argument("--balanced-dir", type=Path, default=root / "data" / "generated_balanced")
+    parser.add_argument("--copy-files", action="store_true")
+    parser.add_argument("--seed", type=int, default=42)
+
+    parser.add_argument("--use-clip", action="store_true")
+    parser.add_argument("--clip-model-id", type=str, default="openai/clip-vit-base-patch32")
+    parser.add_argument("--clip-batch-size", type=int, default=16)
+    parser.add_argument("--clip-min-score", type=float, default=0.20)
+    parser.add_argument("--min-quality", type=float, default=None)
+    parser.add_argument("--align-on", type=str, choices=["clip", "quality", "random"], default="clip")
+    return parser.parse_args()
+
+
+def image_quality_score(path: str) -> float:
+    img = Image.open(path).convert("L")
+    arr = np.asarray(img, dtype=np.float32) / 255.0
+    gy, gx = np.gradient(arr)
+    grad_energy = float(np.mean(gx * gx + gy * gy))
+    contrast = float(np.std(arr))
+    hist, _ = np.histogram(arr, bins=64, range=(0.0, 1.0), density=True)
+    hist = hist + 1e-12
+    entropy = float(-np.sum(hist * np.log(hist)))
+    return 0.5 * grad_energy + 0.3 * contrast + 0.2 * entropy
+
+
+def compute_clip_scores(
+    image_paths: List[str],
+    texts: List[str],
+    model_id: str,
+    batch_size: int,
+) -> List[float]:
+    device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = CLIPModel.from_pretrained(model_id).to(device)
+    processor = CLIPProcessor.from_pretrained(model_id)
+    model.eval()
+
+    scores: List[float] = []
+    with torch.no_grad():
+        for i in range(0, len(image_paths), batch_size):
+            batch_paths = image_paths[i : i + batch_size]
+            batch_texts = texts[i : i + batch_size]
+            images = [Image.open(p).convert("RGB") for p in batch_paths]
+            inputs = processor(text=batch_texts, images=images, return_tensors="pt", padding=True)
+            inputs = {k: v.to(device) for k, v in inputs.items()}
+            img_feat = model.get_image_features(pixel_values=inputs["pixel_values"])
+            txt_feat = model.get_text_features(
+                input_ids=inputs["input_ids"], attention_mask=inputs["attention_mask"]
+            )
+            img_feat = img_feat / img_feat.norm(dim=-1, keepdim=True)
+            txt_feat = txt_feat / txt_feat.norm(dim=-1, keepdim=True)
+            sim = (img_feat * txt_feat).sum(dim=-1)
+            scores.extend(sim.detach().cpu().numpy().astype(float).tolist())
+    return scores
+
+
+def summarize_by_group(df: pd.DataFrame) -> pd.DataFrame:
+    rows = []
+    for (g, y), sub in df.groupby(["group", "y_true"]):
+        rows.append(
+            {
+                "group": g,
+                "y_true": int(y),
+                "n": int(len(sub)),
+                "quality_mean": float(sub["quality_score"].mean()),
+                "quality_std": float(sub["quality_score"].std(ddof=0)),
+                "clip_mean": float(sub["clip_score"].mean()) if "clip_score" in sub.columns else float("nan"),
+                "clip_std": float(sub["clip_score"].std(ddof=0)) if "clip_score" in sub.columns else float("nan"),
+            }
+        )
+    return pd.DataFrame(rows).sort_values(["y_true", "group"]).reset_index(drop=True)
+
+
+def align_and_balance(df: pd.DataFrame, seed: int, align_on: str) -> pd.DataFrame:
+    out_parts = []
+    rng = np.random.default_rng(seed)
+    for y in sorted(df["y_true"].astype(int).unique()):
+        sub_y = df[df["y_true"].astype(int) == y].copy()
+        counts = sub_y.groupby("group")["id"].count()
+        min_n = int(counts.min())
+
+        if align_on == "clip" and "clip_score" in sub_y.columns:
+            target = float(sub_y.groupby("group")["clip_score"].mean().median())
+            score_col = "clip_score"
+        elif align_on == "quality":
+            target = float(sub_y.groupby("group")["quality_score"].mean().median())
+            score_col = "quality_score"
+        else:
+            target = 0.0
+            score_col = None
+
+        for g in sorted(sub_y["group"].unique()):
+            sg = sub_y[sub_y["group"] == g].copy()
+            if score_col is None:
+                chosen = sg.sample(n=min_n, random_state=seed, replace=False)
+            else:
+                sg["dist_to_target"] = (sg[score_col] - target).abs()
+                sg = sg.sort_values("dist_to_target").reset_index(drop=True)
+                chosen = sg.head(min_n)
+            out_parts.append(chosen.drop(columns=["dist_to_target"], errors="ignore"))
+    return pd.concat(out_parts, ignore_index=True)
+
+
+def maybe_copy_files(df: pd.DataFrame, balanced_dir: Path) -> pd.DataFrame:
+    balanced_dir.mkdir(parents=True, exist_ok=True)
+    new_paths = []
+    for _, row in df.iterrows():
+        src = Path(str(row["file_path"]))
+        dst = balanced_dir / str(row["group"]) / src.name
+        dst.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(src, dst)
+        new_paths.append(str(dst))
+    out = df.copy()
+    out["file_path"] = new_paths
+    return out
+
+
+def main() -> None:
+    args = parse_args()
+    args.metadata_out.parent.mkdir(parents=True, exist_ok=True)
+    fair_dir = args.project_root / "results" / "fairness_tables"
+    fair_dir.mkdir(parents=True, exist_ok=True)
+
+    df = pd.read_csv(args.metadata_in)
+    if len(df) == 0:
+        raise ValueError(f"Empty metadata: {args.metadata_in}")
+
+    # 1) quality score
+    df["quality_score"] = [image_quality_score(str(p)) for p in df["file_path"].tolist()]
+
+    # 2) clip score
+    if args.use_clip:
+        df["clip_score"] = compute_clip_scores(
+            image_paths=[str(p) for p in df["file_path"].tolist()],
+            texts=df["prompt"].astype(str).tolist(),
+            model_id=args.clip_model_id,
+            batch_size=args.clip_batch_size,
+        )
+    elif "clip_score" not in df.columns:
+        df["clip_score"] = np.nan
+
+    before_summary = summarize_by_group(df)
+    before_path = fair_dir / "quality_clip_summary_before.csv"
+    before_summary.to_csv(before_path, index=False, encoding="utf-8")
+
+    # 3) threshold filter
+    filt = df.copy()
+    if args.min_quality is not None:
+        filt = filt[filt["quality_score"] >= args.min_quality].copy()
+    if args.use_clip and args.clip_min_score is not None:
+        filt = filt[filt["clip_score"] >= args.clip_min_score].copy()
+    filt = filt.reset_index(drop=True)
+    if len(filt) == 0:
+        raise ValueError("All samples removed by filters. Lower thresholds.")
+
+    # 4) group alignment + balance
+    balanced = align_and_balance(filt, seed=args.seed, align_on=args.align_on)
+    if args.copy_files:
+        balanced = maybe_copy_files(balanced, args.balanced_dir)
+
+    after_summary = summarize_by_group(balanced)
+    after_path = fair_dir / "quality_clip_summary_after.csv"
+    after_summary.to_csv(after_path, index=False, encoding="utf-8")
+    balanced.to_csv(args.metadata_out, index=False, encoding="utf-8")
+
+    print(f"[saved] balanced metadata: {args.metadata_out}")
+    print(f"[saved] before summary: {before_path}")
+    print(f"[saved] after summary: {after_path}")
+    print(f"[info] samples before={len(df)} after_filter={len(filt)} balanced={len(balanced)}")
+
+
+if __name__ == "__main__":
+    main()
