@@ -26,8 +26,9 @@ python scripts/00_run_local_pipeline.py \
   --clip-min-score 0.10
 ```
 
-## Colab 运行
-请按 [docs/COLAB.md](D:\desktop\bishe\project\docs\COLAB.md) 执行（包含完整可复制单元）。
+## Colab 运行（已完全适配版）
+请参照 [docs/COLAB.md](docs/COLAB.md) 执行命令。
+*(注：项目内已自带打过兼容性补丁的 `semdiffusers` 库和版本锁定的环境，可一键在 Colab 畅跑无阻)*
 
 ## 关键输出
 - `results/generation_audit/generation_audit.json`
