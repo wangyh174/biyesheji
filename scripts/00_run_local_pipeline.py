@@ -63,7 +63,7 @@ def main() -> None:
         "--overwrite",
     ]
     if args.generator in ("diffusers", "fairdiffusion"):
-        cmd1 += ["--width", "384", "--height", "384", "--steps", "15"]
+        cmd1 += ["--width", "512", "--height", "512", "--steps", "30"]
     if args.model_path is not None:
         cmd1 += ["--model-path", str(args.model_path)]
     if args.real_model_path is not None:
