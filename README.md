@@ -41,10 +41,13 @@ python scripts/00_run_local_pipeline.py \
 python scripts/00_run_local_pipeline.py \
   --project-root . \
   --generator fairdiffusion \
-  --samples-per-group 20 \
-  --real-per-group 20 \
+  --samples-per-group 40 \
+  --real-per-group 40 \
   --detectors cnndetection,f3net,lgrad \
-  --clip-min-score 0.10
+  --clip-min-score 0.22 \
+  --real-source diffusers \
+  --model-id SG161222/Realistic_Vision_V5.1_noVAE \
+  --real-model-id SG161222/Realistic_Vision_V5.1_noVAE
 ```
 
 ### 3) Colab 运行
@@ -66,6 +69,7 @@ python scripts/00_run_local_pipeline.py \
 - `results/fairness_tables/latest_run_overview.csv`
 - `results/fairness_tables/latest_run_notes.md`
 - `results/attribution/misclassified_samples.csv`
+- `results/attribution/heatmaps/` (误判样本Grad-CAM热力图)
 
 ## 目录结构（核心）
 ```text
