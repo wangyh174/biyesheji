@@ -87,3 +87,56 @@ data/
 ## 备注
 - `paper/` 目录默认本地使用，已在 `.gitignore` 中忽略，不会推送。
 - 若需要复现实验，请优先固定随机种子与参数配置。
+
+## 常见报错与修复
+
+### 1) Colab 中 `torch.cuda.is_available() == False`
+- 现象：明明在 Colab，却显示 `cuda: False`
+- 原因：Runtime 仍是 CPU
+- 修复：
+  1. `Runtime -> Change runtime type -> Hardware accelerator -> GPU`
+  2. 重启会话后再次验证：
+     ```bash
+     python - << 'PY'
+     import torch
+     print("cuda:", torch.cuda.is_available())
+     print("gpu:", torch.cuda.get_device_name(0) if torch.cuda.is_available() else "None")
+     PY
+     ```
+
+### 2) `02_quality_filter.py` 中 CLIP 特征对象报错
+- 现象：`AttributeError: 'BaseModelOutputWithPooling' object has no attribute 'norm'`
+- 原因：`transformers` 新版本返回对象类型变化
+- 修复：已在仓库内修复 `scripts/02_quality_filter.py`，重新 `git pull` 后再运行。
+
+### 3) Colab 依赖冲突（Pillow 与 scikit-image）
+- 现象：`scikit-image ... requires pillow>=10.1, but you have pillow 9.x`
+- 原因：`semdiffusers` 依赖 `Pillow<10`
+- 修复（推荐）：
+  ```bash
+  pip -q uninstall -y scikit-image
+  ```
+  `scikit-image` 非本项目必需，不影响主流程。
+
+### 4) Windows 安装 CUDA 版 PyTorch 报 `No space left on device`
+- 现象：安装 `torch==1.12.1+cu113` 时磁盘空间不足
+- 原因：系统 Python 默认写入 C 盘
+- 修复：使用 D 盘虚拟环境安装
+  ```powershell
+  python -m venv D:\venvs\bishe
+  D:\venvs\bishe\Scripts\Activate.ps1
+  python -m pip install -U pip
+  python -m pip install torch==1.12.1+cu113 torchvision==0.13.1+cu113 -i https://mirrors.aliyun.com/pypi/simple/ --extra-index-url https://download.pytorch.org/whl/cu113
+  ```
+
+### 5) Git 推送卡住在认证
+- 现象：`info: please complete authentication in your browser...` 长时间无响应
+- 原因：浏览器认证未完成或终端被中断
+- 修复：
+  1. 完整走完浏览器认证
+  2. 不要提前 `Ctrl+C`
+  3. 完成后验证：
+     ```bash
+     git push -u origin main
+     git ls-remote --heads origin
+     ```
