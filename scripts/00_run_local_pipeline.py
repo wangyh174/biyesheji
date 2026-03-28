@@ -32,6 +32,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--run-gradcam", action="store_true", default=True)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--clip-min-score", type=float, default=0.20)
+    parser.add_argument("--model-id", type=str, default=None)
+    parser.add_argument("--real-model-id", type=str, default=None)
     parser.add_argument("--model-path", type=Path, default=None)
     parser.add_argument("--real-model-path", type=Path, default=None)
     return parser.parse_args()
@@ -67,6 +69,10 @@ def main() -> None:
     ]
     if args.generator in ("diffusers", "fairdiffusion"):
         cmd1 += ["--width", "512", "--height", "512", "--steps", "30"]
+    if args.model_id is not None:
+        cmd1 += ["--model-id", args.model_id]
+    if args.real_model_id is not None:
+        cmd1 += ["--real-model-id", args.real_model_id]
     if args.model_path is not None:
         cmd1 += ["--model-path", str(args.model_path)]
     if args.real_model_path is not None:
