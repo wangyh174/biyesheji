@@ -122,7 +122,13 @@ def init_diffusers(model_id: str):
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     dtype = torch.float16 if device == "cuda" else torch.float32
-    pipe = StableDiffusionPipeline.from_pretrained(model_id, torch_dtype=dtype)
+    pipe = StableDiffusionPipeline.from_pretrained(
+        model_id, 
+        torch_dtype=dtype,
+        safety_checker=None,
+        feature_extractor=None,
+        requires_safety_checker=False,
+    )
     pipe = pipe.to(device)
     if device == "cpu":
         pipe.enable_attention_slicing()
@@ -169,6 +175,7 @@ def init_fairdiffusion(model_id: str):
     pipe = SemanticEditPipeline.from_pretrained(
         model_id,
         safety_checker=None,
+        feature_extractor=None,
         requires_safety_checker=False,
     ).to(device)
     if device == "cpu":
