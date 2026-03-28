@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--height", type=int, default=512)
     parser.add_argument("--steps", type=int, default=20)
     parser.add_argument("--guidance", type=float, default=7.5)
-    parser.add_argument("--negative-prompt", type=str, default="blurry, low quality, distorted")
+    parser.add_argument("--negative-prompt", type=str, default="blurry, low quality, distorted, bad anatomy, deformed eyes, crossed eyes, disfigured, poorly drawn face, ugly, cartoon, plastic, artificial, weird proportions, fake")
     # Fair-Diffusion style controls (from official README usage).
     parser.add_argument("--fd-editing-prompts", type=str, default="male person,female person")
     parser.add_argument("--fd-reverse-directions", type=str, default="true,false")
@@ -226,6 +226,7 @@ def make_fairdiffusion_image(
     pipe,
     device: str,
     prompt: str,
+    negative_prompt: str,
     width: int,
     height: int,
     steps: int,
@@ -245,6 +246,7 @@ def make_fairdiffusion_image(
     generator = torch.Generator(device=device).manual_seed(seed)
     out = pipe(
         prompt=prompt,
+        negative_prompt=negative_prompt,
         generator=generator,
         num_inference_steps=steps,
         guidance_scale=guidance,
@@ -361,6 +363,7 @@ def main() -> None:
                     pipe=pipe,
                     device=device,
                     prompt=prompt,
+                    negative_prompt=args.negative_prompt,
                     width=args.width,
                     height=args.height,
                     steps=args.steps,
