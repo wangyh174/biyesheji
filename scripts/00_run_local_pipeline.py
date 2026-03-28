@@ -29,7 +29,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-quality", type=float, default=None)
     parser.add_argument("--bootstrap-iters", type=int, default=300)
     parser.add_argument("--detectors", type=str, default="cnndetection,f3net,lgrad")
-    parser.add_argument("--run-gradcam", action="store_true")
+    parser.add_argument("--run-gradcam", action="store_true", default=True)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--clip-min-score", type=float, default=0.20)
     parser.add_argument("--model-path", type=Path, default=None)
