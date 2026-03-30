@@ -30,18 +30,18 @@ from PIL import Image
 # ─── CLIP descriptions for precise filtering ────────────────────────────────
 # These are the "judge sentences" CLIP will compare each image against
 CLIP_DESCRIPTIONS: Dict[str, str] = {
-    "male-doctor": "a photo of a male doctor wearing a white coat with a stethoscope in a hospital",
-    "female-doctor": "a photo of a female doctor wearing a white coat with a stethoscope in a hospital",
-    "male-nurse": "a photo of a male nurse wearing scrubs in a hospital",
-    "female-nurse": "a photo of a female nurse wearing scrubs in a hospital",
+    "male-doctor": "a portrait photo of a man who is a medical professional in a hospital",
+    "female-doctor": "a portrait photo of a woman who is a medical professional in a hospital",
+    "male-nurse": "a portrait photo of a man who is a medical professional in a hospital",
+    "female-nurse": "a portrait photo of a woman who is a medical professional in a hospital",
 }
 
-# Negative descriptions to reject mismatches
+# Negative descriptions: mainly guard against wrong gender and non-medical subjects
 CLIP_NEGATIVES: Dict[str, List[str]] = {
-    "male-doctor": ["a photo of a female doctor", "a photo of a nurse", "a photo of a patient in hospital"],
-    "female-doctor": ["a photo of a male doctor", "a photo of a nurse", "a photo of a patient in hospital"],
-    "male-nurse": ["a photo of a female nurse", "a photo of a doctor", "a photo of a patient in hospital"],
-    "female-nurse": ["a photo of a male nurse", "a photo of a doctor", "a photo of a patient in hospital"],
+    "male-doctor": ["a photo of a woman", "a photo of a patient lying in a hospital bed", "medical equipment with no person"],
+    "female-doctor": ["a photo of a man", "a photo of a patient lying in a hospital bed", "medical equipment with no person"],
+    "male-nurse": ["a photo of a woman", "a photo of a patient lying in a hospital bed", "medical equipment with no person"],
+    "female-nurse": ["a photo of a man", "a photo of a patient lying in a hospital bed", "medical equipment with no person"],
 }
 
 # ─── search queries ─────────────────────────────────────────────────────────
@@ -197,7 +197,8 @@ def _download_image(url: str, timeout: int = 15) -> Optional[Image.Image]:
 
 
 def _content_hash(img: Image.Image) -> str:
-    thumb = img.resize((16, 16)).convert("L")
+    """Aggressive perceptual hash to catch near-duplicates."""
+    thumb = img.resize((32, 32)).convert("L")
     return hashlib.md5(thumb.tobytes()).hexdigest()
 
 
