@@ -31,7 +31,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--professions", type=str, default="doctor,nurse")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--generator", type=str, choices=["mock", "diffusers", "fairdiffusion"], default="mock")
-    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers"], default="mock")
+    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers", "local"], default="mock")
     parser.add_argument("--model-id", type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument("--real-model-id", type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument(
@@ -340,6 +340,9 @@ def main() -> None:
         else:
             real_pipe, real_device = init_diffusers(real_source)
         print(f"[real-source] diffusers model={real_source} device={real_device}")
+    elif args.real_source == "local":
+        local_real_dir = Path(args.project_root) / "data" / "real_samples"
+        print(f"[real-source] local directory: {local_real_dir}")
     else:
         print("[real-source] mock")
 
@@ -428,7 +431,17 @@ def main() -> None:
             sid = f"real_{group}_{i:04d}"
             seed_i = args.seed + 10_000 + i
             image_path = group_real / f"{sid}.png"
-            if args.real_source == "diffusers":
+            if args.real_source == "local":
+                # Use pre-downloaded real photos from data/real_samples/
+                local_group_dir = Path(args.project_root) / "data" / "real_samples" / group
+                local_files = sorted(local_group_dir.glob("*.png")) + sorted(local_group_dir.glob("*.jpg"))
+                if i < len(local_files):
+                    img = Image.open(local_files[i]).convert("RGB")
+                    img = img.resize((args.width, args.height), Image.LANCZOS)
+                else:
+                    print(f"  [warn] Not enough local real images for {group}, have {len(local_files)}, need index {i}")
+                    continue
+            elif args.real_source == "diffusers":
                 img = make_diffusers_image(
                     pipe=real_pipe,
                     device=real_device,
@@ -452,7 +465,7 @@ def main() -> None:
                     "profession": profession,
                     "prompt": prompt,
                     "seed": seed_i,
-                    "source_model": real_source if args.real_source == "diffusers" else "real_mock",
+                    "source_model": "real_photograph" if args.real_source == "local" else (real_source if args.real_source == "diffusers" else "real_mock"),
                     "source_domain": "real_reference",
                     "y_true": 0,
                     "clip_score": "",

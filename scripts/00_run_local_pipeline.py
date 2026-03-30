@@ -23,7 +23,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=Path, default=root)
     parser.add_argument("--generator", type=str, choices=["mock", "diffusers", "fairdiffusion"], default="mock")
-    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers"], default="diffusers")
+    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers", "local"], default="diffusers")
     parser.add_argument("--samples-per-group", type=int, default=30)
     parser.add_argument("--real-per-group", type=int, default=30)
     parser.add_argument("--min-quality", type=float, default=None)
