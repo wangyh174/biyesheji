@@ -26,10 +26,10 @@ else:
 !pip -q install -r requirements-colab.txt
 !pip -q install -e ./semantic-image-editing-main/semantic-image-editing-main
 
-# 清掉旧的低质量图（首次运行可忽略）
+# 清掉旧图（首次可忽略）
 !rm -rf data/real_samples/*
 
-# 下载真人照片，CLIP 自动剔除不匹配的图（如男护士文件夹里的女医生）
+# 下载真人照片，CLIP 自动剔除性别/角色不匹配的图
 !python scripts/download_real_samples.py \
   --per-group 50 \
   --output-dir data/real_samples \
@@ -37,6 +37,7 @@ else:
 ```
 
 ## 3. 代码块 B：生成 AI 假图 + 检测器打分 + 热力图
+注意 `--real-source local`，表示直接使用代码块 A 下载好的真人照片，不再让 AI 重新画。
 
 ```python
 %cd /content/drive/MyDrive/Bishe/project
@@ -48,13 +49,12 @@ else:
   --real-per-group 50 \
   --detectors cnndetection,f3net,lgrad \
   --clip-min-score 0.22 \
-  --real-source diffusers \
-  --model-id SG161222/Realistic_Vision_V5.1_noVAE \
-  --real-model-id SG161222/Realistic_Vision_V5.1_noVAE
+  --real-source local \
+  --model-id SG161222/Realistic_Vision_V5.1_noVAE
 ```
 
 ## 4. 成果查收
-- **真实样本：** `data/real_samples/`（4组×50张，CLIP验证过）
-- **AI假图：** `data/generated_raw/`
+- **真实样本（Pexels正版照片）：** `data/real_samples/`
+- **AI假图（Fair-Diffusion生成）：** `data/generated_raw/`
 - **公平性表格：** `results/fairness_tables/latest_run_overview.csv`
 - **热力图：** `results/attribution/heatmaps/`
