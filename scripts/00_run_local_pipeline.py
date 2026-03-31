@@ -20,7 +20,7 @@ def main():
     parser.add_argument("--project-root", type=str, default=str(root))
     parser.add_argument("--real-source", type=str, default="local", choices=["local", "diffusers", "mock"])
     parser.add_argument("--detectors", type=str, default="cnndetection,f3net")
-    parser.add_argument("--samples", type=int, default=30)
+    parser.add_argument("--samples", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model-id", type=str, default="SG161222/Realistic_Vision_V5.1_noVAE")
     args = parser.parse_args()
@@ -28,8 +28,7 @@ def main():
     project_root = args.project_root
     detector_list = [d.strip() for d in args.detectors.split(",")]
 
-    # --- 01: Data Generation (Fair-Diffusion) ---
-    # Using local real source as established in previous session
+    # --- 01: Data Generation ---
     run_cmd("01_generate.py", [
         "--project-root", project_root,
         "--real-source", args.real_source,
@@ -40,18 +39,16 @@ def main():
     ], project_root)
 
     # --- 01b: Generation Audit ---
-    run_cmd("01b_generation_audit.py", [
-        "--project-root", project_root
-    ], project_root)
+    run_cmd("01b_generation_audit.py", ["--project-root", project_root], project_root)
 
-    # --- 02: Quality Filtering (CLIP Alignment) ---
+    # --- 02: Quality Filtering ---
     run_cmd("02_quality_filter.py", [
         "--project-root", project_root,
         "--use-clip", "True",
         "--clip-min-score", "0.22"
     ], project_root)
 
-    # --- 03 & 04: Baseline Evaluation & Fairness Metrics ---
+    # --- 03 & 04: Baseline Evaluation ---
     for det in detector_list:
         run_cmd("03_run_detectors.py", [
             "--project-root", project_root,
@@ -61,15 +58,11 @@ def main():
     
     run_cmd("04_fairness_eval.py", ["--project-root", project_root], project_root)
 
-    # --- 05: Visual Attribution (Grad-CAM) ---
-    run_cmd("05_gradcam_analysis.py", ["--project-root", project_root], project_root)
+    for det in detector_list:
+        run_cmd("05_gradcam_analysis.py", ["--project-root", project_root, "--detector", det], project_root)
 
-    # --- 06: Structural Attribution (Patch Shuffling - BSA/NeurIPS 24) ---
-    run_cmd("06_patch_shuffling_exp.py", [
-        "--project-root", project_root,
-        "--patch-n", "8"
-    ], project_root)
-    # Re-run detectors on shuffled data
+    # --- 06: Structural Attribution ---
+    run_cmd("06_patch_shuffling_exp.py", ["--project-root", project_root, "--patch-n", "8"], project_root)
     for det in detector_list:
         run_cmd("03_run_detectors.py", [
             "--project-root", project_root,
@@ -77,12 +70,11 @@ def main():
             "--input-dir", "data/shuffled_8x8"
         ], project_root)
 
-    # --- 07: Physical Consistency Analysis (Zheng-D3 ICCV 25) ---
-    run_cmd("07_physical_consistency.py", ["--project-root", project_root], project_root)
+    # --- 07: Physical Consistency ---
+    run_cmd("07_physical_consistency.py", ["--project-root", project_root, "--max-samples", "100"], project_root)
 
-    # --- 08: Innovation - High-pass Residual Decoupling ---
-    run_cmd("08_high_pass_innovation.py", ["--project-root", project_root], project_root)
-    # Re-run detectors on high-pass residuals
+    # --- 08: Innovation ---
+    run_cmd("08_high_pass_innovation.py", ["--project-root", project_root, "--process-all"], project_root)
     for det in detector_list:
         run_cmd("03_run_detectors.py", [
             "--project-root", project_root,
@@ -90,13 +82,8 @@ def main():
             "--input-dir", "data/high_pass_residuals"
         ], project_root)
 
-    # --- 09: Final Master Report & Consolidation ---
+    # --- 09: Master Report ---
     run_cmd("09_master_report.py", ["--project-root", project_root], project_root)
-
-    print("\n" + "="*50)
-    print("THESIS PIPELINE COMPLETED SUCCESSFULLY")
-    print("Final results and charts available in data/ and results/")
-    print("="*50)
 
 if __name__ == "__main__":
     main()
