@@ -13,6 +13,10 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--detector-csv", type=Path, default=root / "results" / "detector_outputs" / "cnndetection_scores.csv")
     parser.add_argument("--output-dir", type=Path, default=root / "results" / "attribution")
     parser.add_argument("--only-false-negative", action="store_true")
+    parser.add_argument("--analyze-all", action="store_true",
+                        help="Generate heatmaps for ALL samples, not just misclassified ones.")
+    parser.add_argument("--max-per-group", type=int, default=10,
+                        help="Max samples per group to generate heatmaps for (when --analyze-all).")
     return parser.parse_args()
 
 def generate_heatmap(image_path: Path, output_path: Path):
@@ -71,15 +75,27 @@ def main() -> None:
     heatmap_dir.mkdir(parents=True, exist_ok=True)
 
     df = pd.read_csv(args.detector_csv)
-    mis = df[df["y_true"].astype(int) != df["y_hat"].astype(int)].copy()
-    if args.only_false_negative:
-        mis = mis[(mis["y_true"].astype(int) == 1) & (mis["y_hat"].astype(int) == 0)].copy()
 
-    mis_path = args.output_dir / "misclassified_samples.csv"
-    mis.to_csv(mis_path, index=False, encoding="utf-8")
-    
-    print(f"Generating heatmaps for {len(mis)} misclassified samples...")
-    for idx, row in mis.iterrows():
+    if args.analyze_all:
+        # Analyze a representative sample from each group for thesis visualizations
+        target_df = df.copy()
+        if args.max_per_group:
+            parts = []
+            for g, sub in target_df.groupby("group"):
+                parts.append(sub.head(args.max_per_group))
+            target_df = pd.concat(parts, ignore_index=True)
+        print(f"Generating heatmaps for {len(target_df)} samples (all groups)...")
+    else:
+        mis = df[df["y_true"].astype(int) != df["y_hat"].astype(int)].copy()
+        if args.only_false_negative:
+            mis = mis[(mis["y_true"].astype(int) == 1) & (mis["y_hat"].astype(int) == 0)].copy()
+        target_df = mis
+        print(f"Generating heatmaps for {len(target_df)} misclassified samples...")
+
+    mis_path = args.output_dir / "analyzed_samples.csv"
+    target_df.to_csv(mis_path, index=False, encoding="utf-8")
+
+    for idx, row in target_df.iterrows():
         img_path = Path(args.project_root) / str(row["file_path"])
         if not img_path.exists():
             print(f"Missing file: {img_path}")

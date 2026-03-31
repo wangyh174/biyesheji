@@ -31,9 +31,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--detector",
         type=str,
-        choices=["cnndetection", "f3net", "lgrad"],
+        choices=["cnndetection", "f3net", "lgrad", "gram"],
         default="cnndetection",
     )
+    parser.add_argument("--input-dir", type=Path, default=None,
+                        help="If set, scan this directory for images instead of using --metadata-in CSV.")
+    parser.add_argument("--input-csv", type=Path, default=None,
+                        help="Alias for --metadata-in for pipeline compatibility.")
     parser.add_argument("--test-size", type=float, default=0.3)
     parser.add_argument("--seed", type=int, default=42)
     return parser.parse_args()
@@ -74,6 +78,8 @@ def select_features(detector: str, feat: Tuple[float, float, float, float, float
         return [hf_ratio, residual_std, pixel_std]
     if detector == "lgrad":
         return [grad_mean, grad_std, residual_std]
+    if detector == "gram":
+        return [pixel_std, grad_std, hf_ratio, residual_std]
     raise ValueError(f"Unsupported detector: {detector}")
 
 
@@ -84,10 +90,41 @@ def choose_threshold(y_true: np.ndarray, score: np.ndarray) -> float:
     return float(th[idx])
 
 
+def build_df_from_dir(input_dir: Path) -> pd.DataFrame:
+    """Scan a directory tree for images and build a DataFrame compatible with metadata CSV."""
+    rows = []
+    for label_dir in sorted(input_dir.iterdir()):
+        if not label_dir.is_dir():
+            continue
+        label_name = label_dir.name  # 'fake' or 'real'
+        y_true = 1 if label_name == "fake" else 0
+        for group_dir in sorted(label_dir.iterdir()):
+            if not group_dir.is_dir():
+                continue
+            group = group_dir.name
+            for img in sorted(group_dir.glob("*.png")) + sorted(group_dir.glob("*.jpg")):
+                rows.append({
+                    "id": img.stem,
+                    "group": group,
+                    "y_true": y_true,
+                    "file_path": str(img),
+                    "prompt": "",
+                })
+    return pd.DataFrame(rows)
+
+
 def main() -> None:
     args = parse_args()
+    # Handle input source: --input-csv or --input-dir override --metadata-in
+    if args.input_csv is not None:
+        args.metadata_in = args.input_csv
     args.output_dir.mkdir(parents=True, exist_ok=True)
-    df = pd.read_csv(args.metadata_in)
+
+    if args.input_dir is not None:
+        df = build_df_from_dir(args.input_dir)
+        print(f"[info] Built metadata from directory: {args.input_dir} ({len(df)} images)")
+    else:
+        df = pd.read_csv(args.metadata_in)
     if len(df) == 0:
         raise ValueError(f"Empty metadata: {args.metadata_in}")
 

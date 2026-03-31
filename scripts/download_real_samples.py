@@ -135,7 +135,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
     parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
-    parser.add_argument("--samples-per-group", type=int, default=50)
+    parser.add_argument("--samples-per-group", type=int, default=60)  # Buffer for elite filtering in Stage 02
     parser.add_argument("--clip-threshold", type=float, default=0.22) # Restore strict threshold
     args = parser.parse_args()
 

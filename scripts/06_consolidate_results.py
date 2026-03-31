@@ -20,7 +20,7 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=Path, default=root)
     parser.add_argument("--metadata", type=Path, default=root / "data" / "metadata_balanced.csv")
-    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,lgrad")
+    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad")
     parser.add_argument(
         "--output-csv",
         type=Path,

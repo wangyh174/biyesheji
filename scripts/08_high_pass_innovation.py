@@ -62,7 +62,7 @@ def main():
                 img = cv2.imread(img_path)
                 if img is None: continue
                 # Basic resize
-                img = cv2.resize(img, (256, 256))
+                img = cv2.resize(img, (512, 512))
                 
                 hpf_img = apply_high_pass_filter(img)
                 out_name = os.path.basename(img_path)

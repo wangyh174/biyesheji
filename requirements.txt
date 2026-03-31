@@ -11,3 +11,8 @@ numpy
 tqdm
 Pillow
 requests
+huggingface_hub
+peft
+scikit-learn
+tabulate
+matplotlib

@@ -38,6 +38,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--clip-min-score", type=float, default=0.20)
     parser.add_argument("--min-quality", type=float, default=None)
     parser.add_argument("--align-on", type=str, choices=["clip", "quality", "random"], default="clip")
+    parser.add_argument("--target-n", type=int, default=None, help="Force balance each group to this exact count.")
     return parser.parse_args()
 
 
@@ -116,13 +117,23 @@ def summarize_by_group(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["y_true", "group"]).reset_index(drop=True)
 
 
-def align_and_balance(df: pd.DataFrame, seed: int, align_on: str) -> pd.DataFrame:
+def align_and_balance(df: pd.DataFrame, seed: int, align_on: str, target_n: int = None) -> pd.DataFrame:
     out_parts = []
     rng = np.random.default_rng(seed)
     for y in sorted(df["y_true"].astype(int).unique()):
         sub_y = df[df["y_true"].astype(int) == y].copy()
         counts = sub_y.groupby("group")["id"].count()
-        min_n = int(counts.min())
+        min_n_actual = int(counts.min())
+        
+        # Use target_n if provided, but only if we have enough samples.
+        # Otherwise fall back to the smallest available group size.
+        if target_n and target_n > 0:
+            if min_n_actual < target_n:
+                print(f"  [warn] Group '{y}' smallest size {min_n_actual} < target {target_n}. Capping at {min_n_actual}.")
+                target_n = min_n_actual
+            n_per_group = target_n
+        else:
+            n_per_group = min_n_actual
 
         if align_on == "clip" and "clip_score" in sub_y.columns:
             target = float(sub_y.groupby("group")["clip_score"].mean().median())
@@ -137,11 +148,11 @@ def align_and_balance(df: pd.DataFrame, seed: int, align_on: str) -> pd.DataFram
         for g in sorted(sub_y["group"].unique()):
             sg = sub_y[sub_y["group"] == g].copy()
             if score_col is None:
-                chosen = sg.sample(n=min_n, random_state=seed, replace=False)
+                chosen = sg.sample(n=n_per_group, random_state=seed, replace=False)
             else:
                 sg["dist_to_target"] = (sg[score_col] - target).abs()
                 sg = sg.sort_values("dist_to_target").reset_index(drop=True)
-                chosen = sg.head(min_n)
+                chosen = sg.head(n_per_group)
             out_parts.append(chosen.drop(columns=["dist_to_target"], errors="ignore"))
     return pd.concat(out_parts, ignore_index=True)
 
@@ -199,7 +210,7 @@ def main() -> None:
         raise ValueError("All samples removed by filters. Lower thresholds.")
 
     # 4) group alignment + balance
-    balanced = align_and_balance(filt, seed=args.seed, align_on=args.align_on)
+    balanced = align_and_balance(filt, seed=args.seed, align_on=args.align_on, target_n=args.target_n)
     if args.copy_files:
         balanced = maybe_copy_files(balanced, args.balanced_dir)
 
