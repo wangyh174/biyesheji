@@ -1,165 +1,102 @@
 """
-One-command local pipeline aligned with thesis roadmap:
-1) Prompt/AIGC generation + cleaning
-2) Multi-detector evaluation + fairness metrics
-3) Grad-CAM attribution entrypoint
+Master Thesis Pipeline Orchestrator (Stages 01-09)
+Aligned with: Fair-Diffusion, BSA (NeurIPS 24), D3 (ICCV 25), Lin (CVPR 24)
 """
-
-from __future__ import annotations
-
 import argparse
 import subprocess
 import sys
+import os
 from pathlib import Path
 
+def run_cmd(script_name, args, cwd):
+    py = sys.executable
+    cmd = [py, f"scripts/{script_name}"] + args
+    print(f"\n>>> Running {script_name} {' '.join(args)}...")
+    subprocess.run(cmd, cwd=cwd, check=True)
 
-def run_cmd(args: list[str], cwd: Path) -> None:
-    print("[run]", " ".join(args))
-    subprocess.run(args, cwd=str(cwd), check=True)
-
-
-def parse_args() -> argparse.Namespace:
+def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
-    parser.add_argument("--project-root", type=Path, default=root)
-    parser.add_argument("--generator", type=str, choices=["mock", "diffusers", "fairdiffusion"], default="mock")
-    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers", "local"], default="diffusers")
-    parser.add_argument("--samples-per-group", type=int, default=30)
-    parser.add_argument("--real-per-group", type=int, default=30)
-    parser.add_argument("--min-quality", type=float, default=None)
-    parser.add_argument("--bootstrap-iters", type=int, default=300)
-    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,lgrad")
-    parser.add_argument("--run-gradcam", action="store_true", default=True)
+    parser.add_argument("--project-root", type=str, default=str(root))
+    parser.add_argument("--real-source", type=str, default="local", choices=["local", "diffusers", "mock"])
+    parser.add_argument("--detectors", type=str, default="cnndetection,f3net")
+    parser.add_argument("--samples", type=int, default=30)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--clip-min-score", type=float, default=0.20)
-    parser.add_argument("--model-id", type=str, default=None)
-    parser.add_argument("--real-model-id", type=str, default=None)
-    parser.add_argument("--model-path", type=Path, default=None)
-    parser.add_argument("--real-model-path", type=Path, default=None)
-    return parser.parse_args()
+    parser.add_argument("--model-id", type=str, default="SG161222/Realistic_Vision_V5.1_noVAE")
+    args = parser.parse_args()
 
+    project_root = args.project_root
+    detector_list = [d.strip() for d in args.detectors.split(",")]
 
-def main() -> None:
-    args = parse_args()
-    root = args.project_root
-    scripts = root / "scripts"
-    py = sys.executable
-    common = ["--project-root", str(root)]
+    # --- 01: Data Generation (Fair-Diffusion) ---
+    # Using local real source as established in previous session
+    run_cmd("01_generate.py", [
+        "--project-root", project_root,
+        "--real-source", args.real_source,
+        "--samples-per-group", str(args.samples),
+        "--model-id", args.model_id,
+        "--generator", "fairdiffusion",
+        "--seed", str(args.seed)
+    ], project_root)
 
-    # Stage 1: data preparation (no race, only gender x profession)
-    cmd1 = [
-        py,
-        str(scripts / "01_generate.py"),
-        *common,
-        "--generator",
-        args.generator,
-        "--real-source",
-        args.real_source,
-        "--samples-per-group",
-        str(args.samples_per_group),
-        "--mock-real-per-group",
-        str(args.real_per_group),
-        "--genders",
-        "male,female",
-        "--professions",
-        "doctor,nurse",
-        "--seed",
-        str(args.seed),
-        "--overwrite",
-    ]
-    if args.generator in ("diffusers", "fairdiffusion"):
-        cmd1 += ["--width", "512", "--height", "512", "--steps", "30"]
-    if args.model_id is not None:
-        cmd1 += ["--model-id", args.model_id]
-    if args.real_model_id is not None:
-        cmd1 += ["--real-model-id", args.real_model_id]
-    if args.model_path is not None:
-        cmd1 += ["--model-path", str(args.model_path)]
-    if args.real_model_path is not None:
-        cmd1 += ["--real-model-path", str(args.real_model_path)]
+    # --- 01b: Generation Audit ---
+    run_cmd("01b_generation_audit.py", [
+        "--project-root", project_root
+    ], project_root)
 
-    cmd2 = [
-        py,
-        str(scripts / "02_quality_filter.py"),
-        *common,
-        "--seed",
-        str(args.seed),
-        "--use-clip",
-        "--clip-min-score",
-        str(args.clip_min_score),
-        "--align-on",
-        "clip",
-    ]
-    cmd_audit = [
-        py,
-        str(scripts / "01b_generation_audit.py"),
-        *common,
-        "--metadata-in",
-        str(root / "data" / "metadata_raw.csv"),
-        "--save-controlled-metadata",
-        "--controlled-metadata-out",
-        str(root / "data" / "metadata_gen_control.csv"),
-        "--seed",
-        str(args.seed),
-    ]
-    cmd2 += ["--metadata-in", str(root / "data" / "metadata_gen_control.csv")]
-    if args.min_quality is not None:
-        cmd2 += ["--min-quality", str(args.min_quality)]
+    # --- 02: Quality Filtering (CLIP Alignment) ---
+    run_cmd("02_quality_filter.py", [
+        "--project-root", project_root,
+        "--use-clip", "True",
+        "--clip-min-score", "0.22"
+    ], project_root)
 
-    run_cmd(cmd1, cwd=root)
-    run_cmd(cmd_audit, cwd=root)
-    run_cmd(cmd2, cwd=root)
-
-    # Stage 2: model evaluation + fairness metrics
-    detector_list = [x.strip() for x in args.detectors.split(",") if x.strip()]
+    # --- 03 & 04: Baseline Evaluation & Fairness Metrics ---
     for det in detector_list:
-        cmd3 = [
-            py,
-            str(scripts / "03_run_detectors.py"),
-            *common,
-            "--detector",
-            det,
-            "--seed",
-            str(args.seed),
-        ]
-        run_cmd(cmd3, cwd=root)
+        run_cmd("03_run_detectors.py", [
+            "--project-root", project_root,
+            "--detector", det,
+            "--input-dir", "data/generated_raw"
+        ], project_root)
+    
+    run_cmd("04_fairness_eval.py", ["--project-root", project_root], project_root)
 
-        det_csv = root / "results" / "detector_outputs" / f"{det}_scores.csv"
-        det_out_dir = root / "results" / "fairness_tables" / det
-        cmd4 = [
-            py,
-            str(scripts / "04_fairness_eval.py"),
-            "--detector-csv",
-            str(det_csv),
-            "--output-dir",
-            str(det_out_dir),
-            "--split",
-            "test",
-            "--bootstrap-iters",
-            str(args.bootstrap_iters),
-            "--seed",
-            str(args.seed),
-        ]
-        run_cmd(cmd4, cwd=root)
+    # --- 05: Visual Attribution (Grad-CAM) ---
+    run_cmd("05_gradcam_analysis.py", ["--project-root", project_root], project_root)
 
-    # Stage 3: attribution entry (optional)
-    if args.run_gradcam:
-        cmd5 = [py, str(scripts / "05_gradcam_analysis.py"), *common]
-        run_cmd(cmd5, cwd=root)
+    # --- 06: Structural Attribution (Patch Shuffling - BSA/NeurIPS 24) ---
+    run_cmd("06_patch_shuffling_exp.py", [
+        "--project-root", project_root,
+        "--patch-n", "8"
+    ], project_root)
+    # Re-run detectors on shuffled data
+    for det in detector_list:
+        run_cmd("03_run_detectors.py", [
+            "--project-root", project_root,
+            "--detector", det,
+            "--input-dir", "data/shuffled_8x8"
+        ], project_root)
 
-    # Stage 4: consolidate latest-run outputs for thesis/report writing.
-    cmd6 = [
-        py,
-        str(scripts / "06_consolidate_results.py"),
-        *common,
-        "--detectors",
-        ",".join(detector_list),
-    ]
-    run_cmd(cmd6, cwd=root)
+    # --- 07: Physical Consistency Analysis (Zheng-D3 ICCV 25) ---
+    run_cmd("07_physical_consistency.py", ["--project-root", project_root], project_root)
 
-    print("[done] Local roadmap pipeline completed.")
-    print(f"[results] {root / 'results' / 'fairness_tables'}")
+    # --- 08: Innovation - High-pass Residual Decoupling ---
+    run_cmd("08_high_pass_innovation.py", ["--project-root", project_root], project_root)
+    # Re-run detectors on high-pass residuals
+    for det in detector_list:
+        run_cmd("03_run_detectors.py", [
+            "--project-root", project_root,
+            "--detector", det,
+            "--input-dir", "data/high_pass_residuals"
+        ], project_root)
 
+    # --- 09: Final Master Report & Consolidation ---
+    run_cmd("09_master_report.py", ["--project-root", project_root], project_root)
+
+    print("\n" + "="*50)
+    print("THESIS PIPELINE COMPLETED SUCCESSFULLY")
+    print("Final results and charts available in data/ and results/")
+    print("="*50)
 
 if __name__ == "__main__":
     main()

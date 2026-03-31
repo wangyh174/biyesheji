@@ -1,60 +1,67 @@
-# Colab 运行指南（毕业设计最终完整版）
+# Google Colab 实验执行指南 (Full Stages 01-09)
 
-## 1. 新建 Colab 并开启 GPU
-- 菜单：`Runtime` -> `Change runtime type` -> `T4 GPU`
+本指南针对 AIGC 检测公平性评估的全流程，包括高精度的受控生成、公平性评估及深度归因分析。
 
-## 2. 代码块 A：环境准备 + 下载真实样本（带 CLIP 智能筛选）
+## ⚙️ 第一部分：环境准备与驱动挂载
 
 ```python
-import os
+# 1. 挂载 Google Drive
 from google.colab import drive
-
 drive.mount('/content/drive')
-workspace_dir = '/content/drive/MyDrive/Bishe'
-project_dir = os.path.join(workspace_dir, 'project')
-!mkdir -p {workspace_dir}
 
-%cd {workspace_dir}
-if not os.path.exists(project_dir):
-    !git clone https://github.com/wangyh174/biyesheji.git project
-else:
-    %cd {project_dir}
-    !git pull origin main
-
-%cd {project_dir}
-
-!pip -q install -r requirements-colab.txt
-!pip -q install -e ./semantic-image-editing-main/semantic-image-editing-main
-
-# 清掉旧图（首次可忽略）
-!rm -rf data/real_samples/*
-
-# 下载真人照片，CLIP 自动剔除性别/角色不匹配的图
-!python scripts/download_real_samples.py \
-  --per-group 50 \
-  --output-dir data/real_samples \
-  --pexels-key "你的Pexels_API_Key"
+# 2. 克隆项目并安装依赖 (包含 Fair-Diffusion 核心库)
+%cd /content
+!git clone https://github.com/wangyh174/biyesheji.git project
+%cd /content/project
+!pip install -r requirements.txt
+!pip install -e semantic-image-editing-main/
+!pip install opencv-python scikit-image transformers diffusers
 ```
 
-## 3. 代码块 B：生成 AI 假图 + 检测器打分 + 热力图
-注意 `--real-source local`，表示直接使用代码块 A 下载好的真人照片，不再让 AI 重新画。
+## 🛠️ 第二部分：全流程流水线执行 (01-09)
+
+直接运行总控脚本，即可完成生成、过滤、评估及全部归因实验（Grad-CAM+Patch Shuffling+GLCM）：
 
 ```python
-%cd /content/drive/MyDrive/Bishe/project
-
+# 执行完整的毕设实验路径 (Fair-Diffusion + 多级归因分析)
+# 指定 --real-source local 使用已下载的真实样本 ( data/real_samples/ )
 !python scripts/00_run_local_pipeline.py \
-  --project-root ./ \
-  --generator fairdiffusion \
-  --samples-per-group 50 \
-  --real-per-group 50 \
-  --detectors cnndetection,f3net,lgrad \
-  --clip-min-score 0.22 \
-  --real-source local \
-  --model-id SG161222/Realistic_Vision_V5.1_noVAE
+    --real-source local \
+    --detectors cnndetection,f3net \
+    --samples 50 \
+    --model-id "SG161222/Realistic_Vision_V5.1_noVAE"
 ```
 
-## 4. 成果查收
-- **真实样本（Pexels正版照片）：** `data/real_samples/`
-- **AI假图（Fair-Diffusion生成）：** `data/generated_raw/`
-- **公平性表格：** `results/fairness_tables/latest_run_overview.csv`
-- **热力图：** `results/attribution/heatmaps/`
+## 🔍 第三部分：关键归因实验单独执行 (进阶)
+
+如果你想单独运行特定的归因实验，可以使用以下命令：
+
+### 1. Patch Shuffling (结构性归因 - NeurIPS 24)
+打乱语义结构，验证偏见随语义消失而消解的趋势：
+```python
+!python scripts/06_patch_shuffling_exp.py --patch-n 8
+# 在打乱后的数据上重跑检测
+!python scripts/03_run_detectors.py --detector f3net --input-dir data/shuffled_8x8
+```
+
+### 2. 物理一致性验证 (二阶统计 - ICCV 25)
+通过 GLCM 特征证明 AI 物理痕迹在跨性别/职业下的公平性：
+```python
+!python scripts/07_physical_consistency.py --max-samples 50
+```
+
+### 3. 解耦创新方案 (高通滤波器 - Innovation)
+展示基于物理解耦的解偏见架构：
+```python
+!python scripts/08_high_pass_innovation.py
+!python scripts/03_run_detectors.py --detector cnndetection --input-dir data/high_pass_residuals
+```
+
+## 📊 第四部分：结果分析与可视化
+
+*   **热力图**：查看 `results/gradcam/` 目录。
+*   **公平性指标表**：查看 `results/fairness_tables/`。
+*   **总报告汇总**：查看 `results/master_report.csv`。
+
+> [!TIP]
+> 建议在生成 Fake 样本前，先运行 `scripts/download_real_samples.py` 补充 Real 样本池，以确保 FPR Gap 的计算基准更稳定。
