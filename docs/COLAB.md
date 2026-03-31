@@ -43,11 +43,25 @@ drive.mount('/content/drive')
     --detectors cnndetection,f3net
 ```
 
-## 📥 第四部分：收割成果与论文素材下载
+## 📥 第四部分：收割成果 (本地下载 + Drive 永存备份)
 ```python
-# 将成果打包下载
+# 1. 打包所有核心实验数据：包含了所有论文所需的图表、偏见分析 CSV、物理一致性统计等
 !zip -r result_v2_N50_final.zip results/ data/shuffled_8x8/ data/high_pass_residuals/ data/physical_consistency_results.csv
 
+# 2. 自动下载到本地 (浏览器会弹出下载框)
 from google.colab import files
-files.download('result_v2_N50_final.zip')
+try:
+    files.download('result_v2_N50_final.zip')
+except:
+    print("浏览器下载请求已发出 (若被拦截，请手动在左侧文件栏右键下载)")
+
+# 3. 同步至 Google Drive 永久存储 (防止会话断开导致数据丢失)
+import os
+backup_dir = "/content/drive/MyDrive/bishe_project_results/"
+!mkdir -p {backup_dir}
+print(f"正在持久化备份至 Drive: {backup_dir}")
+
+!cp result_v2_N50_final.zip {backup_dir}
+!cp -r results/ {backup_dir}
+print("备份完成！你可以在 Google Drive 的 bishe_project_results 文件夹中查看。")
 ```
