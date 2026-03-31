@@ -8,6 +8,7 @@ from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 from tqdm import tqdm
 import hashlib
+import random
 
 def calculate_phash(img_path):
     try:
@@ -20,9 +21,10 @@ def calculate_phash(img_path):
         return hashlib.md5(img_path.encode()).hexdigest()
 
 class RealImageDownloader:
-    def __init__(self, pexels_key=None, pixabay_key=None, device="cpu"):
+    def __init__(self, pexels_key=None, pixabay_key=None, unsplash_key=None, device="cpu"):
         self.pexels_key = pexels_key
         self.pixabay_key = pixabay_key
+        self.unsplash_key = unsplash_key
         self.device = device
         print(f"Loading CLIP model for STRICT disambiguation on {device}...")
         self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
@@ -66,28 +68,46 @@ class RealImageDownloader:
         try:
             image = Image.open(img_path).convert("RGB")
             gender = "male" if "male" in group_name else "female"
+            other_gender = "female" if gender == "male" else "male"
+            profession = "doctor" if "doctor" in group_name else "nurse"
+            other_profession = "nurse" if profession == "doctor" else "doctor"
 
             is_human, human_prob = self.is_real_human_photo(image)
             if not is_human:
                 return 0.0
 
-            target_text = f"a real portrait photo of a {group_name.replace('-', ' ')} in a hospital"
-            competitor_text = f"a real portrait photo of a {gender} doctor in a hospital" if "nurse" in group_name else f"a real portrait photo of a {gender} nurse in a hospital"
+            target_text = (
+                f"a real portrait photo of a {gender} {profession} in a hospital, "
+                f"medical uniform, clinical setting, healthcare worker"
+            )
+            competitor_texts = [
+                f"a real portrait photo of a {gender} {other_profession} in a hospital, healthcare worker",
+                f"a real portrait photo of a {other_gender} {profession} in a hospital, healthcare worker",
+                f"a real portrait photo of a {other_gender} {other_profession} in a hospital, healthcare worker",
+            ]
             negative_texts = [
                 "a toy doll or figurine",
                 "a cartoon or illustration",
                 "a mannequin or statue",
+                "a normal portrait of a person, not a doctor or nurse",
+                "a person sitting outdoors in a park or garden",
+                "a lifestyle portrait, fashion portrait, or travel photo",
+                "an office worker or business person portrait",
+                "a person at home, restaurant, cafe, or outdoor leisure setting",
             ]
-            texts = [target_text, competitor_text] + negative_texts
+            texts = [target_text] + competitor_texts + negative_texts
             probs = self.clip_probs(image, texts)
 
             target_prob = float(probs[0])
-            competitor_prob = float(probs[1])
-            negative_best = float(np.max(probs[2:]))
+            competitor_best = float(np.max(probs[1:4]))
+            negative_best = float(np.max(probs[4:]))
 
-            # Must be a human photo first, then a strong winner over both the competing role
-            # and obviously wrong non-human interpretations.
-            if target_prob >= 0.40 and target_prob > competitor_prob and target_prob > negative_best:
+            # Must clearly beat other medical-group interpretations and obvious non-medical portraits.
+            if (
+                target_prob >= 0.45
+                and target_prob > competitor_best + 0.05
+                and target_prob > negative_best + 0.10
+            ):
                 return min(target_prob, human_prob)
             return 0.0
         except:
@@ -129,55 +149,161 @@ class RealImageDownloader:
                 break
         return images[:count]
 
+    def search_unsplash(self, query, count=200):
+        if not self.unsplash_key:
+            return []
+        headers = {"Authorization": f"Client-ID {self.unsplash_key}"}
+        images = []
+        per_page = 30
+        for page in range(1, (count // per_page) + 2):
+            url = (
+                "https://api.unsplash.com/search/photos"
+                f"?query={query.replace(' ', '%20')}"
+                f"&page={page}&per_page={per_page}"
+                "&orientation=portrait"
+                "&content_filter=high"
+            )
+            try:
+                r = requests.get(url, headers=headers, timeout=15)
+                if r.status_code != 200:
+                    break
+                data = r.json()
+                for p in data.get("results", []):
+                    img_url = p.get("urls", {}).get("regular") or p.get("urls", {}).get("small")
+                    if img_url:
+                        images.append({"url": img_url, "source": "unsplash"})
+                if len(images) >= count:
+                    break
+            except:
+                break
+        return images[:count]
+
+    def search_openverse(self, query, count=200):
+        images = []
+        page = 1
+        page_size = min(20, count)
+        while len(images) < count:
+            url = (
+                "https://api.openverse.org/v1/images/"
+                f"?q={query.replace(' ', '%20')}"
+                f"&page={page}&page_size={page_size}"
+                "&license_type=commercial"
+                "&extension=jpg"
+                "&mature=false"
+            )
+            try:
+                r = requests.get(url, timeout=20)
+                if r.status_code != 200:
+                    break
+                data = r.json()
+                results = data.get("results", [])
+                if not results:
+                    break
+                for p in results:
+                    img_url = p.get("url")
+                    if img_url:
+                        images.append({"url": img_url, "source": "openverse"})
+                if not data.get("next"):
+                    break
+                page += 1
+            except:
+                break
+        return images[:count]
+
+    def build_query_pool(self, group_name):
+        query_map = {
+            "male-doctor": [
+                "male doctor portrait hospital real person",
+                "male physician portrait hospital",
+                "man doctor clinic portrait",
+                "male medical doctor portrait",
+                "doctor portrait hospital staff man",
+            ],
+            "female-doctor": [
+                "female doctor portrait hospital real person",
+                "female physician portrait hospital",
+                "woman doctor clinic portrait",
+                "female medical doctor portrait",
+            ],
+            "male-nurse": [
+                "male nurse portrait scrubs hospital real person",
+                "male nurse portrait hospital",
+                "man nurse scrubs clinic portrait",
+                "male registered nurse portrait",
+            ],
+            "female-nurse": [
+                "female nurse portrait scrubs hospital real person",
+                "female nurse portrait hospital",
+                "woman nurse scrubs clinic portrait",
+                "female registered nurse portrait",
+            ],
+        }
+        return query_map.get(group_name, [group_name.replace("-", " ")])
+
     def fetch_group(self, group_name, output_dir, target_count=50, clip_threshold=0.22):
         print(f"\n--- Gathering REAL images (Deep Search 1000): {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
-        
-        # Specific queries
-        query_map = {
-            "male-doctor": "male doctor portrait hospital real person",
-            "female-doctor": "female doctor portrait hospital real person",
-            "male-nurse": "male nurse portrait scrubs hospital real person",
-            "female-nurse": "female nurse portrait scrubs hospital real person"
-        }
-        
-        query = query_map.get(group_name, group_name.replace('-', ' '))
-        print(f"Deep searching up to 1000 candidates for {group_name}...")
-        potential_images = self.search_pexels(query, 500) + self.search_pixabay(query, 500)
-        
-        # Shuffle search results slightly for variety
-        import random
-        random.shuffle(potential_images)
 
         downloaded_count = 0
         existing_hashes = set()
-        
-        for p_img in tqdm(potential_images):
-            if downloaded_count >= target_count: break
-            img_id = str(hashlib.md5(p_img["url"].encode()).hexdigest())[:10]
-            save_path = os.path.join(output_dir, f"{p_img['source']}_{img_id}.jpg")
+        seen_urls = set()
 
-            if self.download_image(p_img["url"], save_path):
-                score = self.verify_image_disambiguated(save_path, group_name)
-                h = calculate_phash(save_path)
-                
-                if score >= clip_threshold and h not in existing_hashes:
-                    existing_hashes.add(h)
-                    downloaded_count += 1
-                else:
-                    if os.path.exists(save_path): os.remove(save_path)
-        
+        for query_idx, query in enumerate(self.build_query_pool(group_name), start=1):
+            if downloaded_count >= target_count:
+                break
+            print(f"Deep searching query {query_idx} for {group_name}: {query}")
+            potential_images = (
+                self.search_unsplash(query, 150)
+                + self.search_pexels(query, 250)
+                + self.search_openverse(query, 120)
+                + self.search_pixabay(query, 200)
+            )
+            potential_images = [img for img in potential_images if img["url"] not in seen_urls]
+            for img in potential_images:
+                seen_urls.add(img["url"])
+            random.shuffle(potential_images)
+
+            # Allow a very small threshold relaxation for hard groups after the first query.
+            query_threshold = clip_threshold if query_idx == 1 else max(0.18, clip_threshold - 0.02)
+
+            for p_img in tqdm(potential_images):
+                if downloaded_count >= target_count:
+                    break
+                img_id = str(hashlib.md5(p_img["url"].encode()).hexdigest())[:10]
+                save_path = os.path.join(output_dir, f"{p_img['source']}_{img_id}.jpg")
+
+                if self.download_image(p_img["url"], save_path):
+                    score = self.verify_image_disambiguated(save_path, group_name)
+                    h = calculate_phash(save_path)
+
+                    if score >= query_threshold and h not in existing_hashes:
+                        existing_hashes.add(h)
+                        downloaded_count += 1
+                    else:
+                        if os.path.exists(save_path):
+                            os.remove(save_path)
+
         print(f"Final Count for {group_name}: {downloaded_count}/{target_count}")
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
     parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
+    parser.add_argument(
+        "--unsplash-key",
+        type=str,
+        default=os.environ.get("UNSPLASH_ACCESS_KEY", "fsqS67ZO7mOGFKto3dbAm-JQOLMVT6I3E7qMh7J6lHU"),
+    )
     parser.add_argument("--samples-per-group", type=int, default=60)  # Buffer for elite filtering in Stage 02
     parser.add_argument("--clip-threshold", type=float, default=0.22) # Restore strict threshold
     args = parser.parse_args()
 
-    downloader = RealImageDownloader(args.pexels_key, args.pixabay_key, "cuda" if torch.cuda.is_available() else "cpu")
+    downloader = RealImageDownloader(
+        args.pexels_key,
+        args.pixabay_key,
+        args.unsplash_key,
+        "cuda" if torch.cuda.is_available() else "cpu",
+    )
     # All groups strictly disambiguated
     for group in ["male-doctor", "female-doctor", "male-nurse", "female-nurse"]:
         downloader.fetch_group(group, os.path.join("data/real_samples", group), args.samples_per_group, args.clip_threshold)

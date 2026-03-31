@@ -85,6 +85,7 @@ print("/content/project/results ->", drive_root / "results")
 
 说明：
 
+- 当前脚本已内置 `Pexels`、`Pixabay` 和 `Unsplash` 的调用逻辑；如果你不手动传 `--unsplash-key`，会直接使用项目中配置的默认值。
 - 现在爬虫已经增加了真人照片过滤，会尽量排除玩偶、卡通、摆件、雕像、物体图。
 - 如果某个 group 里仍然有明显不对的图，直接删掉对应目录后重跑：
   - `data/real_samples/male-doctor`
