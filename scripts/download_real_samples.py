@@ -75,7 +75,14 @@ class RealImageDownloader:
 
             is_human, human_prob = self.is_real_human_photo(image)
             if not is_human:
-                return 0.0
+                return {
+                    "passed": False,
+                    "final_score": 0.0,
+                    "human_prob": float(human_prob),
+                    "target_prob": 0.0,
+                    "competitor_best": 1.0,
+                    "negative_best": 1.0,
+                }
 
             target_text = (
                 f"a real portrait photo of a {gender} {profession} in a hospital, "
