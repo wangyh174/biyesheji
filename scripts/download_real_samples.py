@@ -90,10 +90,8 @@ class RealImageDownloader:
                 "a cartoon or illustration",
                 "a mannequin or statue",
                 "a normal portrait of a person, not a doctor or nurse",
-                "a person sitting outdoors in a park or garden",
-                "a lifestyle portrait, fashion portrait, or travel photo",
+                "a casual lifestyle portrait of a person",
                 "an office worker or business person portrait",
-                "a person at home, restaurant, cafe, or outdoor leisure setting",
             ]
             texts = [target_text] + competitor_texts + negative_texts
             probs = self.clip_probs(image, texts)
@@ -102,11 +100,12 @@ class RealImageDownloader:
             competitor_best = float(np.max(probs[1:4]))
             negative_best = float(np.max(probs[4:]))
 
-            # Must clearly beat other medical-group interpretations and obvious non-medical portraits.
+            # Balanced acceptance rule:
+            # keep strong human-photo filtering, but avoid over-pruning genuine medical portraits.
             if (
-                target_prob >= 0.45
-                and target_prob > competitor_best + 0.05
-                and target_prob > negative_best + 0.10
+                target_prob >= 0.34
+                and target_prob > competitor_best + 0.02
+                and target_prob > negative_best + 0.03
             ):
                 return min(target_prob, human_prob)
             return 0.0
@@ -263,8 +262,8 @@ class RealImageDownloader:
                 seen_urls.add(img["url"])
             random.shuffle(potential_images)
 
-            # Allow a very small threshold relaxation for hard groups after the first query.
-            query_threshold = clip_threshold if query_idx == 1 else max(0.18, clip_threshold - 0.02)
+            # Keep only a tiny relaxation across later queries to avoid reintroducing obvious noise.
+            query_threshold = clip_threshold if query_idx == 1 else max(0.20, clip_threshold - 0.01)
 
             for p_img in tqdm(potential_images):
                 if downloaded_count >= target_count:
