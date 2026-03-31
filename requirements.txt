@@ -17,4 +17,5 @@ scikit-learn
 tabulate
 matplotlib
 gdown
--e ./semantic-image-editing-main/semantic-image-editing-main
+# Install semdiffusers separately in Colab with:
+# pip install --no-build-isolation ./semantic-image-editing-main/semantic-image-editing-main
