@@ -27,9 +27,10 @@ drive.mount("/content/drive")
 !pip install -U pip
 !pip install torch torchvision torchaudio
 !pip install diffusers transformers accelerate safetensors opencv-python scikit-image tabulate gdown
+!pip install -e semantic-image-editing-main/semantic-image-editing-main
 ```
 
-如果你要用 `fairdiffusion` 模式，还需要安装仓库里语义编辑相关依赖。
+其中最后一条用于安装 `fairdiffusion` 所需的 `semdiffusers`。
 
 ## 3. 把关键目录映射到 Google Drive
 
