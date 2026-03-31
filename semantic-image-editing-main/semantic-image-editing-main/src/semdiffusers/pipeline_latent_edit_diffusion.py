@@ -5,7 +5,11 @@ from typing import Callable, List, Optional, Union
 
 import torch
 
-from transformers import CLIPFeatureExtractor, CLIPTextModel, CLIPTokenizer
+try:
+    from transformers import CLIPImageProcessor as CLIPFeatureExtractor
+except ImportError:
+    from transformers import CLIPFeatureExtractor
+from transformers import CLIPTextModel, CLIPTokenizer
 
 from diffusers.configuration_utils import FrozenDict
 from diffusers.models import AutoencoderKL, UNet2DConditionModel
