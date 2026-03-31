@@ -23,11 +23,12 @@ def main():
     parser.add_argument("--samples", type=int, default=50)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model-id", type=str, default="SG161222/Realistic_Vision_V5.1_noVAE")
+    parser.add_argument("--buffer-extra", type=int, default=20)
     args = parser.parse_args()
 
     project_root = args.project_root
     detector_list = [d.strip() for d in args.detectors.split(",")]
-    buffer = args.samples + 10  # Generate 10 extra for elite selection headroom
+    buffer = args.samples + args.buffer_extra
 
     # === Stage 01: Data Generation (Fair-Diffusion) ===
     run_cmd("01_generate.py", [
@@ -48,6 +49,8 @@ def main():
         "--project-root", project_root,
         "--use-clip",
         "--clip-min-score", "0.22",
+        "--group-margin-min", "0.03",
+        "--human-photo-min", "0.02",
         "--align-on", "clip",
         "--target-n", str(args.samples)  # Hard-cap at exactly N highest-quality samples
     ], project_root)

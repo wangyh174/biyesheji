@@ -1,52 +1,75 @@
-# Google Colab 毕设实验终极执行指南 (全量审计修复版)
+# Colab Run Guide
 
-本指南针对 AIGC 检测公平性评估全流程。
-对标文献: Fair-Diffusion (CVPR'24), BSA (NeurIPS'24), D3 (ICCV'25), Lin (CVPR'24)
+This guide assumes you want to run the thesis pipeline in Google Colab and keep key data in Google Drive.
 
-## ⚙️ 第一部分：环境配置与驱动挂载
-建议使用 **L4 GPU** 或 **A100 GPU** 运行。
+## 1. Mount Drive and clone the project
 
 ```python
-# 1. 挂载 Google Drive
 from google.colab import drive
-drive.mount('/content/drive')
+drive.mount("/content/drive")
 
-# 2. 拉取毕设框架 (已全量修复版)
 %cd /content
-!rm -rf project 
-!git clone https://github.com/wangyh174/biyesheji.git project
+!rm -rf project
+!git clone <YOUR_GITHUB_REPO_URL> project
 %cd /content/project
-!git pull origin main
-
-# 3. 安装依赖
-!pip install -r requirements.txt
-!pip install -e semantic-image-editing-main/semantic-image-editing-main/
-!pip install opencv-python scikit-image transformers diffusers accelerate tabulate gdown
 ```
 
-说明：
-- `scripts/03_run_detectors.py` 已切换为预训练权重推理，不再使用旧版的手工特征 + LogisticRegression 代理分类器。
-- `CNNDetection / Gram / LGrad` 会在首次运行时自动下载公开检测框架与对应 checkpoint。
-- `F3Net` 会在首次运行时自动下载公开发布的 F3Net checkpoint 与依赖源码。
-- `scripts/04_fairness_eval.py` 已使用按 `group × y_true` 分层的 bootstrap 估计公平性置信区间。
-- `scripts/05_gradcam_analysis.py` 已切换为真实模型反向传播的 Grad-CAM，可直接生成论文级热力图。
-- 首次跑 Stage 03 会比以前慢，这是正常现象。
+## 2. Install dependencies
 
-## 🛠️ 第二部分：双库精选真人样本采集 (n=60 候选 → Top 50 精选)
-利用"语义解歧"机制，过滤掉"像医生的护士"。超额采集 60 张，后续由 Stage 02 择优保留 50。
 ```python
-# 采集 240 张 (60×4) 经过 CLIP 语义解歧校准的真人对照图
-# 已内置 Pexels + Pixabay 双 Key，无需填写
+!pip install -U pip
+!pip install torch torchvision torchaudio
+!pip install diffusers transformers accelerate safetensors opencv-python scikit-image tabulate gdown
+```
+
+If you use Fair-Diffusion mode, also install the local semantic editing package described by the repository.
+
+## 3. Persist key folders to Drive
+
+```python
+import os
+from pathlib import Path
+import shutil
+
+drive_root = Path("/content/drive/MyDrive/bishe_project_runtime")
+for rel in ["data/real_samples", "data/generated_raw", "results"]:
+    target = drive_root / rel
+    target.parent.mkdir(parents=True, exist_ok=True)
+    target.mkdir(parents=True, exist_ok=True)
+    local = Path("/content/project") / rel
+    if local.is_symlink():
+        local.unlink()
+    elif local.exists():
+        if local.is_dir():
+            shutil.rmtree(local)
+        else:
+            local.unlink()
+    local.parent.mkdir(parents=True, exist_ok=True)
+    os.symlink(target, local, target_is_directory=True)
+
+print("Mapped to Drive:")
+print("/content/project/data/real_samples ->", drive_root / "data/real_samples")
+print("/content/project/data/generated_raw ->", drive_root / "data/generated_raw")
+print("/content/project/results ->", drive_root / "results")
+```
+
+## 4. Collect real images
+
+```python
+%cd /content/project
 !python scripts/download_real_samples.py \
     --samples-per-group 60 \
     --clip-threshold 0.22
 ```
 
-## 🚀 第三部分：执行全量毕设管线 (01-09)
-包含生成、基准评价、视觉/结构/物理归因及解耦创新。
-4 款检测器 (CNNDetection, F3Net, Gram, LGrad) × 30 步推理 × 512 分辨率。
+Notes:
+
+- The crawler now tries to reject dolls, figurines, cartoons, mannequins, and object photos.
+- If a group still contains wrong samples, delete that group folder under `data/real_samples/<group>` and rerun the crawler.
+
+## 5. Run the full pipeline
+
 ```python
-# 开启自动化深度评估 (生成 60 张 → CLIP 精选 Top 50)
 %cd /content/project
 !python scripts/00_run_local_pipeline.py \
     --real-source local \
@@ -54,16 +77,20 @@ drive.mount('/content/drive')
     --detectors cnndetection,f3net,gram,lgrad
 ```
 
-如果你想先单独检查某一个检测器是否下载成功，可以先跑：
+Current pipeline behavior:
 
-```python
-%cd /content/project
-!python scripts/03_run_detectors.py \
-    --detector cnndetection \
-    --metadata-in data/metadata_balanced.csv
-```
+- Stage 01 over-generates `samples + 20` candidates per group for better headroom.
+- `scripts/01_generate.py` now uses Fair-Diffusion-style generation more faithfully: for `fairdiffusion` mode it keeps the occupation prompt concise and controls gender mainly through editing directions, while still keeping stricter negative prompts as a quality safeguard.
+- In `fairdiffusion` mode, direction choice is now sampled with a target prior and each generated image is saved into the sampled gender-profession bucket. Use `--fd-female-prob 0.5` to mimic the paper's balanced gender sampling more closely.
+- Stage 02 uses CLIP prompt similarity plus:
+  - target-group prediction agreement
+  - group margin threshold
+  - human-photo preference over toy/cartoon/object/deformed/low-quality prompts
+- `scripts/03_run_detectors.py` uses pretrained detector inference.
+- `scripts/04_fairness_eval.py` uses stratified bootstrap on `group × y_true`.
+- `scripts/05_gradcam_analysis.py` uses real model Grad-CAM.
 
-如果你想单独测试某个检测器的 Grad-CAM 是否正常，可在跑完 Stage 03 后执行：
+## 6. Optional: test Grad-CAM separately
 
 ```python
 %cd /content/project
@@ -73,36 +100,20 @@ drive.mount('/content/drive')
     --max-per-group 2
 ```
 
-四个检测器建议按下面的理解写入论文或答辩：
-- `CNNDetection`: Wang et al. 的经典 CNN 生成图检测器。
-- `F3Net`: 频域线索驱动的伪造检测器。
-- `Gram`: GramNet，强调纹理/统计关系建模。
-- `LGrad`: 基于梯度伪影表示的检测器，强调泛化伪影而非原图语义。
+## 7. Common quality problems
 
-## 📥 第四部分：收割成果 (本地下载 + Drive 永存备份)
+- `male-doctor` images look female:
+  Stage 01 prompt drift or Stage 02 semantic filtering is too loose. Rerun after deleting bad generated files.
+- Faces are broken or melted:
+  The generation model produced low-quality candidates; Stage 02 should remove most of them, but you may need to over-generate again.
+- A group has too few remaining samples:
+  That group became the balancing bottleneck. Generate or collect more candidates for that group only, then rerun Stage 02 onward.
+
+## 8. Export results
+
 ```python
-# 1. 打包所有核心实验数据
 %cd /content/project
-!zip -r result_v2_N50_final.zip \
-    results/ \
-    data/shuffled_8x8/ \
-    data/high_pass_residuals/ \
-    data/physical_consistency_results.csv
-
-# 2. 自动下载到本地 (浏览器会弹出下载框)
-from google.colab import files
-try:
-    files.download('result_v2_N50_final.zip')
-except:
-    print("浏览器下载请求已发出 (若被拦截，请手动在左侧文件栏右键下载)")
-
-# 3. 同步至 Google Drive 永久存储
-import os
-backup_dir = "/content/drive/MyDrive/bishe_project_results/"
-!mkdir -p {backup_dir}
-print(f"正在持久化备份至 Drive: {backup_dir}")
-
-!cp result_v2_N50_final.zip {backup_dir}
-!cp -r results/ {backup_dir}
-print("备份完成！你可以在 Google Drive 的 bishe_project_results 文件夹中查看。")
+!zip -r result_v2_N50_final.zip results/ data/high_pass_residuals/ data/physical_consistency_results.csv
 ```
+
+Because `results/` is already mapped to Drive, your main outputs are persistent even if the Colab runtime disconnects.

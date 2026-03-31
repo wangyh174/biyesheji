@@ -3,6 +3,7 @@ import argparse
 import requests
 import torch
 import cv2
+import numpy as np
 from PIL import Image
 from transformers import CLIPProcessor, CLIPModel
 from tqdm import tqdm
@@ -26,6 +27,29 @@ class RealImageDownloader:
         print(f"Loading CLIP model for STRICT disambiguation on {device}...")
         self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
+        self.model.eval()
+
+    def clip_probs(self, image, texts):
+        inputs = self.processor(text=texts, images=image, return_tensors="pt", padding=True).to(self.device)
+        with torch.no_grad():
+            outputs = self.model(**inputs)
+            probs = outputs.logits_per_image.softmax(dim=1)
+        return probs[0].detach().cpu().numpy().astype(float)
+
+    def is_real_human_photo(self, image):
+        try:
+            texts = [
+                "a real photo of a human person",
+                "a toy doll or figurine",
+                "a cartoon or illustration",
+                "an object product photo",
+            ]
+            probs = self.clip_probs(image, texts)
+            human_prob = float(probs[0])
+            non_human_best = float(np.max(probs[1:]))
+            return human_prob >= 0.55 and human_prob > non_human_best, human_prob
+        except:
+            return False, 0.0
 
     def download_image(self, url, save_path):
         try:
@@ -42,21 +66,29 @@ class RealImageDownloader:
         try:
             image = Image.open(img_path).convert("RGB")
             gender = "male" if "male" in group_name else "female"
-            
-            target_text = f"a photo of a {group_name.replace('-', ' ')}"
-            competitor_text = f"a photo of a {gender} doctor portrait" if "nurse" in group_name else f"a photo of a {gender} nurse portrait"
-            
-            inputs = self.processor(text=[target_text, competitor_text], 
-                                    images=image, return_tensors="pt", padding=True).to(self.device)
-            outputs = self.model(**inputs)
-            probs = outputs.logits_per_image.softmax(dim=1)
-            
-            target_prob = probs[0][0].item()
-            competitor_prob = probs[0][1].item()
-            
-            # --- STRICT WINNER LOGIC --- (User preference: Quality over Quantity)
-            if target_prob > competitor_prob: # No soft margin
-                return target_prob
+
+            is_human, human_prob = self.is_real_human_photo(image)
+            if not is_human:
+                return 0.0
+
+            target_text = f"a real portrait photo of a {group_name.replace('-', ' ')} in a hospital"
+            competitor_text = f"a real portrait photo of a {gender} doctor in a hospital" if "nurse" in group_name else f"a real portrait photo of a {gender} nurse in a hospital"
+            negative_texts = [
+                "a toy doll or figurine",
+                "a cartoon or illustration",
+                "a mannequin or statue",
+            ]
+            texts = [target_text, competitor_text] + negative_texts
+            probs = self.clip_probs(image, texts)
+
+            target_prob = float(probs[0])
+            competitor_prob = float(probs[1])
+            negative_best = float(np.max(probs[2:]))
+
+            # Must be a human photo first, then a strong winner over both the competing role
+            # and obviously wrong non-human interpretations.
+            if target_prob >= 0.40 and target_prob > competitor_prob and target_prob > negative_best:
+                return min(target_prob, human_prob)
             return 0.0
         except:
             return 0.0
@@ -67,7 +99,7 @@ class RealImageDownloader:
         images = []
         # Multi-page paging to reach high counts
         for page in range(1, (count // 80) + 2):
-            url = f"https://api.pexels.com/v1/search?query={query}&per_page=80&page={page}"
+            url = f"https://api.pexels.com/v1/search?query={query}&per_page=80&page={page}&orientation=portrait"
             try:
                 r = requests.get(url, headers=headers)
                 data = r.json()
@@ -82,7 +114,12 @@ class RealImageDownloader:
         # Pixabay max 200 per page, paging if needed
         images = []
         for page in range(1, (count // 200) + 2):
-            url = f"https://pixabay.com/api/?key={self.pixabay_key}&q={query.replace(' ', '+')}&image_type=photo&per_page=200&page={page}"
+            url = (
+                f"https://pixabay.com/api/?key={self.pixabay_key}"
+                f"&q={query.replace(' ', '+')}"
+                f"&image_type=photo&safesearch=true&editors_choice=true"
+                f"&per_page=200&page={page}"
+            )
             try:
                 r = requests.get(url)
                 data = r.json()
@@ -98,10 +135,10 @@ class RealImageDownloader:
         
         # Specific queries
         query_map = {
-            "male-doctor": "male doctor hospital",
-            "female-doctor": "female doctor hospital",
-            "male-nurse": "male nurse uniform scrubs",
-            "female-nurse": "female nurse clinic"
+            "male-doctor": "male doctor portrait hospital real person",
+            "female-doctor": "female doctor portrait hospital real person",
+            "male-nurse": "male nurse portrait scrubs hospital real person",
+            "female-nurse": "female nurse portrait scrubs hospital real person"
         }
         
         query = query_map.get(group_name, group_name.replace('-', ' '))

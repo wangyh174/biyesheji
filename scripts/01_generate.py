@@ -60,6 +60,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fd-weights", type=str, default="1,1")
     parser.add_argument("--fd-momentum-scale", type=float, default=0.3)
     parser.add_argument("--fd-momentum-beta", type=float, default=0.6)
+    parser.add_argument("--fd-female-prob", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
 
@@ -67,6 +68,64 @@ def parse_args() -> argparse.Namespace:
 def read_templates(path: Path) -> List[str]:
     lines = [line.strip() for line in path.read_text(encoding="utf-8").splitlines()]
     return [line for line in lines if line]
+
+
+def build_group_prompt(template: str, gender: str, profession: str) -> str:
+    gender_desc = {
+        "male": "adult male, man, masculine facial features",
+        "female": "adult female, woman, feminine facial features",
+    }.get(gender, gender)
+    profession_desc = {
+        "doctor": "doctor, physician, white coat, clinical badge, stethoscope",
+        "nurse": "nurse, hospital nurse, medical scrubs, clinical ward",
+    }.get(profession, profession)
+    base = template.format(gender=gender, profession=profession)
+    constraints = (
+        "single person, realistic human face, natural skin texture, symmetrical eyes, "
+        "intact facial features, professional medical environment, photojournalistic, high detail"
+    )
+    return f"{base} {gender_desc}, {profession_desc}, {constraints}."
+
+
+def build_fairdiffusion_base_prompt(profession: str) -> str:
+    profession_desc = {
+        "doctor": "doctor, physician, white coat, stethoscope",
+        "nurse": "nurse, hospital nurse, medical scrubs",
+    }.get(profession, profession)
+    return (
+        f"A portrait photo of the face of a {profession}. "
+        f"Hospital setting, {profession_desc}, realistic human, clinical identity visible."
+    )
+
+
+def build_group_negative_prompt(base_negative: str, gender: str, profession: str) -> str:
+    parts = [base_negative]
+    if gender == "male":
+        parts.append("woman, female, feminine face, lipstick, heavy makeup, long eyelashes")
+    elif gender == "female":
+        parts.append("man, male, beard, mustache, masculine face")
+    if profession == "doctor":
+        parts.append("nurse cap, nurse-only uniform, patient gown")
+    elif profession == "nurse":
+        parts.append("doctor white coat only, physician portrait")
+    parts.append(
+        "two people, duplicate face, extra eyes, extra fingers, warped face, broken face, melted face, "
+        "mask-like skin, doll, toy, figurine, cartoon, illustration, 3d render"
+    )
+    return ", ".join(x for x in parts if x)
+
+
+def build_fairdiffusion_edit_config(gender: str) -> Tuple[List[str], List[bool]]:
+    # Fair-Diffusion paper steers between "female person" and "male person"
+    # while keeping the occupation prompt itself simple.
+    editing_prompts = ["female person", "male person"]
+    if gender == "female":
+        # Toward female, away from male.
+        reverse_dirs = [False, True]
+    else:
+        # Toward male, away from female.
+        reverse_dirs = [True, False]
+    return editing_prompts, reverse_dirs
 
 
 def ensure_csv(path: Path, overwrite: bool) -> None:
@@ -305,6 +364,18 @@ def build_groups(genders_csv: str, professions_csv: str) -> List[Tuple[str, str,
     return out
 
 
+def sample_gender_for_profession(
+    rng: random.Random,
+    female_prob: float,
+    remaining: Dict[str, int],
+) -> str:
+    if remaining["female"] <= 0:
+        return "male"
+    if remaining["male"] <= 0:
+        return "female"
+    return "female" if rng.random() < female_prob else "male"
+
+
 def main() -> None:
     args = parse_args()
     random.seed(args.seed)
@@ -354,33 +425,38 @@ def main() -> None:
     fd_thresholds = _parse_csv_float(args.fd_thresholds)
     fd_weights = _parse_csv_float(args.fd_weights)
 
-    for group, gender, profession in groups:
-        group_raw = raw_dir / group
-        group_real = real_dir / group
-        group_raw.mkdir(parents=True, exist_ok=True)
-        group_real.mkdir(parents=True, exist_ok=True)
+    if args.generator == "fairdiffusion":
+        for profession in sorted({profession for _, _, profession in groups}):
+            remaining = {gender: args.samples_per_group for gender in ["male", "female"]}
+            counters = {gender: 0 for gender in ["male", "female"]}
+            while remaining["male"] > 0 or remaining["female"] > 0:
+                gender = sample_gender_for_profession(random, args.fd_female_prob, remaining)
+                group = f"{gender}-{profession}"
+                group_raw = raw_dir / group
+                group_real = real_dir / group
+                group_raw.mkdir(parents=True, exist_ok=True)
+                group_real.mkdir(parents=True, exist_ok=True)
 
-        for i in range(args.samples_per_group):
-            t_id = i % len(templates)
-            prompt = templates[t_id].format(gender=gender, profession=profession)
-            sid = f"fake_{group}_{i:04d}"
-            seed_i = args.seed + i
-            image_path = group_raw / f"{sid}.png"
-            if args.generator == "mock":
-                img = make_mock_image(prompt, seed_i, args.width, args.height, kind="fake")
-            elif args.generator == "fairdiffusion":
+                i = counters[gender]
+                t_id = i % len(templates)
+                prompt = build_fairdiffusion_base_prompt(profession)
+                negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
+                image_editing_prompts, image_reverse_dirs = build_fairdiffusion_edit_config(gender)
+                sid = f"fake_{group}_{i:04d}"
+                seed_i = args.seed + sum(counters.values())
+                image_path = group_raw / f"{sid}.png"
                 img = make_fairdiffusion_image(
                     pipe=pipe,
                     device=device,
                     prompt=prompt,
-                    negative_prompt=args.negative_prompt,
+                    negative_prompt=negative_prompt,
                     width=args.width,
                     height=args.height,
                     steps=args.steps,
                     guidance=args.guidance,
                     seed=seed_i,
-                    editing_prompts=fd_editing_prompts,
-                    reverse_dirs=fd_reverse_dirs,
+                    editing_prompts=image_editing_prompts,
+                    reverse_dirs=image_reverse_dirs,
                     warmup_steps=fd_warmup_steps,
                     edit_guidance_scales=fd_guidance_scales,
                     thresholds=fd_thresholds,
@@ -388,44 +464,85 @@ def main() -> None:
                     momentum_scale=args.fd_momentum_scale,
                     momentum_beta=args.fd_momentum_beta,
                 )
-            else:
-                img = make_diffusers_image(
-                    pipe=pipe,
-                    device=device,
-                    prompt=prompt,
-                    negative_prompt=args.negative_prompt,
-                    width=args.width,
-                    height=args.height,
-                    steps=args.steps,
-                    guidance=args.guidance,
-                    seed=seed_i,
+                img.save(image_path)
+
+                rows.append(
+                    {
+                        "id": sid,
+                        "modality": "image",
+                        "group": group,
+                        "gender": gender,
+                        "profession": profession,
+                        "prompt": prompt,
+                        "seed": seed_i,
+                        "source_model": fake_source,
+                        "source_domain": "generated",
+                        "y_true": 1,
+                        "clip_score": "",
+                        "quality_score": "",
+                        "template_id": t_id,
+                        "file_path": str(image_path),
+                    }
                 )
-            img.save(image_path)
-
-            rows.append(
-                {
-                    "id": sid,
-                    "modality": "image",
-                    "group": group,
-                    "gender": gender,
-                    "profession": profession,
-                    "prompt": prompt,
-                    "seed": seed_i,
-                    "source_model": (
-                        fake_source
-                        if args.generator in ("diffusers", "fairdiffusion")
-                        else "mock_generator"
-                    ),
-                    "source_domain": "generated",
-                    "y_true": 1,
-                    "clip_score": "",
-                    "quality_score": "",
-                    "template_id": t_id,
-                    "file_path": str(image_path),
-                }
+                counters[gender] += 1
+                remaining[gender] -= 1
+            print(
+                f"[done] profession={profession} fake_male={counters['male']} "
+                f"fake_female={counters['female']}"
             )
+    else:
+        for group, gender, profession in groups:
+            group_raw = raw_dir / group
+            group_real = real_dir / group
+            group_raw.mkdir(parents=True, exist_ok=True)
+            group_real.mkdir(parents=True, exist_ok=True)
 
-        # Create "real" control samples (same semantic groups) for fairness evaluation.
+            for i in range(args.samples_per_group):
+                t_id = i % len(templates)
+                prompt = build_group_prompt(templates[t_id], gender=gender, profession=profession)
+                negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
+                sid = f"fake_{group}_{i:04d}"
+                seed_i = args.seed + i
+                image_path = group_raw / f"{sid}.png"
+                if args.generator == "mock":
+                    img = make_mock_image(prompt, seed_i, args.width, args.height, kind="fake")
+                else:
+                    img = make_diffusers_image(
+                        pipe=pipe,
+                        device=device,
+                        prompt=prompt,
+                        negative_prompt=negative_prompt,
+                        width=args.width,
+                        height=args.height,
+                        steps=args.steps,
+                        guidance=args.guidance,
+                        seed=seed_i,
+                    )
+                img.save(image_path)
+
+                rows.append(
+                    {
+                        "id": sid,
+                        "modality": "image",
+                        "group": group,
+                        "gender": gender,
+                        "profession": profession,
+                        "prompt": prompt,
+                        "seed": seed_i,
+                        "source_model": fake_source if args.generator == "diffusers" else "mock_generator",
+                        "source_domain": "generated",
+                        "y_true": 1,
+                        "clip_score": "",
+                        "quality_score": "",
+                        "template_id": t_id,
+                        "file_path": str(image_path),
+                    }
+                )
+
+    # Create "real" control samples (same semantic groups) for fairness evaluation.
+    for group, gender, profession in groups:
+        group_real = real_dir / group
+        group_real.mkdir(parents=True, exist_ok=True)
         for i in range(args.mock_real_per_group):
             prompt = f"A real photo of a {gender} {profession} in a hospital, realistic and natural."
             sid = f"real_{group}_{i:04d}"
@@ -471,11 +588,10 @@ def main() -> None:
                     "clip_score": "",
                     "quality_score": "",
                     "template_id": -1,
-                    "file_path": str(image_path),
-                }
-            )
-
-        print(f"[done] group={group} fake={args.samples_per_group} real={args.mock_real_per_group}")
+                        "file_path": str(image_path),
+                    }
+                )
+        print(f"[done] group={group} real={args.mock_real_per_group}")
 
     append_rows(args.metadata_out, rows)
     print(f"[saved] metadata: {args.metadata_out} rows={len(rows)}")

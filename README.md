@@ -1,39 +1,49 @@
-# AIGC 公平性评估与归因分析框架 (Fair-AIGC-Eval)
+# AIGC Fairness Evaluation and Attribution Framework
 
-本项目提供了一套面向特定人口统计学场景（医护群体）的 AIGC 检测器公平性评估与机理分析框架。基于 Fair-Diffusion 受控生成、CLIP 语义对齐、及多层级归因分析（热力图、Patch Shuffle、二阶统计），深度揭示检测器的语义偏见来源。
+This project is a thesis-oriented pipeline for evaluating whether AI-image detectors behave unfairly across four controlled medical-worker groups:
 
-## 🔬 研究路线图 (Stages 01-09)
+- `male-doctor`
+- `female-doctor`
+- `male-nurse`
+- `female-nurse`
 
-本项目严格遵循 **Lin (CVPR 24)**、**BSA (NeurIPS 24)** 及 **D3 (ICCV 25)** 的学术规范：
+The pipeline combines controlled image generation, real-image collection, semantic and quality filtering, detector evaluation, fairness metrics, and attribution analysis.
 
-1.  **Stage 01: 受控生成 (Fair-Diffusion)** - 利用编辑向量（Editing Direction）消除生成侧的原始偏见，生成男女对等的医护样本。
-2.  **Stage 02: 质量对齐 (CLIP Filter)** - 使用 CLIP 模型进行语义与质量双向过滤，对齐 Fake/Real 样本池。
-3.  **Stage 03 & 04: 基准评估 (Baseline)** - 运行 CNNDetection, F3Net, Gram, LGrad 的预训练权重推理并计算 FPR Gap 和 Fairness Metrics。
-4.  **Stage 05: 视觉归因 (Visual Attribution)** - 基于预训练检测器生成模型级 Grad-CAM 热力图，定位语义过拟合（Semantic Overfitting）。
-5.  **Stage 06: 结构性验证 (Patch Shuffling)** - 在物理块乱序条件下测试偏见趋势，验证偏见是否源于宏观语义。
-6.  **Stage 07: 物理本质验证 (Second-Order Stats)** - 基于 GLCM（灰度共生矩阵）验证 AI 生成在二阶特征上的物理一致性。
-7.  **Stage 08: 创新方案 (High-pass Decoupling)** - 引入高频残差滤波器实现“语义解耦检测”，提升跨人群公平性。
-8.  **Stage 09: 汇总报告 (Master Report)** - 自动化产生全量实验表格、对比柱状图及偏见演化曲线。
+## Stages
 
-## 📊 核心理论参考
+1. `Stage 01` Generate fake images and organize real images by group.
+2. `Stage 01b` Audit generation-side imbalance before detector evaluation.
+3. `Stage 02` Filter samples with CLIP, quality control, and group-consistency checks.
+4. `Stage 03` Run pretrained detector inference for `CNNDetection`, `F3Net`, `Gram`, and `LGrad`.
+5. `Stage 04` Compute fairness metrics and stratified-bootstrap confidence intervals.
+6. `Stage 05` Produce model-based Grad-CAM heatmaps.
+7. `Stage 06` Run patch-shuffling structural attribution experiments.
+8. `Stage 07` Measure second-order physical consistency statistics.
+9. `Stage 08` Run high-pass residual decoupling experiments.
+10. `Stage 09` Aggregate results into a master report.
 
--   **Fair-Diffusion (2023)**: 隐空间语义干预框架。
--   **Lin et al. (CVPR 2024)**: 公平性指标定义及局部性增强。
--   **Breaking Semantic Artifacts (NeurIPS 2024)**: Patch Shuffle 与语义伪像理论。
--   **Zheng-D3 (ICCV 2025)**: 基于二阶特征的无监督检测思路。
+## Current Implementation Notes
 
-## 🚀 快速启动
+- `scripts/03_run_detectors.py` now uses pretrained detector inference instead of the old handcrafted-feature + LogisticRegression proxy.
+- `scripts/04_fairness_eval.py` now estimates confidence intervals with stratified bootstrap over `group × y_true`.
+- `scripts/05_gradcam_analysis.py` now uses true model backpropagation Grad-CAM rather than residual pseudo-heatmaps.
+- `scripts/01_generate.py` now uses two behaviors: in normal diffusion mode it strengthens prompts for `male/female × doctor/nurse`, while in `fairdiffusion` mode it keeps the occupation prompt concise and shifts gender control into Fair-Diffusion-style editing directions.
+- In `fairdiffusion` mode, gender directions are now sampled probabilistically per profession and images are routed into the corresponding `male-*` / `female-*` groups. The sampling prior can be controlled by `--fd-female-prob`.
+- `scripts/02_quality_filter.py` now checks more than prompt similarity: it also verifies target-group consistency, group margin, and whether an image is more like a real human photo than a toy, cartoon, object, deformed face, or low-quality image.
+- In Colab, it is recommended to map `data/real_samples`, `data/generated_raw`, and `results` into Google Drive for persistence.
 
-执行以下单条命令即可运行完整毕设流程：
+## Quick Start
+
+Run the full local pipeline:
+
 ```bash
 python scripts/00_run_local_pipeline.py --real-source local --detectors cnndetection,f3net,gram,lgrad
 ```
 
-数据与结果将存储在 `data/` 和 `results/` 目录下。
-观察 `data/shuffled_8x8` 和 `data/high_pass_residuals` 的检测结果以获取深度归因结论。
+Important outputs are written under `data/` and `results/`.
 
-补充说明：
-- `scripts/03_run_detectors.py` 已切换为预训练检测器推理入口，不再使用旧版代理特征分类器。
-- 首次运行检测阶段时，会自动下载公开源码压缩包与权重到 `.external_models/`。
-- `scripts/04_fairness_eval.py` 的置信区间已改为按 `group × y_true` 分层 bootstrap，更适合当前公平性评估设定。
-- `scripts/05_gradcam_analysis.py` 已改为真实模型反向传播的 Grad-CAM，不再使用旧版残差伪热力图。
+## Practical Advice
+
+- If real-image crawling or fake-image generation produces poor samples, delete the bad group folder and rerun Stage 01 or the specific script.
+- For best fake-image quality, over-generate candidates and let Stage 02 keep only the most semantically consistent samples.
+- If a group cannot reach the requested sample count, Stage 02 will cap balancing to the smallest surviving group.
