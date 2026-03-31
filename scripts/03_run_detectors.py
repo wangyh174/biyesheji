@@ -404,9 +404,10 @@ def run_f3net(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
             img = Image.open(path).convert("RGB")
             tensor = transform(img).unsqueeze(0).to(device)
             outputs = model({"img": tensor})
-            probs = outputs["logits"]
-            if probs.ndim != 2 or probs.shape[1] < 2:
+            logits = outputs["logits"]
+            if logits.ndim != 2 or logits.shape[1] < 2:
                 raise ValueError("Unexpected F3Net output format.")
+            probs = torch.softmax(logits, dim=1)
             score = float(probs[:, 1].detach().cpu().numpy()[0])
             scores.append(score)
 

@@ -28,6 +28,8 @@ drive.mount('/content/drive')
 - `scripts/03_run_detectors.py` 已切换为预训练权重推理，不再使用旧版的手工特征 + LogisticRegression 代理分类器。
 - `CNNDetection / Gram / LGrad` 会在首次运行时自动下载公开检测框架与对应 checkpoint。
 - `F3Net` 会在首次运行时自动下载公开发布的 F3Net checkpoint 与依赖源码。
+- `scripts/04_fairness_eval.py` 已使用按 `group × y_true` 分层的 bootstrap 估计公平性置信区间。
+- `scripts/05_gradcam_analysis.py` 已切换为真实模型反向传播的 Grad-CAM，可直接生成论文级热力图。
 - 首次跑 Stage 03 会比以前慢，这是正常现象。
 
 ## 🛠️ 第二部分：双库精选真人样本采集 (n=60 候选 → Top 50 精选)
@@ -59,6 +61,16 @@ drive.mount('/content/drive')
 !python scripts/03_run_detectors.py \
     --detector cnndetection \
     --metadata-in data/metadata_balanced.csv
+```
+
+如果你想单独测试某个检测器的 Grad-CAM 是否正常，可在跑完 Stage 03 后执行：
+
+```python
+%cd /content/project
+!python scripts/05_gradcam_analysis.py \
+    --detector-csv results/detector_outputs/cnndetection_scores.csv \
+    --analyze-all \
+    --max-per-group 2
 ```
 
 四个检测器建议按下面的理解写入论文或答辩：

@@ -52,6 +52,17 @@ def load_physical_consistency(data_dir: Path) -> pd.DataFrame | None:
     return pd.read_csv(csv_path)
 
 
+def compute_auc_from_scores_csv(csv_path: Path) -> float:
+    if not csv_path.exists():
+        return float("nan")
+    df = pd.read_csv(csv_path)
+    y = df["y_true"].astype(int).to_numpy()
+    if len(np.unique(y)) != 2:
+        return float("nan")
+    from sklearn.metrics import roc_auc_score
+    return float(roc_auc_score(y, df["score"].astype(float).to_numpy()))
+
+
 def main() -> None:
     args = parse_args()
     root = args.project_root
@@ -81,24 +92,28 @@ def main() -> None:
 
     # --- 3. Patch Shuffling Impact ---
     shuffled_results = []
-    for det in detectors:
-        original_csv = results_dir / "detector_outputs" / f"{det}_scores.csv"
-        shuffled_csv = results_dir / "detector_outputs" / f"{det}_shuffled_scores.csv"
-        if original_csv.exists():
-            orig_df = pd.read_csv(original_csv)
-            orig_auc = float("nan")
-            y = orig_df["y_true"].astype(int).to_numpy()
-            if len(np.unique(y)) == 2:
-                from sklearn.metrics import roc_auc_score
-                orig_auc = roc_auc_score(y, orig_df["score"].astype(float).to_numpy())
-            row = {"detector": det, "original_auc": orig_auc}
-            if shuffled_csv.exists():
-                shuf_df = pd.read_csv(shuffled_csv)
-                ys = shuf_df["y_true"].astype(int).to_numpy()
-                if len(np.unique(ys)) == 2:
-                    row["shuffled_auc"] = roc_auc_score(ys, shuf_df["score"].astype(float).to_numpy())
-                    row["auc_drop"] = row["original_auc"] - row["shuffled_auc"]
-            shuffled_results.append(row)
+    structural_curve_csv = results_dir / "structural_attribution" / "structural_attribution_curve.csv"
+    if structural_curve_csv.exists():
+        structural_df = pd.read_csv(structural_curve_csv)
+        for det in detectors:
+            sub = structural_df[structural_df["detector"] == det].copy()
+            if len(sub) == 0:
+                continue
+            baseline = sub[sub["patch_n"] == 1]
+            if len(baseline) == 0:
+                continue
+            baseline_auc = float(baseline["auc"].iloc[0])
+            for _, row in sub.sort_values("patch_n").iterrows():
+                shuffled_results.append(
+                    {
+                        "detector": det,
+                        "patch_n": int(row["patch_n"]),
+                        "auc": float(row["auc"]),
+                        "fpr_gap": float(row["fpr_gap"]),
+                        "baseline_auc": baseline_auc,
+                        "auc_drop": baseline_auc - float(row["auc"]),
+                    }
+                )
     if shuffled_results:
         shuf_df = pd.DataFrame(shuffled_results)
         shuf_df.to_csv(report_dir / "patch_shuffling_impact.csv", index=False, encoding="utf-8")
@@ -117,16 +132,12 @@ def main() -> None:
     if hp_dir.exists():
         hp_results = []
         for det in detectors:
-            hp_csv = results_dir / "detector_outputs" / f"{det}_highpass_scores.csv"
+            hp_csv = results_dir / "detector_outputs_highpass" / f"{det}_scores.csv"
             if hp_csv.exists():
-                hp_df = pd.read_csv(hp_csv)
-                y = hp_df["y_true"].astype(int).to_numpy()
-                if len(np.unique(y)) == 2:
-                    from sklearn.metrics import roc_auc_score
-                    hp_results.append({
-                        "detector": det,
-                        "highpass_auc": roc_auc_score(y, hp_df["score"].astype(float).to_numpy())
-                    })
+                hp_results.append({
+                    "detector": det,
+                    "highpass_auc": compute_auc_from_scores_csv(hp_csv)
+                })
         master["high_pass_results"] = hp_results
 
     (report_dir / "master_summary.json").write_text(

@@ -169,9 +169,20 @@ def bootstrap_ci(df: pd.DataFrame, iters: int, seed: int) -> Dict[str, Dict[str,
         "foae": [],
     }
 
+    # Stratify bootstrap on (group, y_true) so each resample preserves
+    # the fairness-evaluation structure of demographic group × label.
+    strata: List[pd.DataFrame] = []
+    for _, sub in df.groupby(["group", "y_true"], dropna=False):
+        sub = sub.reset_index(drop=True)
+        if len(sub) > 0:
+            strata.append(sub)
+
     for _ in range(iters):
-        sample_idx = rng.integers(0, len(df), size=len(df))
-        boot = df.iloc[sample_idx].reset_index(drop=True)
+        boot_parts: List[pd.DataFrame] = []
+        for sub in strata:
+            sample_idx = rng.integers(0, len(sub), size=len(sub))
+            boot_parts.append(sub.iloc[sample_idx].reset_index(drop=True))
+        boot = pd.concat(boot_parts, ignore_index=True)
         gdf = group_metrics(boot)
         summ = fairness_summary(gdf)
         cvpr_m = cvpr2024_style_metrics(boot)
