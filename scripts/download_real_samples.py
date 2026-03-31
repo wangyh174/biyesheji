@@ -25,7 +25,7 @@ class RealImageDownloader:
         self.device = device
         
         # Load CLIP for semantic verification
-        print(f"Loading CLIP model for semantic verification on {device}...")
+        print(f"Loading CLIP model for semantic disambiguation on {device}...")
         self.model = CLIPModel.from_pretrained("openai/clip-vit-base-patch32").to(device)
         self.processor = CLIPProcessor.from_pretrained("openai/clip-vit-base-patch32")
 
@@ -40,20 +40,39 @@ class RealImageDownloader:
             pass
         return False
 
-    def verify_image(self, img_path, target_prompt):
-        """Verify if image matches target (e.g. 'a male doctor') with CLIP"""
+    def verify_image_disambiguated(self, img_path, group_name):
+        """
+        Verify image using competitive semantics.
+        Ensures a 'Nurse' image is more 'Nurse-like' than 'Doctor-like'.
+        """
         try:
             image = Image.open(img_path).convert("RGB")
-            inputs = self.processor(text=[target_prompt, "unrelated background", "medical equipment only"], 
+            # Determine competitors based on gender
+            gender = "male" if "male" in group_name else "female"
+            
+            # Semantic competitors
+            target_text = f"a photo of a {group_name.replace('-', ' ')}"
+            competitor_text = f"a photo of a {gender} doctor" if "nurse" in group_name else f"a photo of a {gender} nurse"
+            background_text = "medical equipment or hospital corridor without people"
+            
+            inputs = self.processor(text=[target_text, competitor_text, background_text], 
                                     images=image, return_tensors="pt", padding=True).to(self.device)
+            
             outputs = self.model(**inputs)
-            probs = outputs.logits_per_image.softmax(dim=1)
-            score = probs[0][0].item()
-            return score
+            probs = outputs.logits_per_image.softmax(dim=1) # [batch, 3]
+            
+            target_prob = probs[0][0].item()
+            competitor_prob = probs[0][1].item()
+            
+            # Rule: Target must be the winner AND above threshold
+            # If target_prob is lower than competitor_prob, reject (Score = 0)
+            if target_prob > competitor_prob:
+                return target_prob
+            return 0.0
         except:
             return 0.0
 
-    def search_pexels(self, query, count=50):
+    def search_pexels(self, query, count=100):
         if not self.pexels_key: return []
         headers = {"Authorization": self.pexels_key}
         url = f"https://api.pexels.com/v1/search?query={query}&per_page={count}"
@@ -65,7 +84,7 @@ class RealImageDownloader:
         except:
             return []
 
-    def search_pixabay(self, query, count=50):
+    def search_pixabay(self, query, count=100):
         if not self.pixabay_key: return []
         url = f"https://pixabay.com/api/?key={self.pixabay_key}&q={query.replace(' ', '+')}&image_type=photo&per_page={count}"
         try:
@@ -76,23 +95,19 @@ class RealImageDownloader:
         except:
             return []
 
-    def fetch_group(self, group_name, output_dir, target_count=50, clip_threshold=0.22):
-        print(f"\n--- Gathering REAL images for group: {group_name} ---")
+    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22):
+        print(f"\n--- Gathering REAL images with Disambiguation: {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
         
-        # Mapping group names to queries
         query_map = {
-            "male-doctor": "male doctor, man doctor professional",
-            "female-doctor": "female doctor, woman doctor hospital",
-            "male-nurse": "male nurse, man nurse practitioner",
-            "female-nurse": "female nurse, woman medical nurse"
+            "male-doctor": "male doctor professional",
+            "female-doctor": "female doctor portrait",
+            "male-nurse": "male nurse medical scrubs",
+            "female-nurse": "female nurse nursing clinic"
         }
         
         query = query_map.get(group_name, group_name.replace('-', ' '))
-        clip_prompt = f"a photo of a {group_name.replace('-', ' ')} in professional medical setting"
-        
-        # Search both libraries
-        potential_images = self.search_pexels(query, target_count*2) + self.search_pixabay(query, target_count*2)
+        potential_images = self.search_pexels(query, target_count*4) + self.search_pixabay(query, target_count*4)
         
         downloaded_count = 0
         existing_hashes = set()
@@ -106,35 +121,33 @@ class RealImageDownloader:
                 save_path += ".jpg"
 
             if self.download_image(p_img["url"], save_path):
-                # CLIP Check
-                score = self.verify_image(save_path, clip_prompt)
+                # Advanced Disambiguation Check
+                score = self.verify_image_disambiguated(save_path, group_name)
                 
-                # Check Deduplication (pHash)
+                # Deduplication
                 h = calculate_phash(save_path)
                 
                 if score >= clip_threshold and h not in existing_hashes:
                     existing_hashes.add(h)
                     downloaded_count += 1
                 else:
-                    # Remove low quality or duplicate
                     if os.path.exists(save_path): os.remove(save_path)
         
-        print(f"Successfully collected {downloaded_count} verified images for {group_name}.")
+        print(f"Collected {downloaded_count} disambiguated images for {group_name}.")
 
 def main():
-    parser = argparse.ArgumentParser(description="Real Image Data Gatherer (CLIP Synchronized)")
-    parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9", help="Pexels API Key")
-    parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185", help="Pixabay API Key")
+    parser = argparse.ArgumentParser(description="Real Image Gatherer (Semantic Disambiguation Mode)")
+    parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
+    parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
     parser.add_argument("--output-dir", type=str, default="data/real_samples")
-    parser.add_argument("--samples-per-group", type=int, default=50)
-    parser.add_argument("--clip-threshold", type=float, default=0.22)
+    parser.add_argument("--samples", type=int, default=50)
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
     device = "cuda" if torch.cuda.is_available() else "cpu"
     downloader = RealImageDownloader(args.pexels_key, args.pixabay_key, device)
 
     groups = ["male-doctor", "female-doctor", "male-nurse", "female-nurse"]
-    
     for group in groups:
         downloader.fetch_group(group, os.path.join(args.output_dir, group), args.samples_per_group, args.clip_threshold)
 
