@@ -40,7 +40,7 @@ drive.mount('/content/drive')
 !python scripts/00_run_local_pipeline.py \
     --real-source local \
     --samples 50 \
-    --detectors cnndetection,f3net
+    --detectors cnndetection,f3net,gram,lgrad
 ```
 
 ## 📥 第四部分：收割成果 (本地下载 + Drive 永存备份)
