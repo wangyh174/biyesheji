@@ -10,8 +10,9 @@ import hashlib
 
 def calculate_phash(img_path):
     try:
+        import numpy as np
         img = Image.open(img_path).convert('L').resize((8, 8), Image.Resampling.LANCZOS)
-        pixels = list(img.getdata())
+        pixels = np.array(img).flatten().tolist()
         avg = sum(pixels) / len(pixels)
         return "".join(['1' if p > avg else '0' for p in pixels])
     except:
