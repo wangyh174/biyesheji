@@ -16,7 +16,7 @@ drive.mount("/content/drive")
 
 %cd /content
 !rm -rf project
-!git clone <你的 GitHub 仓库地址> project
+!git clone https://github.com/wangyh174/biyesheji.git project
 %cd /content/project
 ```
 
