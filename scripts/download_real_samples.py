@@ -9,6 +9,7 @@ from transformers import CLIPProcessor, CLIPModel
 from tqdm import tqdm
 import hashlib
 import random
+import csv
 
 def calculate_phash(img_path):
     try:
@@ -99,18 +100,32 @@ class RealImageDownloader:
             target_prob = float(probs[0])
             competitor_best = float(np.max(probs[1:4]))
             negative_best = float(np.max(probs[4:]))
+            final_score = min(target_prob, human_prob)
 
             # Balanced acceptance rule:
             # keep strong human-photo filtering, but avoid over-pruning genuine medical portraits.
-            if (
+            passed = (
                 target_prob >= 0.34
                 and target_prob > competitor_best + 0.02
                 and target_prob > negative_best + 0.03
-            ):
-                return min(target_prob, human_prob)
-            return 0.0
+            )
+            return {
+                "passed": bool(passed),
+                "final_score": float(final_score),
+                "human_prob": float(human_prob),
+                "target_prob": float(target_prob),
+                "competitor_best": float(competitor_best),
+                "negative_best": float(negative_best),
+            }
         except:
-            return 0.0
+            return {
+                "passed": False,
+                "final_score": 0.0,
+                "human_prob": 0.0,
+                "target_prob": 0.0,
+                "competitor_best": 1.0,
+                "negative_best": 1.0,
+            }
 
     def search_pexels(self, query, count=500):
         if not self.pexels_key: return []
@@ -242,10 +257,14 @@ class RealImageDownloader:
     def fetch_group(self, group_name, output_dir, target_count=50, clip_threshold=0.22):
         print(f"\n--- Gathering REAL images (Deep Search 1000): {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
+        candidate_dir = os.path.join(output_dir, "_candidates")
+        os.makedirs(candidate_dir, exist_ok=True)
+        candidate_csv = os.path.join(output_dir, "_candidate_scores.csv")
 
         downloaded_count = 0
         existing_hashes = set()
         seen_urls = set()
+        candidate_rows = []
 
         for query_idx, query in enumerate(self.build_query_pool(group_name), start=1):
             if downloaded_count >= target_count:
@@ -272,17 +291,58 @@ class RealImageDownloader:
                 save_path = os.path.join(output_dir, f"{p_img['source']}_{img_id}.jpg")
 
                 if self.download_image(p_img["url"], save_path):
-                    score = self.verify_image_disambiguated(save_path, group_name)
+                    result = self.verify_image_disambiguated(save_path, group_name)
                     h = calculate_phash(save_path)
+                    candidate_rows.append(
+                        {
+                            "group": group_name,
+                            "query_idx": query_idx,
+                            "query": query,
+                            "source": p_img["source"],
+                            "url": p_img["url"],
+                            "file_name": os.path.basename(save_path),
+                            "human_prob": result["human_prob"],
+                            "target_prob": result["target_prob"],
+                            "competitor_best": result["competitor_best"],
+                            "negative_best": result["negative_best"],
+                            "final_score": result["final_score"],
+                            "passed": int(result["passed"]),
+                        }
+                    )
 
-                    if score >= query_threshold and h not in existing_hashes:
+                    if result["passed"] and result["final_score"] >= query_threshold and h not in existing_hashes:
                         existing_hashes.add(h)
                         downloaded_count += 1
                     else:
-                        if os.path.exists(save_path):
-                            os.remove(save_path)
+                        candidate_path = os.path.join(candidate_dir, os.path.basename(save_path))
+                        if os.path.exists(candidate_path):
+                            os.remove(candidate_path)
+                        os.replace(save_path, candidate_path)
+
+        candidate_rows.sort(key=lambda x: x["final_score"], reverse=True)
+        with open(candidate_csv, "w", newline="", encoding="utf-8") as f:
+            writer = csv.DictWriter(
+                f,
+                fieldnames=[
+                    "group",
+                    "query_idx",
+                    "query",
+                    "source",
+                    "url",
+                    "file_name",
+                    "human_prob",
+                    "target_prob",
+                    "competitor_best",
+                    "negative_best",
+                    "final_score",
+                    "passed",
+                ],
+            )
+            writer.writeheader()
+            writer.writerows(candidate_rows)
 
         print(f"Final Count for {group_name}: {downloaded_count}/{target_count}")
+        print(f"Saved candidate review file: {candidate_csv}")
 
 def main():
     parser = argparse.ArgumentParser()

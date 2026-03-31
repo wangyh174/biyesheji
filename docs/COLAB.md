@@ -1,12 +1,12 @@
 # Google Colab 运行说明
 
-这份文档用于在 Google Colab 上运行本项目，并且把下面三类关键数据都持久化到 Google Drive：
+这份文档用于在 Google Colab 上运行本项目，并把下面三类关键数据持久化到 Google Drive：
 
 - `data/real_samples`
 - `data/generated_raw`
 - `results`
 
-这样即使 Colab 断开，已经爬取的真人图、已经生成的 fake 图、以及实验结果都不会丢失。最后还会额外把结果打包下载到本地。
+这样即使 Colab 断开，已经采集的真人图、已经生成的 fake 图、以及实验结果都不会丢失。
 
 ## 1. 挂载 Google Drive 并拉取项目
 
@@ -18,6 +18,7 @@ drive.mount("/content/drive")
 !rm -rf project
 !git clone https://github.com/wangyh174/biyesheji.git project
 %cd /content/project
+!git pull origin main
 ```
 
 ## 2. 安装依赖
@@ -28,7 +29,7 @@ drive.mount("/content/drive")
 !pip install diffusers transformers accelerate safetensors opencv-python scikit-image tabulate gdown
 ```
 
-如果你要使用 `fairdiffusion` 模式，还需要安装语义编辑相关包。按照仓库里的本地语义编辑目录再补一条安装命令即可。
+如果你要用 `fairdiffusion` 模式，还需要安装仓库里语义编辑相关依赖。
 
 ## 3. 把关键目录映射到 Google Drive
 
@@ -74,7 +75,7 @@ print("/content/project/data/generated_raw ->", drive_root / "data/generated_raw
 print("/content/project/results ->", drive_root / "results")
 ```
 
-## 4. 先采集真人图
+## 4. 采集真人图
 
 ```python
 %cd /content/project
@@ -85,13 +86,53 @@ print("/content/project/results ->", drive_root / "results")
 
 说明：
 
-- 当前脚本已内置 `Pexels`、`Pixabay` 和 `Unsplash` 的调用逻辑；如果你不手动传 `--unsplash-key`，会直接使用项目中配置的默认值。
-- 现在爬虫已经增加了真人照片过滤，会尽量排除玩偶、卡通、摆件、雕像、物体图。
-- 如果某个 group 里仍然有明显不对的图，直接删掉对应目录后重跑：
-  - `data/real_samples/male-doctor`
-  - `data/real_samples/female-doctor`
-  - `data/real_samples/male-nurse`
-  - `data/real_samples/female-nurse`
+- 当前脚本会优先从这些来源抓图：
+  - `Unsplash`
+  - `Pexels`
+  - `Openverse`
+  - `Pixabay`
+- 已内置 `Pexels`、`Pixabay`、`Unsplash` 调用逻辑。
+- 现在爬虫已经增加了真人照片过滤，会尽量排除：
+  - 玩偶
+  - 卡通
+  - 摆件
+  - 雕像
+  - 普通非医疗人物肖像
+
+### 新的半自动候选复查机制
+
+现在每个 group 目录下除了正式通过的图片外，还会额外生成：
+
+- `_candidates/`
+- `_candidate_scores.csv`
+
+含义如下：
+
+- `正式通过的图片`
+  直接保存在 `data/real_samples/<group>/`
+- `未正式通过但分数较高的候选图`
+  保存在 `data/real_samples/<group>/_candidates/`
+- `每张候选图的评分明细`
+  写在 `data/real_samples/<group>/_candidate_scores.csv`
+
+`_candidate_scores.csv` 里会包含这些字段：
+
+- `human_prob`
+- `target_prob`
+- `competitor_best`
+- `negative_best`
+- `final_score`
+- `passed`
+
+如果某个 group 最终数量不够，不要立刻继续调阈值。  
+先去对应目录下看：
+
+- `data/real_samples/male-doctor/_candidates/`
+- `data/real_samples/male-doctor/_candidate_scores.csv`
+
+把明显正确的真人医护图人工挑一些补到 group 根目录里即可。
+
+这一步非常适合毕设，因为你只需要每组几十张干净图，不需要把整个采集过程做到完全无人值守。
 
 ## 5. 运行完整流水线
 
@@ -105,13 +146,13 @@ print("/content/project/results ->", drive_root / "results")
 
 当前流水线的关键行为：
 
-- Stage 01 会先多生成 `samples + 20` 张候选图，再让后面筛选。
-- `scripts/01_generate.py` 已经更贴近 Fair-Diffusion：
+- Stage 01 会先多生成 `samples + 20` 张 fake 候选图，再交给后续筛选
+- `scripts/01_generate.py` 已更贴近 Fair-Diffusion：
   - `fairdiffusion` 模式下主 prompt 更简洁
   - 性别主要通过 editing direction 控制
-  - direction 现在按目标先验采样
-  - 可用 `--fd-female-prob 0.5` 更接近论文里的平衡采样
-- `scripts/02_quality_filter.py` 现在不只看 prompt 相似度，还会过滤：
+  - direction 按目标先验采样
+  - 可用 `--fd-female-prob 0.5` 接近论文里的平衡采样
+- `scripts/02_quality_filter.py` 会过滤：
   - 群体不一致图
   - 更像玩偶/卡通/物体的图
   - 畸形脸和低质量图
@@ -131,14 +172,17 @@ print("/content/project/results ->", drive_root / "results")
 
 ## 7. 常见问题
 
-- `male-doctor` 里混入女性：
+- `male-doctor` 里混入女性  
   说明生成阶段性别漂移，或者 Stage 02 过滤不够严格。删掉坏的 fake 图后重新跑 Stage 01 和 Stage 02。
 
-- fake 图脸崩、融化、眼睛不对：
-  这是生成模型候选质量问题。现在的流程会尽量在 Stage 02 过滤掉，但如果坏图太多，还是建议重新多生成一轮。
+- fake 图脸崩、融化、眼睛不对  
+  这是生成模型候选质量问题。现在流程会尽量在 Stage 02 过滤掉，但如果坏图太多，还是建议重新多生成一轮。
 
-- 某个组样本不够：
-  说明它成了平衡瓶颈。需要补真人图或补 fake 图，然后再从 Stage 02 开始往后跑。
+- 真人图某个组数量不够  
+  不要立刻再改阈值。先看该组的：
+  - `_candidates/`
+  - `_candidate_scores.csv`
+  再人工补图。
 
 ## 8. 把结果保存到 Google Drive 并下载到本地
 
@@ -161,7 +205,7 @@ from google.colab import files
 files.download("result_v2_N50_final.zip")
 ```
 
-如果你还想在 Google Drive 里单独再留一份压缩包，也可以再执行：
+如果你还想在 Google Drive 里单独再留一份压缩包，也可以执行：
 
 ```python
 backup_zip = "/content/drive/MyDrive/bishe_project_runtime/result_v2_N50_final.zip"
