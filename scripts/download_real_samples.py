@@ -41,16 +41,10 @@ class RealImageDownloader:
         return False
 
     def verify_image_disambiguated(self, img_path, group_name):
-        """
-        Verify image using competitive semantics.
-        Ensures a 'Nurse' image is more 'Nurse-like' than 'Doctor-like'.
-        """
         try:
             image = Image.open(img_path).convert("RGB")
-            # Determine competitors based on gender
             gender = "male" if "male" in group_name else "female"
             
-            # Semantic competitors
             target_text = f"a photo of a {group_name.replace('-', ' ')}"
             competitor_text = f"a photo of a {gender} doctor" if "nurse" in group_name else f"a photo of a {gender} nurse"
             background_text = "medical equipment or hospital corridor without people"
@@ -59,13 +53,11 @@ class RealImageDownloader:
                                     images=image, return_tensors="pt", padding=True).to(self.device)
             
             outputs = self.model(**inputs)
-            probs = outputs.logits_per_image.softmax(dim=1) # [batch, 3]
+            probs = outputs.logits_per_image.softmax(dim=1)
             
             target_prob = probs[0][0].item()
             competitor_prob = probs[0][1].item()
             
-            # Rule: Target must be the winner AND above threshold
-            # If target_prob is lower than competitor_prob, reject (Score = 0)
             if target_prob > competitor_prob:
                 return target_prob
             return 0.0
@@ -95,7 +87,7 @@ class RealImageDownloader:
         except:
             return []
 
-    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22):
+    def fetch_group(self, group_name, output_dir, target_count=50, clip_threshold=0.22):
         print(f"\n--- Gathering REAL images with Disambiguation: {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
         
@@ -121,10 +113,7 @@ class RealImageDownloader:
                 save_path += ".jpg"
 
             if self.download_image(p_img["url"], save_path):
-                # Advanced Disambiguation Check
                 score = self.verify_image_disambiguated(save_path, group_name)
-                
-                # Deduplication
                 h = calculate_phash(save_path)
                 
                 if score >= clip_threshold and h not in existing_hashes:
@@ -136,11 +125,12 @@ class RealImageDownloader:
         print(f"Collected {downloaded_count} disambiguated images for {group_name}.")
 
 def main():
-    parser = argparse.ArgumentParser(description="Real Image Gatherer (Semantic Disambiguation Mode)")
+    parser = argparse.ArgumentParser(description="Real Image Gatherer (Fix Mode)")
     parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
     parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
     parser.add_argument("--output-dir", type=str, default="data/real_samples")
-    parser.add_argument("--samples", type=int, default=50)
+    parser.add_argument("--samples-per-group", type=int, default=50) # FIX:恢复名称
+    parser.add_argument("--clip-threshold", type=float, default=0.22) # FIX:恢复参数
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 

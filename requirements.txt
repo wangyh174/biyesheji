@@ -1,0 +1,13 @@
+torch
+torchvision
+torchaudio
+transformers
+diffusers
+accelerate
+opencv-python
+scikit-image
+pandas
+numpy
+tqdm
+Pillow
+requests
