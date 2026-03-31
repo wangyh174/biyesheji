@@ -21,8 +21,14 @@ drive.mount('/content/drive')
 # 3. 安装依赖
 !pip install -r requirements.txt
 !pip install -e semantic-image-editing-main/semantic-image-editing-main/
-!pip install opencv-python scikit-image transformers diffusers accelerate tabulate
+!pip install opencv-python scikit-image transformers diffusers accelerate tabulate gdown
 ```
+
+说明：
+- `scripts/03_run_detectors.py` 已切换为预训练权重推理，不再使用旧版的手工特征 + LogisticRegression 代理分类器。
+- `CNNDetection / Gram / LGrad` 会在首次运行时自动下载公开检测框架与对应 checkpoint。
+- `F3Net` 会在首次运行时自动下载公开发布的 F3Net checkpoint 与依赖源码。
+- 首次跑 Stage 03 会比以前慢，这是正常现象。
 
 ## 🛠️ 第二部分：双库精选真人样本采集 (n=60 候选 → Top 50 精选)
 利用"语义解歧"机制，过滤掉"像医生的护士"。超额采集 60 张，后续由 Stage 02 择优保留 50。
@@ -45,6 +51,21 @@ drive.mount('/content/drive')
     --samples 50 \
     --detectors cnndetection,f3net,gram,lgrad
 ```
+
+如果你想先单独检查某一个检测器是否下载成功，可以先跑：
+
+```python
+%cd /content/project
+!python scripts/03_run_detectors.py \
+    --detector cnndetection \
+    --metadata-in data/metadata_balanced.csv
+```
+
+四个检测器建议按下面的理解写入论文或答辩：
+- `CNNDetection`: Wang et al. 的经典 CNN 生成图检测器。
+- `F3Net`: 频域线索驱动的伪造检测器。
+- `Gram`: GramNet，强调纹理/统计关系建模。
+- `LGrad`: 基于梯度伪影表示的检测器，强调泛化伪影而非原图语义。
 
 ## 📥 第四部分：收割成果 (本地下载 + Drive 永存备份)
 ```python

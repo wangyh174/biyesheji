@@ -16,3 +16,4 @@ peft
 scikit-learn
 tabulate
 matplotlib
+gdown
