@@ -124,7 +124,7 @@ class RealImageDownloader:
 def main():
     parser = argparse.ArgumentParser(description="Real Image Data Gatherer (CLIP Synchronized)")
     parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9", help="Pexels API Key")
-    parser.add_argument("--pixabay-key", type=str, default="", help="Pixabay API Key (Get one for free at pixabay.com)")
+    parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185", help="Pixabay API Key")
     parser.add_argument("--output-dir", type=str, default="data/real_samples")
     parser.add_argument("--samples-per-group", type=int, default=50)
     parser.add_argument("--clip-threshold", type=float, default=0.22)
