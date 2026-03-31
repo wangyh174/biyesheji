@@ -17,3 +17,4 @@ scikit-learn
 tabulate
 matplotlib
 gdown
+-e ./semantic-image-editing-main/semantic-image-editing-main
