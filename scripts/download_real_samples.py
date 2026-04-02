@@ -145,21 +145,30 @@ class RealImageDownloader:
                 "negative_best": 1.0,
             }
 
-    def search_pexels(self, query, count=500):
-        if not self.pexels_key:
-            return []
-        headers = {"Authorization": self.pexels_key}
+    def search_wikimedia(self, query, count=150):
         images = []
-        for page in range(1, (count // 80) + 2):
-            url = f"https://api.pexels.com/v1/search?query={query}&per_page=80&page={page}&orientation=portrait"
-            try:
-                r = requests.get(url, headers=headers, timeout=15)
-                data = r.json()
-                images.extend([{"url": p["src"]["large"], "source": "pexels"} for p in data.get("photos", [])])
-                if len(images) >= count:
-                    break
-            except Exception:
-                break
+        url = "https://commons.wikimedia.org/w/api.php"
+        params = {
+            "action": "query",
+            "format": "json",
+            "generator": "search",
+            "gsrsearch": f"filetype:bitmap {query}",
+            "gsrlimit": min(50, count),
+            "prop": "imageinfo",
+            "iiprop": "url",
+        }
+        try:
+            r = requests.get(url, params=params, headers={"User-Agent": "AIGC-Fairness-Bot/1.0"}, timeout=15)
+            data = r.json()
+            pages = data.get("query", {}).get("pages", {})
+            for page_id, page_info in pages.items():
+                imageinfo = page_info.get("imageinfo", [])
+                if imageinfo:
+                    img_url = imageinfo[0].get("url")
+                    if img_url:
+                        images.append({"url": img_url, "source": "wikimedia"})
+        except Exception:
+            pass
         return images[:count]
 
     def search_pixabay(self, query, count=500):
@@ -226,7 +235,7 @@ class RealImageDownloader:
                 "&mature=false"
             )
             try:
-                r = requests.get(url, timeout=20)
+                r = requests.get(url, headers={"User-Agent": "AIGC-Fairness-Bot/1.0"}, timeout=20)
                 if r.status_code != 200:
                     break
                 data = r.json()
@@ -297,7 +306,7 @@ class RealImageDownloader:
 
             providers = [
                 ("Unsplash", lambda: self.search_unsplash(query, 120)),
-                ("Pexels", lambda: self.search_pexels(query, 200)),
+                ("Wikimedia", lambda: self.search_wikimedia(query, 150)),
                 ("Openverse", lambda: self.search_openverse(query, 100)),
                 ("Pixabay", lambda: self.search_pixabay(query, 150)),
             ]
