@@ -122,9 +122,9 @@ class RealImageDownloader:
             final_score = min(target_prob, human_prob)
 
             passed = (
-                target_prob >= 0.40
-                and target_prob > competitor_best + 0.05
-                and target_prob > negative_best + 0.08
+                target_prob >= 0.30
+                and target_prob > competitor_best + 0.04
+                and target_prob > negative_best + 0.06
             )
 
             return {
@@ -248,7 +248,7 @@ class RealImageDownloader:
         }
         return query_map.get(group_name, [group_name.replace("-", " ")])
 
-    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22):
+    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22, global_hashes=None):
         print(f"\n--- Gathering REAL images (Deep Search 1000): {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
         candidate_dir = os.path.join(output_dir, "_candidates")
@@ -256,7 +256,8 @@ class RealImageDownloader:
         candidate_csv = os.path.join(output_dir, "_candidate_scores.csv")
 
         downloaded_count = 0
-        existing_hashes = set()
+        # 使用全局 hash 集合防止跨组重复
+        existing_hashes = global_hashes if global_hashes is not None else set()
         seen_urls = set()
         candidate_rows = []
 
@@ -267,9 +268,9 @@ class RealImageDownloader:
             print(f"Deep searching query {query_idx} for {group_name}: {query}")
 
             providers = [
-                ("Unsplash", lambda: self.search_unsplash(query, 120)),
-                ("Pexels", lambda: self.search_pexels(query, 200)),
-                ("Pixabay", lambda: self.search_pixabay(query, 150)),
+                ("Unsplash", lambda q=query: self.search_unsplash(q, 200)),
+                ("Pexels", lambda q=query: self.search_pexels(q, 300)),
+                ("Pixabay", lambda q=query: self.search_pixabay(q, 250)),
             ]
             
             query_threshold = clip_threshold if query_idx == 1 else max(0.20, clip_threshold - 0.01)
@@ -368,12 +369,14 @@ def main():
         device="cuda" if torch.cuda.is_available() else "cpu",
     )
 
+    global_hashes = set()  # 全局 hash 集合，防止跨组重复图片
     for group in ["male-doctor", "female-doctor", "male-nurse", "female-nurse"]:
         downloader.fetch_group(
             group,
             os.path.join("data/real_samples", group),
             args.samples_per_group,
             args.clip_threshold,
+            global_hashes=global_hashes,
         )
 
 
