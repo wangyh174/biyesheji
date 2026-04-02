@@ -173,17 +173,20 @@ class RealImageDownloader:
                     timeout=20,
                 )
                 if r.status_code != 200:
+                    print(f"\n      [Google API Error] Status {r.status_code}: {r.text[:200]}")
                     break
                 data = r.json()
                 items = data.get("items", [])
                 if not items:
+                    print(f"\n      [Google API Empty] No items returned for this query.")
                     break
                 for item in items:
                     img_url = item.get("link")
                     if img_url:
                         images.append({"url": img_url, "source": "google"})
                 start += 10
-            except Exception:
+            except Exception as e:
+                print(f"\n      [Google Exception] Network or other error: {e}")
                 break
         return images[:count]
 

@@ -20,7 +20,7 @@ def main():
     parser.add_argument("--project-root", type=str, default=str(root))
     parser.add_argument("--real-source", type=str, default="local", choices=["local", "diffusers", "mock"])
     parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad")
-    parser.add_argument("--samples", type=int, default=50)
+    parser.add_argument("--samples", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model-id", type=str, default="SG161222/Realistic_Vision_V5.1_noVAE")
     parser.add_argument("--buffer-extra", type=int, default=20)
