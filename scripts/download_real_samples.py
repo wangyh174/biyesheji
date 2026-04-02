@@ -145,30 +145,23 @@ class RealImageDownloader:
                 "negative_best": 1.0,
             }
 
-    def search_wikimedia(self, query, count=150):
+    def search_pexels(self, query, count=200):
+        if not self.pexels_key:
+            return []
+        headers = {"Authorization": self.pexels_key}
         images = []
-        url = "https://commons.wikimedia.org/w/api.php"
-        params = {
-            "action": "query",
-            "format": "json",
-            "generator": "search",
-            "gsrsearch": f"filetype:bitmap {query}",
-            "gsrlimit": min(50, count),
-            "prop": "imageinfo",
-            "iiprop": "url",
-        }
-        try:
-            r = requests.get(url, params=params, headers={"User-Agent": "AIGC-Fairness-Bot/1.0"}, timeout=15)
-            data = r.json()
-            pages = data.get("query", {}).get("pages", {})
-            for page_id, page_info in pages.items():
-                imageinfo = page_info.get("imageinfo", [])
-                if imageinfo:
-                    img_url = imageinfo[0].get("url")
-                    if img_url:
-                        images.append({"url": img_url, "source": "wikimedia"})
-        except Exception:
-            pass
+        for page in range(1, (count // 80) + 2):
+            url = f"https://api.pexels.com/v1/search?query={query}&per_page=80&page={page}&orientation=portrait"
+            try:
+                r = requests.get(url, headers=headers, timeout=15)
+                if r.status_code != 200:
+                    break
+                data = r.json()
+                images.extend([{"url": p["src"]["large"], "source": "pexels"} for p in data.get("photos", [])])
+                if len(images) >= count:
+                    break
+            except Exception:
+                break
         return images[:count]
 
     def search_pixabay(self, query, count=500):
@@ -221,37 +214,6 @@ class RealImageDownloader:
                 break
         return images[:count]
 
-    def search_openverse(self, query, count=200):
-        images = []
-        page = 1
-        page_size = min(20, count)
-        while len(images) < count:
-            url = (
-                "https://api.openverse.org/v1/images/"
-                f"?q={query.replace(' ', '%20')}"
-                f"&page={page}&page_size={page_size}"
-                "&license_type=commercial"
-                "&extension=jpg"
-                "&mature=false"
-            )
-            try:
-                r = requests.get(url, headers={"User-Agent": "AIGC-Fairness-Bot/1.0"}, timeout=20)
-                if r.status_code != 200:
-                    break
-                data = r.json()
-                results = data.get("results", [])
-                if not results:
-                    break
-                for p in results:
-                    img_url = p.get("url")
-                    if img_url:
-                        images.append({"url": img_url, "source": "openverse"})
-                if not data.get("next"):
-                    break
-                page += 1
-            except Exception:
-                break
-        return images[:count]
 
     def build_query_pool(self, group_name):
         query_map = {
@@ -306,8 +268,7 @@ class RealImageDownloader:
 
             providers = [
                 ("Unsplash", lambda: self.search_unsplash(query, 120)),
-                ("Wikimedia", lambda: self.search_wikimedia(query, 150)),
-                ("Openverse", lambda: self.search_openverse(query, 100)),
+                ("Pexels", lambda: self.search_pexels(query, 200)),
                 ("Pixabay", lambda: self.search_pixabay(query, 150)),
             ]
             
@@ -393,7 +354,7 @@ class RealImageDownloader:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
+    parser.add_argument("--pexels-key", type=str, default="VriU36HKC2dGu63uX8Uoseqf6wwvsECXoas33RoiGFSO5ItcIwsYAKfq")
     parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
     parser.add_argument("--unsplash-key", type=str, default="fsqS67ZO7mOGFKto3dbAm-JQOLMVT6I3E7qMh7J6lHU")
     parser.add_argument("--samples-per-group", type=int, default=100)
