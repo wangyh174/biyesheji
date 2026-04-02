@@ -1,7 +1,6 @@
-# Google Colab 运行说明
+﻿# Google Colab 运行说明
 
-这份文档用于在 Google Colab 上运行本项目，并把下面三类关键数据持久化到 Google Drive：
-
+这份文档用于在 Google Colab 中运行本项目，并把下面三类关键数据持久化到 Google Drive：
 - `data/real_samples`
 - `data/generated_raw`
 - `results`
@@ -35,11 +34,24 @@ drive.mount("/content/drive")
 ```
 
 说明：
-
-- 不再推荐使用 `pip install -e ...`，因为在 Colab 上这类老式 `setup.py` 包做 editable install 容易失败。
+- 不再推荐使用 `pip install -e ...`，因为在 Colab 里这类老式 `setup.py` 包做 editable install 容易失败。
 - 现在推荐的方式是普通安装，并显式加 `--no-build-isolation`。
 
-## 3. 把关键目录映射到 Google Drive
+## 3. 设置 Google 图片搜索参数
+
+如果你想优先从 Google 图片搜索抓取真人单人照片，需要先准备两个值：
+- `GOOGLE_API_KEY`
+- `GOOGLE_CSE_ID`
+
+先留空也可以，脚本会自动退回到 `Unsplash / Pexels / Openverse / Pixabay`。
+
+```python
+import os
+os.environ["GOOGLE_API_KEY"] = ""
+os.environ["GOOGLE_CSE_ID"] = ""
+```
+
+## 4. 把关键目录映射到 Google Drive
 
 ```python
 import os
@@ -65,35 +77,36 @@ for rel in ["data/real_samples", "data/generated_raw", "results"]:
     local.parent.mkdir(parents=True, exist_ok=True)
     os.symlink(target, local, target_is_directory=True)
 
-print("已映射到 Google Drive：")
+print("已映射到 Google Drive")
 print("/content/project/data/real_samples ->", drive_root / "data/real_samples")
 print("/content/project/data/generated_raw ->", drive_root / "data/generated_raw")
 print("/content/project/results ->", drive_root / "results")
 ```
 
-## 4. 采集真人图
+## 5. 采集真人图
 
 ```python
 %cd /content/project
 !python scripts/download_real_samples.py \
-    --samples-per-group 60 \
+    --samples-per-group 100 \
     --clip-threshold 0.22
 ```
 
 说明：
-
 - 当前会优先从这些来源抓图：
+  - `Google Programmable Search`（如果已填写 `GOOGLE_API_KEY` 和 `GOOGLE_CSE_ID`）
   - `Unsplash`
   - `Pexels`
   - `Openverse`
   - `Pixabay`
+- 查询词已经强化为“单人、真人、职业肖像”方向。
 - 每个 group 目录下还会额外生成：
   - `_candidates/`
   - `_candidate_scores.csv`
 
 如果正式通过的图不够，就从 `_candidates/` 里人工补一些明显正确的图。
 
-## 5. 运行完整流水线
+## 6. 运行完整流水线
 
 ```python
 %cd /content/project
@@ -103,7 +116,7 @@ print("/content/project/results ->", drive_root / "results")
     --detectors cnndetection,f3net,gram,lgrad
 ```
 
-## 6. 如果只想单独检查 Grad-CAM
+## 7. 如果只想单独检查 Grad-CAM
 
 ```python
 %cd /content/project
@@ -113,7 +126,7 @@ print("/content/project/results ->", drive_root / "results")
     --max-per-group 2
 ```
 
-## 7. 下载结果
+## 8. 下载结果
 
 因为 `data/real_samples`、`data/generated_raw`、`results` 已经映射到 Google Drive，所以这些文件会自动持久化保存。
 
