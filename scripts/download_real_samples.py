@@ -27,15 +27,11 @@ class RealImageDownloader:
         pexels_key=None,
         pixabay_key=None,
         unsplash_key=None,
-        google_api_key=None,
-        google_cse_id=None,
         device="cpu",
     ):
         self.pexels_key = pexels_key
         self.pixabay_key = pixabay_key
         self.unsplash_key = unsplash_key
-        self.google_api_key = google_api_key
-        self.google_cse_id = google_cse_id
         self.device = device
 
         print(f"Loading CLIP model for STRICT disambiguation on {device}...")
@@ -148,47 +144,6 @@ class RealImageDownloader:
                 "competitor_best": 1.0,
                 "negative_best": 1.0,
             }
-
-    def search_google_cse(self, query, count=100):
-        if not self.google_api_key or not self.google_cse_id:
-            return []
-        images = []
-        start = 1
-        while len(images) < count and start <= 91:
-            params = {
-                "key": self.google_api_key,
-                "cx": self.google_cse_id,
-                "q": query,
-                "searchType": "image",
-                "num": min(10, count - len(images)),
-                "start": start,
-                "safe": "active",
-                "imgType": "photo",
-                "imgSize": "large",
-            }
-            try:
-                r = requests.get(
-                    "https://customsearch.googleapis.com/customsearch/v1",
-                    params=params,
-                    timeout=20,
-                )
-                if r.status_code != 200:
-                    print(f"\n      [Google API Error] Status {r.status_code}: {r.text[:200]}")
-                    break
-                data = r.json()
-                items = data.get("items", [])
-                if not items:
-                    print(f"\n      [Google API Empty] No items returned for this query.")
-                    break
-                for item in items:
-                    img_url = item.get("link")
-                    if img_url:
-                        images.append({"url": img_url, "source": "google"})
-                start += 10
-            except Exception as e:
-                print(f"\n      [Google Exception] Network or other error: {e}")
-                break
-        return images[:count]
 
     def search_pexels(self, query, count=500):
         if not self.pexels_key:
@@ -341,7 +296,6 @@ class RealImageDownloader:
             print(f"Deep searching query {query_idx} for {group_name}: {query}")
 
             providers = [
-                ("Google", lambda: self.search_google_cse(query, 100)),
                 ("Unsplash", lambda: self.search_unsplash(query, 120)),
                 ("Pexels", lambda: self.search_pexels(query, 200)),
                 ("Openverse", lambda: self.search_openverse(query, 100)),
@@ -433,8 +387,6 @@ def main():
     parser.add_argument("--pexels-key", type=str, default="563492ad6f917000010000018f6f368097b6452296d11a6873523fe9")
     parser.add_argument("--pixabay-key", type=str, default="55245278-eb83bc54c887305bb0c422185")
     parser.add_argument("--unsplash-key", type=str, default="fsqS67ZO7mOGFKto3dbAm-JQOLMVT6I3E7qMh7J6lHU")
-    parser.add_argument("--google-api-key", type=str, default="AIzaSyAAHyYptWtoZVr03yNANOsfniQ6iRx8ijg")
-    parser.add_argument("--google-cse-id", type=str, default="d094d1afd11394717")
     parser.add_argument("--samples-per-group", type=int, default=100)
     parser.add_argument("--clip-threshold", type=float, default=0.22)
     args = parser.parse_args()
@@ -443,8 +395,6 @@ def main():
         pexels_key=args.pexels_key,
         pixabay_key=args.pixabay_key,
         unsplash_key=args.unsplash_key,
-        google_api_key=args.google_api_key,
-        google_cse_id=args.google_cse_id,
         device="cuda" if torch.cuda.is_available() else "cpu",
     )
 
