@@ -248,7 +248,7 @@ class RealImageDownloader:
         }
         return query_map.get(group_name, [group_name.replace("-", " ")])
 
-    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22, global_hashes=None):
+    def fetch_group(self, group_name, output_dir, target_count=100, clip_threshold=0.22, global_hashes=None, global_seen_urls=None):
         print(f"\n--- Gathering REAL images (Deep Search 1000): {group_name} ---")
         os.makedirs(output_dir, exist_ok=True)
         candidate_dir = os.path.join(output_dir, "_candidates")
@@ -256,9 +256,9 @@ class RealImageDownloader:
         candidate_csv = os.path.join(output_dir, "_candidate_scores.csv")
 
         downloaded_count = 0
-        # 使用全局 hash 集合防止跨组重复
+        # 全局 hash + URL 双重去重，彻底杜绝跨组重复
         existing_hashes = global_hashes if global_hashes is not None else set()
-        seen_urls = set()
+        seen_urls = global_seen_urls if global_seen_urls is not None else set()
         candidate_rows = []
 
         for query_idx, query in enumerate(self.build_query_pool(group_name), start=1):
@@ -322,10 +322,14 @@ class RealImageDownloader:
                             existing_hashes.add(h)
                             downloaded_count += 1
                         else:
+                            # 未通过：移入候选区，若为重复图则直接删除
                             candidate_path = os.path.join(candidate_dir, os.path.basename(save_path))
-                            if os.path.exists(candidate_path):
-                                os.remove(candidate_path)
-                            os.replace(save_path, candidate_path)
+                            if h in existing_hashes:
+                                os.remove(save_path)  # 重复图直接删除，不保留
+                            else:
+                                if os.path.exists(candidate_path):
+                                    os.remove(candidate_path)
+                                os.replace(save_path, candidate_path)
 
         candidate_rows.sort(key=lambda x: x["final_score"], reverse=True)
         with open(candidate_csv, "w", newline="", encoding="utf-8") as f:
@@ -369,7 +373,8 @@ def main():
         device="cuda" if torch.cuda.is_available() else "cpu",
     )
 
-    global_hashes = set()  # 全局 hash 集合，防止跨组重复图片
+    global_hashes = set()      # 全局 phash，防止跨组相同图片内容
+    global_seen_urls = set()   # 全局 URL，防止跨组重复下载
     for group in ["male-doctor", "female-doctor", "male-nurse", "female-nurse"]:
         downloader.fetch_group(
             group,
@@ -377,6 +382,7 @@ def main():
             args.samples_per_group,
             args.clip_threshold,
             global_hashes=global_hashes,
+            global_seen_urls=global_seen_urls,
         )
 
 
