@@ -122,9 +122,9 @@ class RealImageDownloader:
             final_score = min(target_prob, human_prob)
 
             passed = (
-                target_prob >= 0.34
-                and target_prob > competitor_best + 0.02
-                and target_prob > negative_best + 0.03
+                target_prob >= 0.40
+                and target_prob > competitor_best + 0.05
+                and target_prob > negative_best + 0.08
             )
 
             return {
@@ -256,32 +256,32 @@ class RealImageDownloader:
     def build_query_pool(self, group_name):
         query_map = {
             "male-doctor": [
-                "male doctor single person portrait hospital real photo",
-                "male physician single person clinic portrait real photo",
-                "male medical doctor headshot hospital real person",
-                "single male doctor portrait healthcare worker real photo",
-                "male doctor white coat stethoscope single person photo",
+                "male doctor white coat stethoscope hospital portrait",
+                "male physician stethoscope clinical professional headshot",
+                "man doctor medical uniform hospital",
+                "male doctor scrubs clinic professional portrait",
+                "male healthcare doctor uniform stethoscope",
             ],
             "female-doctor": [
-                "female doctor single person portrait hospital real photo",
-                "female physician single person clinic portrait real photo",
-                "female medical doctor headshot hospital real person",
-                "single female doctor portrait healthcare worker real photo",
-                "female doctor white coat stethoscope single person photo",
+                "female doctor white coat stethoscope hospital portrait",
+                "female physician stethoscope clinical professional headshot",
+                "woman doctor medical uniform hospital",
+                "female doctor scrubs clinic professional portrait",
+                "female healthcare doctor uniform stethoscope",
             ],
             "male-nurse": [
-                "male nurse single person portrait scrubs hospital real photo",
-                "male registered nurse single person clinic portrait real photo",
-                "male nurse headshot hospital scrubs real person",
-                "single male nurse portrait healthcare worker real photo",
-                "male nurse scrubs single person photo",
+                "male nurse scrubs hospital professional portrait",
+                "male nurse uniform stethoscope clinic headshot",
+                "man nurse medical scrubs healthcare portrait",
+                "male registered nurse hospital uniform professional",
+                "male nurse blue scrubs clinical setting",
             ],
             "female-nurse": [
-                "female nurse single person portrait scrubs hospital real photo",
-                "female registered nurse single person clinic portrait real photo",
-                "female nurse headshot hospital scrubs real person",
-                "single female nurse portrait healthcare worker real photo",
-                "female nurse scrubs single person photo",
+                "female nurse scrubs hospital professional portrait",
+                "female nurse uniform stethoscope clinic headshot",
+                "woman nurse medical scrubs healthcare portrait",
+                "female registered nurse hospital uniform professional",
+                "female nurse blue scrubs clinical setting",
             ],
         }
         return query_map.get(group_name, [group_name.replace("-", " ")])
