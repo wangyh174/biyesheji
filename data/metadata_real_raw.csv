@@ -1,0 +1,72 @@
+id,group,orig_w,orig_h,face_ratio_w,y_true,file_path
+fdimage (1),female-doctor,1240,697,0.179,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (1)_aligned.png
+fdimage (10),female-doctor,1200,1200,0.19,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (10)_aligned.png
+fdimage (11),female-doctor,2048,1088,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (11)_aligned.png
+fdimage (12),female-doctor,1440,1920,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (12)_aligned.png
+fdimage (13),female-doctor,720,720,0.319,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (13)_aligned.png
+fdimage (14),female-doctor,2000,3000,0.232,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (14)_aligned.png
+fdimage (15),female-doctor,1352,900,0.212,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (15)_aligned.png
+fdimage (16),female-doctor,992,992,0.172,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (16)_aligned.png
+fdimage (17),female-doctor,1200,640,0.192,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (17)_aligned.png
+fdimage (18),female-doctor,1280,932,0.212,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (18)_aligned.png
+fdimage (19),female-doctor,750,750,0.225,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (19)_aligned.png
+fdimage (20),female-doctor,1200,800,0.166,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (20)_aligned.png
+fdimage (21),female-doctor,1200,799,0.165,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (21)_aligned.png
+fdimage (22),female-doctor,801,1200,0.21,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (22)_aligned.png
+fdimage (23),female-doctor,800,1200,0.198,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (23)_aligned.png
+fdimage (24),female-doctor,1400,935,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (24)_aligned.png
+fdimage (25),female-doctor,1920,1920,0.208,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (25)_aligned.png
+fdimage (26),female-doctor,2000,2000,0.201,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (26)_aligned.png
+fdimage (27),female-doctor,960,524,0.233,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (27)_aligned.png
+fdimage (28),female-doctor,1470,980,0.171,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (28)_aligned.png
+fdimage (29),female-doctor,2940,1960,0.202,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (29)_aligned.png
+fdimage (3),female-doctor,906,1220,0.266,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (3)_aligned.png
+fdimage (30),female-doctor,1066,600,0.332,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (30)_aligned.png
+fdimage (31),female-doctor,1080,675,0.209,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (31)_aligned.png
+fdimage (32),female-doctor,1200,1500,0.312,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (32)_aligned.png
+fdimage (33),female-doctor,1200,1500,0.367,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (33)_aligned.png
+fdimage (34),female-doctor,1200,1500,0.344,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (34)_aligned.png
+fdimage (35),female-doctor,660,880,0.18,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (35)_aligned.png
+fdimage (36),female-doctor,856,560,0.184,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (36)_aligned.png
+fdimage (37),female-doctor,800,534,0.219,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (37)_aligned.png
+fdimage (38),female-doctor,1200,1500,0.322,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (38)_aligned.png
+fdimage (39),female-doctor,1200,675,0.184,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (39)_aligned.png
+fdimage (4),female-doctor,900,600,0.168,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (4)_aligned.png
+fdimage (40),female-doctor,1080,1080,0.182,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (40)_aligned.png
+fdimage (41),female-doctor,1024,1024,0.258,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (41)_aligned.png
+fdimage (42),female-doctor,645,681,0.184,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (42)_aligned.png
+fdimage (43),female-doctor,1000,666,0.176,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (43)_aligned.png
+fdimage (44),female-doctor,1200,630,0.21,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (44)_aligned.png
+fdimage (45),female-doctor,1000,651,0.187,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (45)_aligned.png
+fdimage (46),female-doctor,1000,527,0.252,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (46)_aligned.png
+fdimage (47),female-doctor,952,960,0.207,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (47)_aligned.png
+fdimage (48),female-doctor,1200,766,0.265,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (48)_aligned.png
+fdimage (49),female-doctor,1400,730,0.242,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (49)_aligned.png
+fdimage (5),female-doctor,1290,913,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (5)_aligned.png
+fdimage (50),female-doctor,800,798,0.189,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (50)_aligned.png
+fdimage (51),female-doctor,740,580,0.186,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (51)_aligned.png
+fdimage (52),female-doctor,1000,666,0.221,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (52)_aligned.png
+fdimage (53),female-doctor,1365,768,0.237,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (53)_aligned.png
+fdimage (54),female-doctor,800,533,0.178,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (54)_aligned.png
+fdimage (55),female-doctor,1440,960,0.184,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (55)_aligned.png
+fdimage (56),female-doctor,1290,860,0.251,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (56)_aligned.png
+fdimage (57),female-doctor,1333,2000,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (57)_aligned.png
+fdimage (58),female-doctor,1200,800,0.249,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (58)_aligned.png
+fdimage (6),female-doctor,524,622,0.208,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (6)_aligned.png
+fdimage (7),female-doctor,6000,4000,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (7)_aligned.png
+fdimage (8),female-doctor,1536,1024,0.224,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (8)_aligned.png
+fdimage (9),female-doctor,740,542,0.197,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\fdimage (9)_aligned.png
+image_1775885575349,female-doctor,800,800,0.294,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775885575349_aligned.png
+image_1775885606997,female-doctor,526,790,0.194,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775885606997_aligned.png
+image_1775885774970,female-doctor,4000,6000,0.194,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775885774970_aligned.png
+image_1775887127470,female-doctor,1400,935,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887127470_aligned.png
+image_1775887207189,female-doctor,2560,1707,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887207189_aligned.png
+image_1775887229404,female-doctor,2560,1707,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887229404_aligned.png
+image_1775887294726,female-doctor,526,526,0.321,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887294726_aligned.png
+image_1775887374284,female-doctor,600,800,0.285,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887374284_aligned.png
+image_1775887388552,female-doctor,1000,1000,0.307,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887388552_aligned.png
+image_1775887406959,female-doctor,1280,853,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887406959_aligned.png
+image_1775887420369,female-doctor,600,800,0.255,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887420369_aligned.png
+image_1775887434528,female-doctor,600,800,0.312,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887434528_aligned.png
+image_1775887444432,female-doctor,1600,1080,0.16,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887444432_aligned.png
+image_1775887457847,female-doctor,1920,1080,0.18,0,d:\desktop\bishe\project\data\real_samples\female-doctor_after\image_1775887457847_aligned.png

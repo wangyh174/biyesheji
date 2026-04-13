@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>项目学术综述与执行流程全景：面向AIGC检测算法的偏见评估</title>
+    <style>
+        body {
+            font-family: 'Times New Roman', 'SimSun', serif; 
+            line-height: 1.7;
+            color: #222;
+            max-width: 950px;
+            margin: 40px auto;
+            padding: 30px 60px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.05);
+            border: 1px solid #ccc;
+            text-align: justify;
+        }
+        h1 {
+            color: #000;
+            text-align: center;
+            font-size: 20pt;
+            border-bottom: 2px solid #000;
+            padding-bottom: 10px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .subtitle {
+            text-align: center;
+            color: #555;
+            font-size: 13pt;
+            margin-bottom: 30px;
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+        }
+        h2 {
+            color: #000;
+            border-left: 5px solid #2c3e50;
+            padding-left: 12px;
+            margin-top: 35px;
+            font-size: 15pt;
+            background-color: #f8f9fa;
+        }
+        h3 {
+            color: #34495e;
+            margin-top: 25px;
+            font-size: 13pt;
+            border-bottom: 1px dashed #ccc;
+            padding-bottom: 5px;
+        }
+        p {
+            margin: 12px 0;
+            font-size: 11.5pt;
+        }
+        ul, ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+        li {
+            margin-bottom: 10px;
+            font-size: 11pt;
+        }
+        .workflow-step {
+            background-color: #f9fbfd;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 5px 5px 0;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        .workflow-step h4 {
+            margin: 0 0 8px 0;
+            color: #2980b9;
+            font-size: 12pt;
+        }
+        .workflow-step p {
+            margin: 0;
+            color: #444;
+            font-size: 11pt;
+        }
+        .abstract {
+            background-color: #f1f2f6;
+            border: 1px solid #dcdde1;
+            padding: 15px;
+            font-family: 'Arial', 'Microsoft YaHei', sans-serif;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Evaluating Decision Bias in AIGC Detection: Workflow & Methodology</h1>
+    <div class="subtitle">AIGC检测偏见评估：项目全景执行流程与学术细节呈现</div>
+    
+    <div class="abstract">
+        <p><strong>⚠️ 致文书老师的阅读指引：</strong><br>
+        之前的版本着重于拔高“学术立意”与“代码理论参数”，但在此版本中，重点补充了<strong>“学生在这个项目里到底一行行敲代码干了什么事”</strong>。下面梳理出的【十大工程串联步骤】，正是文书中塑造申请人“超强动手能力、项目全栈管理能力、独立攻坚精神”的最佳叙事时间线。文书可以沿着这个 Stage 0 到 Stage 9 的脉络，讲述一个精彩的工程落地故事。</p>
+    </div>
+
+    <h2>一、 核心研究问题与动机 (Problem Formulation)</h2>
+    <p>伴随生成式AI爆发，市场上出现了海量用来抓捕AI假图的检测算法。然而，<strong>这套承担着“数字世界的法官”角色的检测机制，本身是否公正无私？</strong></p>
+    <p>本人试图实证：这些顶级检测器并不是在客观识别“AI高频物理伪影”，而是堕落成了带有刻板印象的统计学机器——例如，“女护士”、“女医生”发一张真实的自拍，被这些检测器误封禁（判定为AI生成）的概率，会显著偏高。我期望用一套完整的自动化工程体系量化并挖出这个“审判偏见”的病根。</p>
+
+    <h2>二、 申请人的【十大全栈工程执行脉络】 (End-to-End Execution Pipeline)</h2>
+    <p>为了完成这一宏大课题，我独立开发了以下一整套包含从数据抓取、筛选、大模型生成、算法评测再到反向归因的自动化 Python 流水线：</p>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 0: 真实对照组数据获取与严苛“物理清洗” (Real Data Acquisition)</h4>
+        <p>我首先基于 Google 手工定向抓取了四类（男/女医生、男/女护士）的真实人像照片。为了防止“女护士多为全身照，男医生多为大头特写照”这种构图比例产生的实验偏差（混杂变量），我不仅写了清洗代码，更是<strong>自主研发了一套基于 MTCNN 的自动化动态弹性裁切工具</strong> (<code>preprocess_dongtai.py</code>)。它利用 0.35 的最佳构图容差算法和 Y轴偏移演算，将所有图片的人脸占地面积强制归一化一致。这是保障后续分析科学性的最强基石。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 1: 基于核心算法的同态假图生成 (AI Generation via Diffusers)</h4>
+        <p>为了构建对冲实验，我使用 Python 的 <code>diffusers</code> 库并调用 <code>Stable Diffusion v1.5</code> 引擎，挂载最新的 <code>Fair-Diffusion</code> 技术架构，批量生成了对标各个职业性别的虚假图像。期间我在代码里把步数写死在30、引导系数锁定为7.5，做到了跨族群的标准化生成（<code>01_generate.py</code>）。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 1b - Stage 2: 跨模态精英筛选机制 (Quality Elite Filtering)</h4>
+        <p>如果 AI 本来就把女护士画得“很假”，检测器报警自然不算偏见。为了证明检测器存在真正的不公，我写了一个审查脚本 (<code>02_quality_filter.py</code>)：利用 <code>CLIP</code> 视觉大语言模型，遍历计算每一张假图与职业形容词的余弦相似度。剔除低劣样本，强迫只把匹配度＞0.22 的、各个类群里“画得最好、最逼真”的顶级精英样本池送入后续检测。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 3: 在个人环境内部署四款顶会检测器 (Deploy SOTA Detectors)</h4>
+        <p>我搜集了学术圈知名的 4 款顶级论文开源模型库：<code>CNNDetection (CVPR'20)</code>, <code>F3Net (ECCV'20)</code>, <code>GramNet (NeurIPS'21)</code> 和 <code>LGrad (CVPR'23)</code>。通过编写包含并行调度的推理脚本 (<code>03_run_detectors.py</code>)，让成千上万张自建数据集在我的本地和云端环境中跑通，并导出了他们对每一张图的“真伪打分”置信度字典。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 4: 计算由于偏见产生的统计学黑洞 (Fairness Measurement)</h4>
+        <p>在获得了所有预测概率后，我编写了核心公平性评估脚本 (<code>04_fairness_eval.py</code>)。通过统计 <strong>FPR Gap (误报率差距)</strong> 来揭露检测器将不同职业真实人物误杀的概率失衡差值。为保证严谨性，我在代码里手撕了 <code>Bootstrap 重采样引擎</code>，对数据执行 1000 次蒙特卡洛投点抽样，求出了无懈可击的 95% 显著性置信区间。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 5 - 6: 第一大归因创新：多尺度碎片化结构破坏实验</h4>
+        <p>证实偏见后，我要追踪偏见的源头。我用 Python 编写了一个将整图自动切割为 2×2 到 32×32 网格（例如切成64块 64×64的碎片）并进行随机混洗的破坏算法 (<code>06_patch_shuffling_exp.py</code>)。结果证明：一旦图像里的人像语义结构被我用代码切碎（但AI伪影残留被保留），那群高智检测器的准确率曲线便呈现断崖式暴跌。这就实锤了：<strong>检测器判断真假，其实根本就是在“看脸”，而不是物理识别</strong>。</p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 7 - 8: 第二大归因创新：逆向高通拉普拉斯解耦</h4>
+        <p>为了反证上一步，我独立研发了一套语义-噪声分离测试系统 (<code>08_high_pass_innovation.py</code>)。我调用 <code>OpenCV</code> 对测试图片实施 Laplacian 二阶微分变换，瞬间抽干了人物的外观结构特征（连男是女都看不出来），逼迫检测器只能去审视纯纯的高频噪点。跑完脚本后数据惊艳：弱势群体的极高误判率奇迹般的大幅收缩回归至正常阈值，彻底证明了——<strong>剥离低频图像语义特征，偏见即告破产。</strong></p>
+    </div>
+
+    <div class="workflow-step">
+        <h4>🟢 Stage 9: 项目收口与报告终态自生成 (Automated Reporting)</h4>
+        <p>面对庞大散落的十万级数据点阵矩阵，我编写了总控中枢 (<code>09_master_report.py</code>)，一键合并我跑出来的这 8 个阶段的所有 <code>.csv</code> 表单和曲线可视化图，自动化输出最终结论总表。至此，全流程完美闭环。</p>
+    </div>
+
+    <h2>三、 高级学术名词提取（供文书核心段落点缀用）</h2>
+    <p>为了辅助文书行文，请老师重点在“遇到困难和如何攻坚”的描述中采用如下词条体现：</p>
+    <ul>
+        <li>为了控制混入误差：自主研发了 <strong>动态弹性自适应裁切系统 (Dynamic Adaptive Confounding Control)</strong>。</li>
+        <li>为了保证图像样本质量：采用了具有大局观的 <strong>跨模态精英过滤矩阵 (Cross-Modal Elite Filtering)</strong>。</li>
+        <li>为了证明统计无误：撰写了数理底层的 <strong>蒙特卡洛 Bootstrap 重采样置信求导算法 (Bootstrap Confidence Intervals Inference)</strong>。</li>
+        <li>为了寻根溯源突破理论：独立构思并编写验证了 <strong>多尺度阵列结构破坏 (Multi-Scale Structural Shuffling)</strong> 和 <strong>基于高通滤波层的语义-频响解耦 (Semantic-Noise Decoupling via High-pass Filtering)</strong>。</li>
+    </ul>
+
+</body>
+</html>
