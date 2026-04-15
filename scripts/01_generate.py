@@ -26,7 +26,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--prompt-file", type=Path, default=root / "data" / "prompts" / "prompt_templates.txt")
     parser.add_argument("--metadata-out", type=Path, default=root / "data" / "metadata_raw.csv")
     parser.add_argument("--samples-per-group", type=int, default=50)
-    parser.add_argument("--mock-real-per-group", type=int, default=50)
+    parser.add_argument(
+        "--real-per-group",
+        type=int,
+        default=None,
+        help="How many real samples to register per group. For --real-source local, uses all available files when omitted.",
+    )
+    parser.add_argument(
+        "--mock-real-per-group",
+        type=int,
+        default=None,
+        help="Deprecated alias of --real-per-group. Kept only for backward compatibility.",
+    )
     parser.add_argument("--genders", type=str, default="male,female")
     parser.add_argument("--professions", type=str, default="doctor,nurse")
     parser.add_argument("--seed", type=int, default=42)
@@ -50,6 +61,13 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--height", type=int, default=512)
     parser.add_argument("--steps", type=int, default=30)
     parser.add_argument("--guidance", type=float, default=7.5)
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cuda",
+        choices=["cpu", "cuda"],
+        help="Inference device. Default is cuda; the script will fail fast if CUDA is unavailable.",
+    )
     parser.add_argument("--negative-prompt", type=str, default="blurry, low quality, distorted, bad anatomy, deformed eyes, crossed eyes, disfigured, poorly drawn face, ugly, cartoon, plastic, artificial, weird proportions, fake")
     # Fair-Diffusion style controls (from official README usage).
     parser.add_argument("--fd-editing-prompts", type=str, default="male person,female person")
@@ -63,6 +81,35 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--fd-female-prob", type=float, default=0.5)
     parser.add_argument("--overwrite", action="store_true")
     return parser.parse_args()
+
+
+def validate_runtime(device: str) -> None:
+    if device == "cuda":
+        import torch
+
+        if not torch.cuda.is_available():
+            raise RuntimeError(
+                "CUDA device was requested, but no GPU is available. "
+                "In Colab, switch Runtime -> Change runtime type -> GPU, "
+                "or pass --device cpu if you intentionally want CPU mode."
+            )
+
+
+def resolve_real_per_group(args: argparse.Namespace) -> int | None:
+    if args.real_per_group is not None and args.mock_real_per_group is not None:
+        raise ValueError("Use only one of --real-per-group or --mock-real-per-group, not both.")
+    if args.real_per_group is not None:
+        return args.real_per_group
+    if args.mock_real_per_group is not None:
+        return args.mock_real_per_group
+    return None
+
+
+def list_local_real_files(group_dir: Path) -> List[Path]:
+    files: List[Path] = []
+    for ext in ("*.png", "*.jpg", "*.jpeg", "*.webp", "*.bmp"):
+        files.extend(sorted(group_dir.glob(ext)))
+    return files
 
 
 def read_templates(path: Path) -> List[str]:
@@ -175,11 +222,10 @@ def make_mock_image(prompt: str, seed: int, width: int, height: int, kind: str) 
     return img
 
 
-def init_diffusers(model_id: str):
+def init_diffusers(model_id: str, device: str):
     import torch
     from diffusers import StableDiffusionPipeline
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     dtype = torch.float16 if device == "cuda" else torch.float32
     pipe = StableDiffusionPipeline.from_pretrained(
         model_id, 
@@ -219,9 +265,7 @@ def _parse_csv_bool(s: str) -> List[bool]:
     return out
 
 
-def init_fairdiffusion(model_id: str):
-    import torch
-
+def init_fairdiffusion(model_id: str, device: str):
     try:
         from semdiffusers import SemanticEditPipeline
     except ImportError as e:
@@ -230,7 +274,6 @@ def init_fairdiffusion(model_id: str):
             "Install: pip install -e ./semantic-image-editing-main/semantic-image-editing-main"
         ) from e
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     pipe = SemanticEditPipeline.from_pretrained(
         model_id,
         safety_checker=None,
@@ -378,8 +421,11 @@ def sample_gender_for_profession(
 
 def main() -> None:
     args = parse_args()
+    validate_runtime(args.device)
+    real_per_group = resolve_real_per_group(args)
     random.seed(args.seed)
     np.random.seed(args.seed)
+    print(f"[info] running on device: {args.device}")
 
     root = args.project_root
     raw_dir = root / "data" / "generated_raw"
@@ -397,10 +443,10 @@ def main() -> None:
     real_source = resolve_model_source(args.real_model_id, args.real_model_path)
 
     if args.generator == "diffusers":
-        pipe, device = init_diffusers(fake_source)
+        pipe, device = init_diffusers(fake_source, args.device)
         print(f"[generator] diffusers model={fake_source} device={device}")
     elif args.generator == "fairdiffusion":
-        pipe, device = init_fairdiffusion(fake_source)
+        pipe, device = init_fairdiffusion(fake_source, args.device)
         print(f"[generator] fairdiffusion model={fake_source} device={device}")
     else:
         print("[generator] mock (fast debug mode)")
@@ -409,7 +455,7 @@ def main() -> None:
         if args.generator == "diffusers" and real_source == fake_source:
             real_pipe, real_device = pipe, device
         else:
-            real_pipe, real_device = init_diffusers(real_source)
+            real_pipe, real_device = init_diffusers(real_source, args.device)
         print(f"[real-source] diffusers model={real_source} device={real_device}")
     elif args.real_source == "local":
         local_real_dir = Path(args.project_root) / "data" / "real_samples"
@@ -539,59 +585,90 @@ def main() -> None:
                     }
                 )
 
-    # Create "real" control samples (same semantic groups) for fairness evaluation.
+    # Create/register "real" control samples (same semantic groups) for fairness evaluation.
     for group, gender, profession in groups:
-        group_real = real_dir / group
-        group_real.mkdir(parents=True, exist_ok=True)
-        for i in range(args.mock_real_per_group):
-            prompt = f"A real photo of a {gender} {profession} in a hospital, realistic and natural."
-            sid = f"real_{group}_{i:04d}"
-            seed_i = args.seed + 10_000 + i
-            image_path = group_real / f"{sid}.png"
-            if args.real_source == "local":
-                # Use pre-downloaded real photos from data/real_samples/
-                local_group_dir = Path(args.project_root) / "data" / "real_samples" / group
-                local_files = sorted(local_group_dir.glob("*.png")) + sorted(local_group_dir.glob("*.jpg"))
-                if i < len(local_files):
-                    img = Image.open(local_files[i]).convert("RGB")
-                    img = img.resize((args.width, args.height), Image.LANCZOS)
-                else:
-                    print(f"  [warn] Not enough local real images for {group}, have {len(local_files)}, need index {i}")
-                    continue
-            elif args.real_source == "diffusers":
-                img = make_diffusers_image(
-                    pipe=real_pipe,
-                    device=real_device,
-                    prompt=prompt,
-                    negative_prompt=args.negative_prompt,
-                    width=args.width,
-                    height=args.height,
-                    steps=args.steps,
-                    guidance=args.guidance,
-                    seed=seed_i,
-                )
-            else:
-                img = make_mock_image(prompt, seed_i, args.width, args.height, kind="real")
-            img.save(image_path)
-            rows.append(
-                {
-                    "id": sid,
-                    "modality": "image",
-                    "group": group,
-                    "gender": gender,
-                    "profession": profession,
-                    "prompt": prompt,
-                    "seed": seed_i,
-                    "source_model": "real_photograph" if args.real_source == "local" else (real_source if args.real_source == "diffusers" else "real_mock"),
-                    "source_domain": "real_reference",
-                    "y_true": 0,
-                    "clip_score": "",
-                    "quality_score": "",
-                    "template_id": -1,
+        registered_real = 0
+        if args.real_source == "local":
+            local_group_dir = Path(args.project_root) / "data" / "real_samples" / group
+            local_files = list_local_real_files(local_group_dir)
+            if not local_files:
+                print(f"  [warn] No local real images found for {group}: {local_group_dir}")
+                continue
+
+            use_files = local_files if real_per_group is None else local_files[:real_per_group]
+            if real_per_group is not None and len(local_files) < real_per_group:
+                print(f"  [warn] Local real images for {group}: have {len(local_files)}, requested {real_per_group}")
+
+            for i, image_path in enumerate(use_files):
+                prompt = f"A real photo of a {gender} {profession} in a hospital, realistic and natural."
+                sid = f"real_{group}_{i:04d}"
+                seed_i = args.seed + 10_000 + i
+                rows.append(
+                    {
+                        "id": sid,
+                        "modality": "image",
+                        "group": group,
+                        "gender": gender,
+                        "profession": profession,
+                        "prompt": prompt,
+                        "seed": seed_i,
+                        "source_model": "real_photograph",
+                        "source_domain": "real_reference",
+                        "y_true": 0,
+                        "clip_score": "",
+                        "quality_score": "",
+                        "template_id": -1,
                         "file_path": str(image_path),
                     }
                 )
-        print(f"[done] group={group} real={args.mock_real_per_group}")
+                registered_real += 1
+        else:
+            group_real = real_dir / group
+            group_real.mkdir(parents=True, exist_ok=True)
+            if real_per_group is None:
+                raise ValueError("--real-per-group is required when --real-source is mock or diffusers.")
+            for i in range(real_per_group):
+                prompt = f"A real photo of a {gender} {profession} in a hospital, realistic and natural."
+                sid = f"real_{group}_{i:04d}"
+                seed_i = args.seed + 10_000 + i
+                image_path = group_real / f"{sid}.png"
+                if args.real_source == "diffusers":
+                    img = make_diffusers_image(
+                        pipe=real_pipe,
+                        device=real_device,
+                        prompt=prompt,
+                        negative_prompt=args.negative_prompt,
+                        width=args.width,
+                        height=args.height,
+                        steps=args.steps,
+                        guidance=args.guidance,
+                        seed=seed_i,
+                    )
+                    source_model = real_source
+                else:
+                    img = make_mock_image(prompt, seed_i, args.width, args.height, kind="real")
+                    source_model = "real_mock"
+                img.save(image_path)
+                rows.append(
+                    {
+                        "id": sid,
+                        "modality": "image",
+                        "group": group,
+                        "gender": gender,
+                        "profession": profession,
+                        "prompt": prompt,
+                        "seed": seed_i,
+                        "source_model": source_model,
+                        "source_domain": "real_reference",
+                        "y_true": 0,
+                        "clip_score": "",
+                        "quality_score": "",
+                        "template_id": -1,
+                        "file_path": str(image_path),
+                    }
+                )
+                registered_real += 1
+        print(f"[done] group={group} real={registered_real}")
 
     append_rows(args.metadata_out, rows)
     print(f"[saved] metadata: {args.metadata_out} rows={len(rows)}")

@@ -35,13 +35,39 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--use-clip", action="store_true")
     parser.add_argument("--clip-model-id", type=str, default="openai/clip-vit-base-patch32")
     parser.add_argument("--clip-batch-size", type=int, default=16)
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cuda",
+        choices=["cpu", "cuda"],
+        help="Inference device for CLIP-based filtering. Default is cuda.",
+    )
     parser.add_argument("--clip-min-score", type=float, default=0.20)
     parser.add_argument("--group-margin-min", type=float, default=0.02)
     parser.add_argument("--human-photo-min", type=float, default=0.02)
+    parser.add_argument(
+        "--disable-toy-check",
+        action="store_true",
+        help="Do not require human_photo_score > toy_score.",
+    )
+    parser.add_argument(
+        "--disable-cartoon-check",
+        action="store_true",
+        help="Do not require human_photo_score > cartoon_score.",
+    )
     parser.add_argument("--min-quality", type=float, default=None)
     parser.add_argument("--align-on", type=str, choices=["clip", "quality", "random"], default="clip")
     parser.add_argument("--target-n", type=int, default=None, help="Force balance each group to this exact count.")
     return parser.parse_args()
+
+
+def validate_runtime(device: str, use_clip: bool) -> None:
+    if use_clip and device == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError(
+            "CUDA device was requested for CLIP filtering, but no GPU is available. "
+            "In Colab, switch Runtime -> Change runtime type -> GPU, "
+            "or pass --device cpu if you intentionally want CPU mode."
+        )
 
 
 def image_quality_score(path: str) -> float:
@@ -56,33 +82,34 @@ def image_quality_score(path: str) -> float:
     return 0.5 * grad_energy + 0.3 * contrast + 0.2 * entropy
 
 
+def as_feature_tensor(x):
+    # transformers versions may return either a Tensor or a model output object
+    # (e.g. BaseModelOutputWithPooling). Normalize to a 2D feature tensor.
+    if isinstance(x, torch.Tensor):
+        return x
+    if hasattr(x, "pooler_output") and x.pooler_output is not None:
+        return x.pooler_output
+    if hasattr(x, "image_embeds") and x.image_embeds is not None:
+        return x.image_embeds
+    if hasattr(x, "text_embeds") and x.text_embeds is not None:
+        return x.text_embeds
+    if hasattr(x, "last_hidden_state") and x.last_hidden_state is not None:
+        return x.last_hidden_state[:, 0, :]
+    raise TypeError(f"Unsupported feature output type: {type(x)}")
+
+
 def compute_clip_scores(
     image_paths: List[str],
     texts: List[str],
     model_id: str,
     batch_size: int,
+    device: str,
 ) -> List[float]:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = CLIPModel.from_pretrained(model_id).to(device)
     processor = CLIPProcessor.from_pretrained(model_id)
     model.eval()
 
     scores: List[float] = []
-
-    def as_feature_tensor(x):
-        # transformers versions may return either a Tensor or a model output object
-        # (e.g. BaseModelOutputWithPooling). Normalize to a 2D feature tensor.
-        if isinstance(x, torch.Tensor):
-            return x
-        if hasattr(x, "pooler_output") and x.pooler_output is not None:
-            return x.pooler_output
-        if hasattr(x, "image_embeds") and x.image_embeds is not None:
-            return x.image_embeds
-        if hasattr(x, "text_embeds") and x.text_embeds is not None:
-            return x.text_embeds
-        if hasattr(x, "last_hidden_state") and x.last_hidden_state is not None:
-            return x.last_hidden_state[:, 0, :]
-        raise TypeError(f"Unsupported feature output type: {type(x)}")
 
     with torch.no_grad():
         for i in range(0, len(image_paths), batch_size):
@@ -120,8 +147,8 @@ def compute_semantic_consistency(
     groups: List[str],
     model_id: str,
     batch_size: int,
+    device: str,
 ) -> pd.DataFrame:
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = CLIPModel.from_pretrained(model_id).to(device)
     processor = CLIPProcessor.from_pretrained(model_id)
     model.eval()
@@ -147,10 +174,10 @@ def compute_semantic_consistency(
     with torch.no_grad():
         text_inputs = processor(text=text_prompts, return_tensors="pt", padding=True)
         text_inputs = {k: v.to(device) for k, v in text_inputs.items()}
-        text_feat = model.get_text_features(
+        text_feat = as_feature_tensor(model.get_text_features(
             input_ids=text_inputs["input_ids"],
             attention_mask=text_inputs["attention_mask"],
-        )
+        ))
         text_feat = text_feat / text_feat.norm(dim=-1, keepdim=True)
 
     sims_all: List[np.ndarray] = []
@@ -160,7 +187,7 @@ def compute_semantic_consistency(
             images = [Image.open(p).convert("RGB") for p in batch_paths]
             inputs = processor(images=images, return_tensors="pt", padding=True)
             inputs = {k: v.to(device) for k, v in inputs.items()}
-            img_feat = model.get_image_features(pixel_values=inputs["pixel_values"])
+            img_feat = as_feature_tensor(model.get_image_features(pixel_values=inputs["pixel_values"]))
             img_feat = img_feat / img_feat.norm(dim=-1, keepdim=True)
             sims = img_feat @ text_feat.T
             sims_all.append(sims.detach().cpu().numpy())
@@ -270,9 +297,13 @@ def maybe_copy_files(df: pd.DataFrame, balanced_dir: Path) -> pd.DataFrame:
 
 def main() -> None:
     args = parse_args()
+    validate_runtime(args.device, args.use_clip)
     args.metadata_out.parent.mkdir(parents=True, exist_ok=True)
     fair_dir = args.project_root / "results" / "fairness_tables"
     fair_dir.mkdir(parents=True, exist_ok=True)
+    scored_path = args.project_root / "data" / "metadata_scored.csv"
+    filtered_prebalance_path = args.project_root / "data" / "metadata_filtered_prebalance.csv"
+    print(f"[info] running on device: {args.device}")
 
     df = pd.read_csv(args.metadata_in)
     if len(df) == 0:
@@ -288,12 +319,14 @@ def main() -> None:
             texts=df["prompt"].astype(str).tolist(),
             model_id=args.clip_model_id,
             batch_size=args.clip_batch_size,
+            device=args.device,
         )
         semantic_df = compute_semantic_consistency(
             image_paths=[str(p) for p in df["file_path"].tolist()],
             groups=df["group"].astype(str).tolist(),
             model_id=args.clip_model_id,
             batch_size=args.clip_batch_size,
+            device=args.device,
         )
         df = pd.concat([df.reset_index(drop=True), semantic_df.reset_index(drop=True)], axis=1)
     elif "clip_score" not in df.columns:
@@ -302,6 +335,7 @@ def main() -> None:
     before_summary = summarize_by_group(df)
     before_path = fair_dir / "quality_clip_summary_before.csv"
     before_summary.to_csv(before_path, index=False, encoding="utf-8")
+    df.to_csv(scored_path, index=False, encoding="utf-8")
 
     # 3) threshold filter
     filt = df.copy()
@@ -313,14 +347,17 @@ def main() -> None:
         filt = filt[filt["pred_group"] == filt["group"]].copy()
         filt = filt[filt["group_margin"] >= args.group_margin_min].copy()
         filt = filt[filt["human_photo_score"] >= args.human_photo_min].copy()
-        filt = filt[filt["human_photo_score"] > filt["toy_score"]].copy()
-        filt = filt[filt["human_photo_score"] > filt["cartoon_score"]].copy()
+        if not args.disable_toy_check:
+            filt = filt[filt["human_photo_score"] > filt["toy_score"]].copy()
+        if not args.disable_cartoon_check:
+            filt = filt[filt["human_photo_score"] > filt["cartoon_score"]].copy()
         filt = filt[filt["human_photo_score"] > filt["object_score"]].copy()
         filt = filt[filt["human_photo_score"] > filt["deformed_face_score"]].copy()
         filt = filt[filt["human_photo_score"] > filt["low_quality_score"]].copy()
     filt = filt.reset_index(drop=True)
     if len(filt) == 0:
         raise ValueError("All samples removed by filters. Lower thresholds.")
+    filt.to_csv(filtered_prebalance_path, index=False, encoding="utf-8")
 
     # 4) group alignment + balance
     balanced = align_and_balance(filt, seed=args.seed, align_on=args.align_on, target_n=args.target_n)
@@ -333,6 +370,8 @@ def main() -> None:
     balanced.to_csv(args.metadata_out, index=False, encoding="utf-8")
 
     print(f"[saved] balanced metadata: {args.metadata_out}")
+    print(f"[saved] scored metadata: {scored_path}")
+    print(f"[saved] filtered prebalance metadata: {filtered_prebalance_path}")
     print(f"[saved] before summary: {before_path}")
     print(f"[saved] after summary: {after_path}")
     print(f"[info] samples before={len(df)} after_filter={len(filt)} balanced={len(balanced)}")

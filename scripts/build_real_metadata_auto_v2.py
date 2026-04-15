@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+from collections import Counter
 from pathlib import Path
 from typing import Dict, List, Tuple
 
@@ -9,6 +10,7 @@ import numpy as np
 import pandas as pd
 import torch
 from PIL import Image, UnidentifiedImageError
+from tqdm.auto import tqdm
 from transformers import CLIPModel, CLIPProcessor
 
 
@@ -54,9 +56,9 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--device",
         type=str,
-        default="cuda" if torch.cuda.is_available() else "cpu",
+        default="cuda",
         choices=["cpu", "cuda"],
-        help="Inference device.",
+        help="Inference device. Default is cuda; the script will fail fast if CUDA is unavailable.",
     )
     parser.add_argument(
         "--min-width",
@@ -95,6 +97,15 @@ def parse_args() -> argparse.Namespace:
         help="If ai_suspect_conf - real_photo_conf exceeds this margin, raise AI review.",
     )
     return parser.parse_args()
+
+
+def validate_runtime(device: str) -> None:
+    if device == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError(
+            "CUDA device was requested, but no GPU is available. "
+            "In Colab, switch Runtime -> Change runtime type -> GPU, "
+            "or pass --device cpu if you intentionally want CPU mode."
+        )
 
 
 class ClipZeroShotTagger:
@@ -223,7 +234,13 @@ def classify_by_clip(
         "ai_type_auto": [],
     }
 
-    for start in range(0, len(image_paths), batch_size):
+    total_batches = (len(image_paths) + batch_size - 1) // batch_size
+    for start in tqdm(
+        range(0, len(image_paths), batch_size),
+        total=total_batches,
+        desc="CLIP auditing",
+        unit="batch",
+    ):
         batch_paths = image_paths[start : start + batch_size]
         batch_images: List[Image.Image] = []
         for p in batch_paths:
@@ -313,15 +330,26 @@ def build_review_signals(
 
 def main() -> None:
     args = parse_args()
+    validate_runtime(args.device)
     args.output_csv.parent.mkdir(parents=True, exist_ok=True)
+    print(f"[info] running on device: {args.device}")
 
     items = collect_image_paths(args.input_root)
     if not items:
         raise ValueError(f"No images found under: {args.input_root}")
+    print(f"[info] found images: {len(items)}")
+    group_counts = Counter(group for group, _ in items)
+    for group in VALID_GROUPS:
+        if group in group_counts:
+            print(f"[info] group {group}: {group_counts[group]} images")
 
     rows: List[Dict[str, object]] = []
+    current_group = None
 
-    for group, path in items:
+    for group, path in tqdm(items, desc="Scanning images", unit="img"):
+        if group != current_group:
+            current_group = group
+            print(f"[info] scanning group: {group}")
         try:
             with Image.open(path) as img:
                 width, height = img.size
@@ -379,6 +407,7 @@ def main() -> None:
     ok_df = base_df[ok_mask].copy().reset_index(drop=True)
 
     if len(ok_df) > 0:
+        print(f"[info] readable images for CLIP audit: {len(ok_df)}")
         tagger = ClipZeroShotTagger(args.clip_model_id, args.device)
         clip_results = classify_by_clip(
             tagger=tagger,

@@ -68,7 +68,23 @@ def parse_args() -> argparse.Namespace:
                         help="Generate heatmaps for ALL samples, not just misclassified ones.")
     parser.add_argument("--max-per-group", type=int, default=10,
                         help="Max samples per group to generate heatmaps for (when --analyze-all).")
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cuda",
+        choices=["cpu", "cuda"],
+        help="Inference device for Grad-CAM. Default is cuda.",
+    )
     return parser.parse_args()
+
+
+def validate_runtime(device: str) -> None:
+    if device == "cuda" and not torch.cuda.is_available():
+        raise RuntimeError(
+            "CUDA device was requested for Grad-CAM, but no GPU is available. "
+            "In Colab, switch Runtime -> Change runtime type -> GPU, "
+            "or pass --device cpu if you intentionally want CPU mode."
+        )
 
 
 def load_stage03_module(project_root: Path):
@@ -208,7 +224,7 @@ def save_gradcam_triptych(
     plt.close(fig)
 
 
-def build_sidbench_components(stage03, detector_name: str, external_root: Path):
+def build_sidbench_components(stage03, detector_name: str, external_root: Path, device: str):
     cfg = stage03.DETECTOR_CONFIGS[detector_name]
     repo_root = stage03.ensure_archive(stage03.SIDBENCH_ARCHIVE_URL, external_root / "sidbench", "sidbench-main")
     stage03.ensure_requirements(repo_root / "requirements.txt", external_root / ".installed" / "sidbench.ok")
@@ -229,7 +245,6 @@ def build_sidbench_components(stage03, detector_name: str, external_root: Path):
     from models.LGrad import LGrad  # type: ignore
     from preprocessing.lgrad.models import build_model  # type: ignore
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     checkpoint = weights_root / cfg.sidbench_ckpt_relpath
     if detector_name == "cnndetection":
         model = CNNDetect()
@@ -335,12 +350,11 @@ def sidbench_score_selector(detector_name: str) -> Callable[[object], torch.Tens
     return selector
 
 
-def build_f3net_components(stage03, external_root: Path):
+def build_f3net_components(stage03, external_root: Path, device: str):
     repo_root = stage03.ensure_archive(stage03.PYDEEPFAKEDET_ARCHIVE_URL, external_root / "PyDeepFakeDet", "PyDeepFakeDet-main")
     stage03.ensure_requirements(repo_root / "requirements.txt", external_root / ".installed" / "pydeepfakedet.ok")
     checkpoint = stage03.download_gdrive(stage03.F3NET_RAW_CKPT_URL, external_root / "weights" / "f3net_raw.pth")
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
     model = stage03._load_f3net_model(repo_root, checkpoint).to(device).eval()
     target_layer = choose_target_layer(model, "f3net")
 
@@ -366,20 +380,22 @@ def build_f3net_components(stage03, external_root: Path):
     return model, preprocess_fn, target_layer, score_selector, device
 
 
-def load_detector_components(detector_name: str, project_root: Path, external_root: Path):
+def load_detector_components(detector_name: str, project_root: Path, external_root: Path, device: str):
     stage03 = load_stage03_module(project_root)
     if detector_name in {"cnndetection", "gram", "lgrad"}:
-        return build_sidbench_components(stage03, detector_name, external_root)
+        return build_sidbench_components(stage03, detector_name, external_root, device)
     if detector_name == "f3net":
-        return build_f3net_components(stage03, external_root)
+        return build_f3net_components(stage03, external_root, device)
     raise ValueError(f"Unsupported detector for Grad-CAM: {detector_name}")
 
 
 def main() -> None:
     args = parse_args()
+    validate_runtime(args.device)
     args.output_dir.mkdir(parents=True, exist_ok=True)
     heatmap_dir = args.output_dir / "heatmaps"
     heatmap_dir.mkdir(parents=True, exist_ok=True)
+    print(f"[info] running on device: {args.device}")
 
     df = pd.read_csv(args.detector_csv)
     detector_name = infer_detector_name(df, args.detector_csv)
@@ -393,7 +409,7 @@ def main() -> None:
         return
 
     model, preprocess_fn, target_layer, score_selector, device = load_detector_components(
-        detector_name, args.project_root, args.external_root
+        detector_name, args.project_root, args.external_root, args.device
     )
     gradcam = GradCAM(model, target_layer)
 

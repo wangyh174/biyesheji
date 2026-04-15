@@ -22,7 +22,7 @@ def main():
     parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad")
     parser.add_argument("--samples", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--model-id", type=str, default="SG161222/Realistic_Vision_V5.1_noVAE")
+    parser.add_argument("--model-id", type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument("--buffer-extra", type=int, default=20)
     args = parser.parse_args()
 
@@ -35,7 +35,7 @@ def main():
         "--project-root", project_root,
         "--real-source", args.real_source,
         "--samples-per-group", str(buffer),       # Overgenerate for quality filtering
-        "--mock-real-per-group", str(buffer),      # Fix #9: Keep fake/real symmetric
+        "--real-per-group", str(args.samples),     # Local real images are already fixed; keep final comparison size at N
         "--model-id", args.model_id,
         "--generator", "fairdiffusion",
         "--seed", str(args.seed)

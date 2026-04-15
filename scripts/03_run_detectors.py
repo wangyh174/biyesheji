@@ -27,6 +27,7 @@ import argparse
 import csv
 import importlib
 import os
+import site
 import shutil
 import subprocess
 import sys
@@ -107,8 +108,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--detector",
         type=str,
-        choices=sorted(DETECTOR_CONFIGS.keys()),
         default="cnndetection",
+        help="Detector name, comma-separated list, or 'all'.",
     )
     parser.add_argument("--input-dir", type=Path, default=None,
                         help="If set, scan this directory for images instead of using --metadata-in CSV.")
@@ -116,7 +117,44 @@ def parse_args() -> argparse.Namespace:
                         help="Alias for --metadata-in for pipeline compatibility.")
     parser.add_argument("--external-root", type=Path, default=root / ".external_models")
     parser.add_argument("--keep-staging", action="store_true")
+    parser.add_argument(
+        "--device",
+        type=str,
+        default="cuda",
+        choices=["cpu", "cuda"],
+        help="Inference device for in-process detector backends. Default is cuda.",
+    )
     return parser.parse_args()
+
+
+def parse_detector_names(detector_arg: str) -> List[str]:
+    token = detector_arg.strip().lower()
+    if token == "all":
+        return list(DETECTOR_CONFIGS.keys())
+
+    names = [part.strip().lower() for part in detector_arg.split(",") if part.strip()]
+    if not names:
+        raise ValueError("No detector names were provided.")
+
+    invalid = [name for name in names if name not in DETECTOR_CONFIGS]
+    if invalid:
+        raise ValueError(
+            f"Unsupported detector(s): {', '.join(invalid)}. "
+            f"Valid choices: {', '.join(sorted(DETECTOR_CONFIGS))}, all"
+        )
+    return names
+
+
+def validate_runtime(device: str) -> None:
+    if device == "cuda":
+        import torch
+
+        if not torch.cuda.is_available():
+            raise RuntimeError(
+                "CUDA device was requested for detector inference, but no GPU is available. "
+                "In Colab, switch Runtime -> Change runtime type -> GPU, "
+                "or pass --device cpu if you intentionally want CPU mode."
+            )
 
 
 def ensure_dir(path: Path) -> None:
@@ -142,6 +180,81 @@ def ensure_requirements(requirements_file: Path, marker: Path) -> None:
         run([sys.executable, "-m", "pip", "install", "-r", str(requirements_file)])
     marker.parent.mkdir(parents=True, exist_ok=True)
     marker.write_text("ok", encoding="utf-8")
+
+
+def resolve_existing_path(candidates: Iterable[Path]) -> Path | None:
+    for candidate in candidates:
+        if candidate.exists():
+            return candidate
+    return None
+
+
+def resolve_sidbench_checkpoint(args: argparse.Namespace, cfg: DetectorConfig) -> Path:
+    external_root = args.external_root
+    candidates: List[Path] = []
+
+    if cfg.name == "cnndetection":
+        candidates.extend(
+            [
+                external_root / "weights" / "cnndetect" / "blur_jpg_prob0.5.pth",
+                external_root / "sidbench_weights" / "weights" / "cnndetect" / "blur_jpg_prob0.5.pth",
+            ]
+        )
+    elif cfg.name == "gram":
+        candidates.extend(
+            [
+                external_root / "weights" / "gram" / "gram_resnet50.pth",
+                external_root / "weights" / "gramnet" / "Gram.pth",
+                external_root / "sidbench_weights" / "weights" / "gram" / "gram_resnet50.pth",
+                external_root / "sidbench_weights" / "weights" / "gramnet" / "Gram.pth",
+            ]
+        )
+    elif cfg.name == "lgrad":
+        candidates.extend(
+            [
+                external_root / "weights" / "lgrad" / "Lgrad_Mix.pth",
+                external_root / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
+                external_root / "sidbench_weights" / "weights" / "lgrad" / "Lgrad_Mix.pth",
+                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
+            ]
+        )
+
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            f"Missing local checkpoint for {cfg.name}. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
+def resolve_lgrad_preprocessing_ckpt(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "preprocessing" / "karras2019stylegan-bedrooms-256x256_discriminator.pth",
+        args.external_root / "sidbench_weights" / "weights" / "preprocessing" / "karras2019stylegan-bedrooms-256x256_discriminator.pth",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing LGrad preprocessing checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
+def resolve_f3net_checkpoint(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "f3net" / "F3Net_Mix.pth",
+        args.external_root / "weights" / "f3net_raw.pth",
+        args.external_root / "weights" / "F3Net_Mix.pth",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing local F3Net checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
 
 
 def download_file(url: str, destination: Path) -> Path:
@@ -180,6 +293,25 @@ def ensure_archive(url: str, destination_dir: Path, folder_hint: str) -> Path:
     extracted_root.rename(destination_dir)
     marker.write_text("ok", encoding="utf-8")
     return destination_dir
+
+
+def patch_sidbench_transformers_compat(repo_root: Path) -> None:
+    target = repo_root / "networks" / "med.py"
+    if not target.exists():
+        return
+
+    text = target.read_text(encoding="utf-8")
+    old = "from transformers.modeling_utils import apply_chunking_to_forward"
+    new = (
+        "try:\n"
+        "    from transformers.modeling_utils import apply_chunking_to_forward\n"
+        "except ImportError:\n"
+        "    from transformers.pytorch_utils import apply_chunking_to_forward"
+    )
+    if old in text and new not in text:
+        text = text.replace(old, new)
+        target.write_text(text, encoding="utf-8")
+        print(f"[patch] updated transformers compatibility in {target}")
 
 
 def build_df_from_dir(input_dir: Path) -> pd.DataFrame:
@@ -278,23 +410,14 @@ def save_outputs(df: pd.DataFrame, args: argparse.Namespace) -> None:
 
 def run_sidbench(df: pd.DataFrame, args: argparse.Namespace, cfg: DetectorConfig) -> pd.DataFrame:
     repo_root = ensure_archive(SIDBENCH_ARCHIVE_URL, args.external_root / "sidbench", "sidbench-main")
+    patch_sidbench_transformers_compat(repo_root)
     ensure_requirements(repo_root / "requirements.txt", args.external_root / ".installed" / "sidbench.ok")
-
-    weights_zip = download_gdrive(SIDBENCH_WEIGHTS_URL, args.external_root / "sidbench_weights.zip")
-    weights_root = args.external_root / "sidbench_weights"
-    if not (weights_root / ".ready").exists():
-        ensure_dir(weights_root)
-        with zipfile.ZipFile(weights_zip, "r") as zf:
-            zf.extractall(weights_root)
-        (weights_root / ".ready").write_text("ok", encoding="utf-8")
 
     staging_root, path_map = stage_dataset(df, args.external_root / "staging" / cfg.name)
     predictions_file = args.external_root / "predictions" / f"{cfg.name}_sidbench.csv"
     ensure_dir(predictions_file.parent)
 
-    checkpoint = weights_root / cfg.sidbench_ckpt_relpath
-    if not checkpoint.exists():
-        raise FileNotFoundError(f"Missing checkpoint for {cfg.name}: {checkpoint}")
+    checkpoint = resolve_sidbench_checkpoint(args, cfg)
 
     cmd = [
         sys.executable,
@@ -303,7 +426,7 @@ def run_sidbench(df: pd.DataFrame, args: argparse.Namespace, cfg: DetectorConfig
         str(staging_root),
         "--modelName",
         str(cfg.sidbench_model_name),
-        "--cptk",
+        "--ckpt",
         str(checkpoint),
         "--predictionsFile",
         str(predictions_file),
@@ -313,7 +436,7 @@ def run_sidbench(df: pd.DataFrame, args: argparse.Namespace, cfg: DetectorConfig
     if cfg.name == "lgrad":
         for i, token in enumerate(extra_args):
             if token == "weights/preprocessing/karras2019stylegan-bedrooms-256x256_discriminator.pth":
-                extra_args[i] = str(weights_root / token)
+                extra_args[i] = str(resolve_lgrad_preprocessing_ckpt(args))
     cmd.extend(extra_args)
     run(cmd, cwd=repo_root)
 
@@ -380,13 +503,16 @@ def _load_f3net_model(repo_root: Path, checkpoint_path: Path):
 
 def run_f3net(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
     repo_root = ensure_archive(PYDEEPFAKEDET_ARCHIVE_URL, args.external_root / "PyDeepFakeDet", "PyDeepFakeDet-main")
-    ensure_requirements(repo_root / "requirements.txt", args.external_root / ".installed" / "pydeepfakedet.ok")
-    checkpoint = download_gdrive(F3NET_RAW_CKPT_URL, args.external_root / "weights" / "f3net_raw.pth")
+    pydeep_root = repo_root / "PyDeepFakeDet"
+    if pydeep_root.exists():
+        site.addsitedir(str(pydeep_root))
+    site.addsitedir(str(repo_root))
+    checkpoint = resolve_f3net_checkpoint(args)
 
     import torch
     from torchvision import transforms
 
-    device = "cuda" if torch.cuda.is_available() else "cpu"
+    device = args.device
     model = _load_f3net_model(repo_root, checkpoint).to(device)
     model.eval()
 
@@ -421,18 +547,26 @@ def run_f3net(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
 
 def main() -> None:
     args = parse_args()
+    validate_runtime(args.device)
     ensure_dir(args.external_root)
-    cfg = DETECTOR_CONFIGS[args.detector]
+    print(f"[info] running on device: {args.device}")
     df = load_input_dataframe(args)
+    detector_names = parse_detector_names(args.detector)
 
-    if cfg.backend == "sidbench":
-        out = run_sidbench(df, args, cfg)
-    elif cfg.backend == "pydeepfakedet_f3net":
-        out = run_f3net(df, args)
-    else:
-        raise ValueError(f"Unsupported detector backend: {cfg.backend}")
+    for detector_name in detector_names:
+        run_args = argparse.Namespace(**vars(args))
+        run_args.detector = detector_name
+        cfg = DETECTOR_CONFIGS[detector_name]
+        print(f"\n[info] running detector: {detector_name}")
 
-    save_outputs(out, args)
+        if cfg.backend == "sidbench":
+            out = run_sidbench(df, run_args, cfg)
+        elif cfg.backend == "pydeepfakedet_f3net":
+            out = run_f3net(df, run_args)
+        else:
+            raise ValueError(f"Unsupported detector backend: {cfg.backend}")
+
+        save_outputs(out, run_args)
 
 
 if __name__ == "__main__":

@@ -39,7 +39,13 @@ The pipeline combines controlled image generation, real-image collection, semant
 Run the full local pipeline:
 
 ```bash
-python scripts/00_run_local_pipeline.py --real-source local --detectors cnndetection,f3net,gram,lgrad
+python scripts/00_run_local_pipeline.py --real-source local --samples 50 --buffer-extra 100 --detectors cnndetection,f3net,gram,lgrad
+```
+
+Generate 150 fake candidates per group, but use 50 existing local real images per group from `data/real_samples/`:
+
+```bash
+python scripts/01_generate.py --project-root . --real-source local --samples-per-group 150 --real-per-group 50 --model-id runwayml/stable-diffusion-v1-5 --generator fairdiffusion --seed 42
 ```
 
 Crawl real images with Google-enabled search (leave the Google values empty until you have them):
@@ -54,6 +60,8 @@ Important outputs are written under `data/` and `results/`.
 
 ## Practical Advice
 
+- When `--real-source local` is used, `scripts/01_generate.py` does not mock or regenerate real images. It directly registers the existing files under `data/real_samples/<group>/` into the metadata.
+- Use `--real-per-group` to cap how many local real images per group are included in Stage 01. If omitted, all available local real files in that group are used.
 - If real-image crawling or fake-image generation produces poor samples, delete the bad group folder and rerun Stage 01 or the specific script.
 - For best fake-image quality, over-generate candidates and let Stage 02 keep only the most semantically consistent samples.
 - If a group cannot reach the requested sample count automatically, review `_candidates/` and `_candidate_scores.csv`, then manually move correct images into the group folder.
