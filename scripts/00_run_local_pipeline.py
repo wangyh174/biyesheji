@@ -18,8 +18,8 @@ def main():
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=str, default=str(root))
-    parser.add_argument("--real-source", type=str, default="local", choices=["local", "diffusers", "mock"])
-    parser.add_argument("--detectors", type=str, default="cnndetection,univfd,dire,lgrad")
+    parser.add_argument("--real-source", type=str, default="local", choices=["local"])
+    parser.add_argument("--detectors", type=str, default="cnndetection,lgrad,npr")
     parser.add_argument("--samples", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model-id", type=str, default="runwayml/stable-diffusion-v1-5")

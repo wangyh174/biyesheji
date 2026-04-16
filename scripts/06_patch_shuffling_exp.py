@@ -188,7 +188,7 @@ def main():
     parser.add_argument("--project-root", type=str, default=".", help="Project root directory")
     parser.add_argument("--patch-scales", type=str, default="1,2,4,8,16,32",
                         help="Comma-separated list of patch grid sizes to test")
-    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad",
+    parser.add_argument("--detectors", type=str, default="cnndetection,lgrad,npr",
                         help="Comma-separated list of detectors")
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()

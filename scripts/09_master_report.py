@@ -17,7 +17,7 @@ def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser(description="Master Report Generator")
     parser.add_argument("--project-root", type=Path, default=root)
-    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad")
+    parser.add_argument("--detectors", type=str, default="cnndetection,lgrad,npr")
     return parser.parse_args()
 
 

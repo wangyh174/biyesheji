@@ -1,9 +1,9 @@
 """
 Step 1: Generate candidate synthetic samples for fairness evaluation.
 
-Supports:
-1) mock generator (fast, for pipeline debugging)
-2) diffusers generator (real text-to-image generation)
+Official thesis mode:
+1) Fair-Diffusion for fake-image generation
+2) Local real-image registration for control samples
 """
 
 from __future__ import annotations
@@ -41,8 +41,20 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--genders", type=str, default="male,female")
     parser.add_argument("--professions", type=str, default="doctor,nurse")
     parser.add_argument("--seed", type=int, default=42)
-    parser.add_argument("--generator", type=str, choices=["mock", "diffusers", "fairdiffusion"], default="mock")
-    parser.add_argument("--real-source", type=str, choices=["mock", "diffusers", "local"], default="mock")
+    parser.add_argument(
+        "--generator",
+        type=str,
+        choices=["fairdiffusion"],
+        default="fairdiffusion",
+        help="Official thesis pipeline only supports Fair-Diffusion generation.",
+    )
+    parser.add_argument(
+        "--real-source",
+        type=str,
+        choices=["local"],
+        default="local",
+        help="Official thesis pipeline only supports local real-image registration.",
+    )
     parser.add_argument("--model-id", type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument("--real-model-id", type=str, default="runwayml/stable-diffusion-v1-5")
     parser.add_argument(
@@ -421,6 +433,10 @@ def sample_gender_for_profession(
 
 def main() -> None:
     args = parse_args()
+    if args.generator != "fairdiffusion":
+        raise ValueError("This project is configured to run only with --generator fairdiffusion.")
+    if args.real_source != "local":
+        raise ValueError("This project is configured to run only with --real-source local.")
     validate_runtime(args.device)
     real_per_group = resolve_real_per_group(args)
     random.seed(args.seed)
@@ -438,30 +454,12 @@ def main() -> None:
     ensure_csv(args.metadata_out, overwrite=args.overwrite)
 
     pipe, device = (None, None)
-    real_pipe, real_device = (None, None)
     fake_source = resolve_model_source(args.model_id, args.model_path)
-    real_source = resolve_model_source(args.real_model_id, args.real_model_path)
+    pipe, device = init_fairdiffusion(fake_source, args.device)
+    print(f"[generator] fairdiffusion model={fake_source} device={device}")
 
-    if args.generator == "diffusers":
-        pipe, device = init_diffusers(fake_source, args.device)
-        print(f"[generator] diffusers model={fake_source} device={device}")
-    elif args.generator == "fairdiffusion":
-        pipe, device = init_fairdiffusion(fake_source, args.device)
-        print(f"[generator] fairdiffusion model={fake_source} device={device}")
-    else:
-        print("[generator] mock (fast debug mode)")
-
-    if args.real_source == "diffusers":
-        if args.generator == "diffusers" and real_source == fake_source:
-            real_pipe, real_device = pipe, device
-        else:
-            real_pipe, real_device = init_diffusers(real_source, args.device)
-        print(f"[real-source] diffusers model={real_source} device={real_device}")
-    elif args.real_source == "local":
-        local_real_dir = Path(args.project_root) / "data" / "real_samples"
-        print(f"[real-source] local directory: {local_real_dir}")
-    else:
-        print("[real-source] mock")
+    local_real_dir = Path(args.project_root) / "data" / "real_samples"
+    print(f"[real-source] local directory: {local_real_dir}")
 
     rows: List[Dict[str, object]] = []
     fd_editing_prompts = _parse_csv_str(args.fd_editing_prompts)
@@ -471,119 +469,70 @@ def main() -> None:
     fd_thresholds = _parse_csv_float(args.fd_thresholds)
     fd_weights = _parse_csv_float(args.fd_weights)
 
-    if args.generator == "fairdiffusion":
-        for profession in sorted({profession for _, _, profession in groups}):
-            remaining = {gender: args.samples_per_group for gender in ["male", "female"]}
-            counters = {gender: 0 for gender in ["male", "female"]}
-            while remaining["male"] > 0 or remaining["female"] > 0:
-                gender = sample_gender_for_profession(random, args.fd_female_prob, remaining)
-                group = f"{gender}-{profession}"
-                group_raw = raw_dir / group
-                group_real = real_dir / group
-                group_raw.mkdir(parents=True, exist_ok=True)
-                group_real.mkdir(parents=True, exist_ok=True)
-
-                i = counters[gender]
-                t_id = i % len(templates)
-                prompt = build_fairdiffusion_base_prompt(profession)
-                negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
-                image_editing_prompts, image_reverse_dirs = build_fairdiffusion_edit_config(gender)
-                sid = f"fake_{group}_{i:04d}"
-                seed_i = args.seed + sum(counters.values())
-                image_path = group_raw / f"{sid}.png"
-                img = make_fairdiffusion_image(
-                    pipe=pipe,
-                    device=device,
-                    prompt=prompt,
-                    negative_prompt=negative_prompt,
-                    width=args.width,
-                    height=args.height,
-                    steps=args.steps,
-                    guidance=args.guidance,
-                    seed=seed_i,
-                    editing_prompts=image_editing_prompts,
-                    reverse_dirs=image_reverse_dirs,
-                    warmup_steps=fd_warmup_steps,
-                    edit_guidance_scales=fd_guidance_scales,
-                    thresholds=fd_thresholds,
-                    weights=fd_weights,
-                    momentum_scale=args.fd_momentum_scale,
-                    momentum_beta=args.fd_momentum_beta,
-                )
-                img.save(image_path)
-
-                rows.append(
-                    {
-                        "id": sid,
-                        "modality": "image",
-                        "group": group,
-                        "gender": gender,
-                        "profession": profession,
-                        "prompt": prompt,
-                        "seed": seed_i,
-                        "source_model": fake_source,
-                        "source_domain": "generated",
-                        "y_true": 1,
-                        "clip_score": "",
-                        "quality_score": "",
-                        "template_id": t_id,
-                        "file_path": str(image_path),
-                    }
-                )
-                counters[gender] += 1
-                remaining[gender] -= 1
-            print(
-                f"[done] profession={profession} fake_male={counters['male']} "
-                f"fake_female={counters['female']}"
-            )
-    else:
-        for group, gender, profession in groups:
+    for profession in sorted({profession for _, _, profession in groups}):
+        remaining = {gender: args.samples_per_group for gender in ["male", "female"]}
+        counters = {gender: 0 for gender in ["male", "female"]}
+        while remaining["male"] > 0 or remaining["female"] > 0:
+            gender = sample_gender_for_profession(random, args.fd_female_prob, remaining)
+            group = f"{gender}-{profession}"
             group_raw = raw_dir / group
             group_real = real_dir / group
             group_raw.mkdir(parents=True, exist_ok=True)
             group_real.mkdir(parents=True, exist_ok=True)
 
-            for i in range(args.samples_per_group):
-                t_id = i % len(templates)
-                prompt = build_group_prompt(templates[t_id], gender=gender, profession=profession)
-                negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
-                sid = f"fake_{group}_{i:04d}"
-                seed_i = args.seed + i
-                image_path = group_raw / f"{sid}.png"
-                if args.generator == "mock":
-                    img = make_mock_image(prompt, seed_i, args.width, args.height, kind="fake")
-                else:
-                    img = make_diffusers_image(
-                        pipe=pipe,
-                        device=device,
-                        prompt=prompt,
-                        negative_prompt=negative_prompt,
-                        width=args.width,
-                        height=args.height,
-                        steps=args.steps,
-                        guidance=args.guidance,
-                        seed=seed_i,
-                    )
-                img.save(image_path)
+            i = counters[gender]
+            t_id = i % len(templates)
+            prompt = build_fairdiffusion_base_prompt(profession)
+            negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
+            image_editing_prompts, image_reverse_dirs = build_fairdiffusion_edit_config(gender)
+            sid = f"fake_{group}_{i:04d}"
+            seed_i = args.seed + sum(counters.values())
+            image_path = group_raw / f"{sid}.png"
+            img = make_fairdiffusion_image(
+                pipe=pipe,
+                device=device,
+                prompt=prompt,
+                negative_prompt=negative_prompt,
+                width=args.width,
+                height=args.height,
+                steps=args.steps,
+                guidance=args.guidance,
+                seed=seed_i,
+                editing_prompts=image_editing_prompts,
+                reverse_dirs=image_reverse_dirs,
+                warmup_steps=fd_warmup_steps,
+                edit_guidance_scales=fd_guidance_scales,
+                thresholds=fd_thresholds,
+                weights=fd_weights,
+                momentum_scale=args.fd_momentum_scale,
+                momentum_beta=args.fd_momentum_beta,
+            )
+            img.save(image_path)
 
-                rows.append(
-                    {
-                        "id": sid,
-                        "modality": "image",
-                        "group": group,
-                        "gender": gender,
-                        "profession": profession,
-                        "prompt": prompt,
-                        "seed": seed_i,
-                        "source_model": fake_source if args.generator == "diffusers" else "mock_generator",
-                        "source_domain": "generated",
-                        "y_true": 1,
-                        "clip_score": "",
-                        "quality_score": "",
-                        "template_id": t_id,
-                        "file_path": str(image_path),
-                    }
-                )
+            rows.append(
+                {
+                    "id": sid,
+                    "modality": "image",
+                    "group": group,
+                    "gender": gender,
+                    "profession": profession,
+                    "prompt": prompt,
+                    "seed": seed_i,
+                    "source_model": fake_source,
+                    "source_domain": "generated",
+                    "y_true": 1,
+                    "clip_score": "",
+                    "quality_score": "",
+                    "template_id": t_id,
+                    "file_path": str(image_path),
+                }
+            )
+            counters[gender] += 1
+            remaining[gender] -= 1
+        print(
+            f"[done] profession={profession} fake_male={counters['male']} "
+            f"fake_female={counters['female']}"
+        )
 
     # Create/register "real" control samples (same semantic groups) for fairness evaluation.
     for group, gender, profession in groups:
@@ -613,52 +562,6 @@ def main() -> None:
                         "prompt": prompt,
                         "seed": seed_i,
                         "source_model": "real_photograph",
-                        "source_domain": "real_reference",
-                        "y_true": 0,
-                        "clip_score": "",
-                        "quality_score": "",
-                        "template_id": -1,
-                        "file_path": str(image_path),
-                    }
-                )
-                registered_real += 1
-        else:
-            group_real = real_dir / group
-            group_real.mkdir(parents=True, exist_ok=True)
-            if real_per_group is None:
-                raise ValueError("--real-per-group is required when --real-source is mock or diffusers.")
-            for i in range(real_per_group):
-                prompt = f"A real photo of a {gender} {profession} in a hospital, realistic and natural."
-                sid = f"real_{group}_{i:04d}"
-                seed_i = args.seed + 10_000 + i
-                image_path = group_real / f"{sid}.png"
-                if args.real_source == "diffusers":
-                    img = make_diffusers_image(
-                        pipe=real_pipe,
-                        device=real_device,
-                        prompt=prompt,
-                        negative_prompt=args.negative_prompt,
-                        width=args.width,
-                        height=args.height,
-                        steps=args.steps,
-                        guidance=args.guidance,
-                        seed=seed_i,
-                    )
-                    source_model = real_source
-                else:
-                    img = make_mock_image(prompt, seed_i, args.width, args.height, kind="real")
-                    source_model = "real_mock"
-                img.save(image_path)
-                rows.append(
-                    {
-                        "id": sid,
-                        "modality": "image",
-                        "group": group,
-                        "gender": gender,
-                        "profession": profession,
-                        "prompt": prompt,
-                        "seed": seed_i,
-                        "source_model": source_model,
                         "source_domain": "real_reference",
                         "y_true": 0,
                         "clip_score": "",

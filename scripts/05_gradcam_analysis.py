@@ -5,7 +5,8 @@ This script generates actual gradient-based activation maps from the pretrained
 detectors used in Stage 03, instead of the previous residual-visualization
 proxy. It supports:
 
-- CNNDetection / Gram / LGrad via SIDBench-backed pretrained models
+- CNNDetection / LGrad / NPR via the current official Stage 03 backends
+- Gram via SIDBench-backed pretrained models
 - F3Net via the PyDeepFakeDet pretrained F3Net checkpoint
 """
 
@@ -34,6 +35,9 @@ IMAGENET_MEAN = [0.485, 0.456, 0.406]
 IMAGENET_STD = [0.229, 0.224, 0.225]
 TARGET_LAYER_CANDIDATES = {
     "cnndetection": [
+        "layer4.2.conv3",
+        "layer4.1.conv3",
+        "layer4.2.conv2",
         "model.layer4.2.conv3",
         "model.layer4.1.conv3",
         "model.layer4.2.conv2",
@@ -44,6 +48,17 @@ TARGET_LAYER_CANDIDATES = {
         "model.layer4.2.conv2",
     ],
     "lgrad": [
+        "layer4.2.conv3",
+        "layer4.1.conv3",
+        "layer4.2.conv2",
+        "model.layer4.2.conv3",
+        "model.layer4.1.conv3",
+        "model.layer4.2.conv2",
+    ],
+    "npr": [
+        "layer4.2.conv3",
+        "layer4.1.conv3",
+        "layer4.2.conv2",
         "model.layer4.2.conv3",
         "model.layer4.1.conv3",
         "model.layer4.2.conv2",
@@ -146,7 +161,7 @@ def infer_detector_name(df: pd.DataFrame, detector_csv: Path) -> str:
         if name:
             return name
     stem = detector_csv.stem.lower()
-    for name in ("cnndetection", "f3net", "gram", "lgrad"):
+    for name in ("cnndetection", "f3net", "gram", "lgrad", "npr"):
         if name in stem:
             return name
     raise ValueError(f"Could not infer detector name from {detector_csv}")
@@ -279,6 +294,111 @@ def build_sidbench_components(stage03, detector_name: str, external_root: Path, 
     return model, preprocess, target_layer, score_selector, device
 
 
+def build_official_preprocess(detector_name: str, lgrad_model: nn.Module | None = None):
+    base_transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+        ]
+    )
+
+    if detector_name != "lgrad":
+        def preprocess(image: Image.Image, device: str) -> torch.Tensor:
+            if detector_name == "npr":
+                width, height = image.size
+                if width % 2 == 1 or height % 2 == 1:
+                    image = image.crop((0, 0, width - (width % 2), height - (height % 2)))
+            return base_transform(image).unsqueeze(0).to(device)
+
+        return preprocess
+
+    if lgrad_model is None:
+        raise ValueError("LGrad preprocessing requires the gradient model.")
+
+    gen_transform = transforms.Compose(
+        [
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+        ]
+    )
+    final_transform = transforms.Compose(
+        [
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
+        ]
+    )
+
+    def preprocess(image: Image.Image, device: str) -> torch.Tensor:
+        img_tensor = gen_transform(image).unsqueeze(0).to(device=device, dtype=torch.float32)
+        img_tensor.requires_grad_(True)
+        pre = lgrad_model(img_tensor)
+        lgrad_model.zero_grad(set_to_none=True)
+        grads = torch.autograd.grad(pre.sum(), img_tensor, create_graph=False, retain_graph=False)[0]
+        grad_pil = stage03_normalize_grad_uint8(grads[0])
+        return final_transform(grad_pil).unsqueeze(0).to(device)
+
+    return preprocess
+
+
+def stage03_normalize_grad_uint8(grad_tensor) -> Image.Image:
+    grad_np = grad_tensor.detach().cpu().permute(1, 2, 0).numpy()
+    grad_np = grad_np - grad_np.min()
+    max_val = float(grad_np.max())
+    if max_val > 0:
+        grad_np = grad_np / max_val
+    grad_np = np.clip(grad_np * 255.0, 0, 255).astype(np.uint8)
+    return Image.fromarray(grad_np, mode="RGB")
+
+
+def build_official_components(stage03, detector_name: str, external_root: Path, device: str):
+    if detector_name == "cnndetection":
+        repo_root = stage03.ensure_archive(
+            stage03.CNNDETECTION_OFFICIAL_ARCHIVE_URL,
+            external_root / "CNNDetection",
+            "CNNDetection-master",
+        )
+        stage03.ensure_requirements(repo_root / "requirements.txt", external_root / ".installed" / "cnndetection.ok")
+        checkpoint = stage03.resolve_cnndetection_checkpoint(
+            argparse.Namespace(external_root=external_root)
+        )
+        model = stage03._load_cnndetection_model(repo_root, checkpoint).to(device).eval()
+        preprocess = build_official_preprocess(detector_name)
+    elif detector_name == "lgrad":
+        repo_root = stage03.ensure_archive(
+            stage03.LGRAD_OFFICIAL_ARCHIVE_URL,
+            external_root / "LGrad",
+            "LGrad-master",
+        )
+        checkpoint = stage03.resolve_lgrad_checkpoint(argparse.Namespace(external_root=external_root))
+        preprocessing_ckpt = stage03.resolve_lgrad_preprocessing_ckpt(
+            argparse.Namespace(external_root=external_root)
+        )
+        grad_model = stage03._load_lgrad_gradient_model(repo_root, preprocessing_ckpt).to(device).eval()
+        model = stage03._load_lgrad_classifier_model(repo_root, checkpoint).to(device).eval()
+        preprocess = build_official_preprocess(detector_name, lgrad_model=grad_model)
+    elif detector_name == "npr":
+        repo_root = stage03.ensure_archive(
+            stage03.NPR_OFFICIAL_ARCHIVE_URL,
+            external_root / "NPR-DeepfakeDetection",
+            "NPR-DeepfakeDetection-main",
+        )
+        checkpoint = stage03.resolve_npr_checkpoint(argparse.Namespace(external_root=external_root))
+        model = stage03._load_npr_model(repo_root, checkpoint).to(device).eval()
+        preprocess = build_official_preprocess(detector_name)
+    else:
+        raise ValueError(f"Unsupported official detector for Grad-CAM: {detector_name}")
+
+    target_layer = choose_target_layer(model, detector_name)
+
+    def score_selector(output: object) -> torch.Tensor:
+        logits = output["logits"] if isinstance(output, dict) and "logits" in output else output
+        return logits.reshape(-1)[0]
+
+    return model, preprocess, target_layer, score_selector, device
+
+
 def build_sidbench_preprocess(detector_name: str, load_size: int | None, crop_size: int, lgrad_model: nn.Module | None):
     resize_ops: List[transforms.Compose] = []
     if load_size is not None:
@@ -382,7 +502,9 @@ def build_f3net_components(stage03, external_root: Path, device: str):
 
 def load_detector_components(detector_name: str, project_root: Path, external_root: Path, device: str):
     stage03 = load_stage03_module(project_root)
-    if detector_name in {"cnndetection", "gram", "lgrad"}:
+    if detector_name in {"cnndetection", "lgrad", "npr"}:
+        return build_official_components(stage03, detector_name, external_root, device)
+    if detector_name in {"gram"}:
         return build_sidbench_components(stage03, detector_name, external_root, device)
     if detector_name == "f3net":
         return build_f3net_components(stage03, external_root, device)
