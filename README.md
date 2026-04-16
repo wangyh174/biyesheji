@@ -14,7 +14,7 @@ The pipeline combines controlled image generation, real-image collection, semant
 1. `Stage 01` Generate fake images and organize real images by group.
 2. `Stage 01b` Audit generation-side imbalance before detector evaluation.
 3. `Stage 02` Filter samples with CLIP, quality control, and group-consistency checks.
-4. `Stage 03` Run pretrained detector inference for `CNNDetection`, `F3Net`, `Gram`, and `LGrad`.
+4. `Stage 03` Run pretrained detector inference for `CNNDetection`, `UnivFD`, `DIRE`, `LGrad`, and any additional enabled detectors.
 5. `Stage 04` Compute fairness metrics and stratified-bootstrap confidence intervals.
 6. `Stage 05` Produce model-based Grad-CAM heatmaps.
 7. `Stage 06` Run patch-shuffling structural attribution experiments.
@@ -39,7 +39,7 @@ The pipeline combines controlled image generation, real-image collection, semant
 Run the full local pipeline:
 
 ```bash
-python scripts/00_run_local_pipeline.py --real-source local --samples 50 --buffer-extra 100 --detectors cnndetection,f3net,gram,lgrad
+python scripts/00_run_local_pipeline.py --real-source local --samples 50 --buffer-extra 100 --detectors cnndetection,univfd,dire,lgrad
 ```
 
 Generate 150 fake candidates per group, but use 50 existing local real images per group from `data/real_samples/`:
@@ -57,6 +57,26 @@ python scripts/download_real_samples.py --samples-per-group 100 --clip-threshold
 ```
 
 Important outputs are written under `data/` and `results/`.
+
+## Detector Weights
+
+`LGrad` is supported in the current detector pipeline. Public checkpoints can come from either source:
+
+- Official repo: `https://github.com/chuangchuangtan/LGrad`
+- Official README weights folder: `https://drive.google.com/drive/folders/17-MAyCpMqyn4b_DFP2LekrmIgRovwoix?usp=share_link`
+- SIDBench repo: `https://github.com/mever-team/sidbench`
+- SIDBench weights archive: `https://drive.google.com/file/d/1YuJ2so_1LgOSRjJUqZL-L2EQmuJcdxQh/view?usp=sharing`
+
+Supported local LGrad checkpoint filenames include:
+
+- `LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth`
+- `LGrad-2class-Trainon-Progan_chair_horse.pth`
+- `LGrad-1class-Trainon-Progan_horse.pth`
+
+Place them under either of these directories:
+
+- `.external_models/weights/lgrad/`
+- `.external_models/sidbench_weights/weights/lgrad/`
 
 ## Practical Advice
 

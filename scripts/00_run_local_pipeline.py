@@ -19,7 +19,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=str, default=str(root))
     parser.add_argument("--real-source", type=str, default="local", choices=["local", "diffusers", "mock"])
-    parser.add_argument("--detectors", type=str, default="cnndetection,f3net,gram,lgrad")
+    parser.add_argument("--detectors", type=str, default="cnndetection,univfd,dire,lgrad")
     parser.add_argument("--samples", type=int, default=100)
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--model-id", type=str, default="runwayml/stable-diffusion-v1-5")
@@ -58,7 +58,7 @@ def main():
     # All downstream stages use the balanced (QC-passed) metadata
     metadata_balanced = str(Path(project_root) / "data" / "metadata_balanced.csv")
 
-    # === Stage 03: Run Detectors (CNNDetection, F3Net, Gram, LGrad) ===
+    # === Stage 03: Run Detectors (default: CNNDetection, UnivFD, DIRE, LGrad) ===
     for det in detector_list:
         run_cmd("03_run_detectors.py", [
             "--project-root", project_root,

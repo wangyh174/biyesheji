@@ -93,7 +93,7 @@ graph TD
 | 项目 | 值 |
 |:---|:---|
 | **做什么** | 用 4 款学术检测器分别判断每张图"是真是假" |
-| **检测器列表** | CNNDetection (CVPR'20)、F3Net (ECCV'20)、Gram (NeurIPS'21)、LGrad (CVPR'23) |
+| **检测器列表** | CNNDetection (CVPR'20)、UnivFD、DIRE、LGrad；其余如 F3Net / Gram 作为补充检测器在权重可用时接入 |
 | **实际实现** | 提取每张图的物理特征（频谱比、残差标准差、梯度均值/方差、像素方差），用 LogisticRegression 做 70/30 训练/测试切分 |
 | **输出** | `results/detector_outputs/{det}_scores.csv`（包含 y_true, y_hat, score, group, split） |
 

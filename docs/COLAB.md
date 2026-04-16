@@ -113,7 +113,7 @@ print("/content/project/results ->", drive_root / "results")
 !python scripts/00_run_local_pipeline.py \
     --real-source local \
     --samples 50 \
-    --detectors cnndetection,f3net,gram,lgrad
+    --detectors cnndetection,univfd,dire,lgrad
 ```
 
 ## 7. 如果只想单独检查 Grad-CAM

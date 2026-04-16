@@ -4,7 +4,7 @@ Stage 03: Run detector inference with released pretrained checkpoints.
 This replaces the previous proxy-feature + LogisticRegression baseline with
 pretrained detector inference. The implementation is intentionally split:
 
-- cnndetection / gram / lgrad:
+- cnndetection / gram / lgrad / univfd / dire:
     run through SIDBench, which exposes per-image prediction export and bundles
     released checkpoints for these detectors in a single weights archive.
 - f3net:
@@ -15,8 +15,9 @@ Notes
 1) The script is designed for Colab/runtime execution. It downloads source zips
    and weights on demand into `.external_models/`.
 2) F3Net / GramNet public checkpoints come from PyDeepFakeDet's released model
-   zoo. CNNDetection uses the official Wang et al. detector family; LGrad uses
-   the released LGrad checkpoint filename used by the authors/benchmarks.
+   zoo. CNNDetection uses the official Wang et al. detector family; LGrad
+   accepts the public checkpoint filenames released by the authors and reused
+   by SIDBench benchmarks.
 3) All rows are marked as split='test' because these are pretrained models,
    not train/test-split logistic baselines.
 """
@@ -76,11 +77,35 @@ DETECTOR_CONFIGS: Dict[str, DetectorConfig] = {
         sidbench_ckpt_relpath="weights/gramnet/Gram.pth",
         sidbench_extra=("--resizeSize", "299", "--cropSize", "299"),
     ),
+    "univfd": DetectorConfig(
+        name="univfd",
+        backend="sidbench",
+        display_name="UnivFD",
+        sidbench_model_name="UnivFD",
+        sidbench_ckpt_relpath="weights/univfd/fc_weights.pth",
+        sidbench_extra=("--resizeSize", "224", "--cropSize", "224"),
+    ),
+    "dire": DetectorConfig(
+        name="dire",
+        backend="sidbench",
+        display_name="DIRE",
+        sidbench_model_name="Dire",
+        sidbench_ckpt_relpath="weights/dire/lsun_adm.pth",
+        sidbench_extra=(
+            "--resizeSize",
+            "256",
+            "--cropSize",
+            "256",
+            "--DireGenerativeModelPath",
+            "weights/preprocessing/lsun_bedroom.pt",
+        ),
+    ),
     "lgrad": DetectorConfig(
         name="lgrad",
         backend="sidbench",
         display_name="LGrad",
         sidbench_model_name="LGrad",
+        # Prefer the 4-class public checkpoint when multiple LGrad variants are present.
         sidbench_ckpt_relpath="weights/lgrad/LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
         sidbench_extra=(
             "--resizeSize",
@@ -209,13 +234,39 @@ def resolve_sidbench_checkpoint(args: argparse.Namespace, cfg: DetectorConfig) -
                 external_root / "sidbench_weights" / "weights" / "gramnet" / "Gram.pth",
             ]
         )
+    elif cfg.name == "univfd":
+        candidates.extend(
+            [
+                external_root / "weights" / "univfd" / "fc_weights.pth",
+                external_root / "weights" / "univfd" / "fc_weights..pth",
+                external_root / "sidbench_weights" / "weights" / "univfd" / "fc_weights.pth",
+                external_root / "sidbench_weights" / "weights" / "univfd" / "fc_weights..pth",
+            ]
+        )
+    elif cfg.name == "dire":
+        candidates.extend(
+            [
+                external_root / "weights" / "dire" / "lsun_adm.pth",
+                external_root / "weights" / "dire" / "lsun_iddpm.pth",
+                external_root / "weights" / "dire" / "lsun_pndm.pth",
+                external_root / "weights" / "dire" / "lsun_stylegan.pth",
+                external_root / "sidbench_weights" / "weights" / "dire" / "lsun_adm.pth",
+                external_root / "sidbench_weights" / "weights" / "dire" / "lsun_iddpm.pth",
+                external_root / "sidbench_weights" / "weights" / "dire" / "lsun_pndm.pth",
+                external_root / "sidbench_weights" / "weights" / "dire" / "lsun_stylegan.pth",
+            ]
+        )
     elif cfg.name == "lgrad":
         candidates.extend(
             [
                 external_root / "weights" / "lgrad" / "Lgrad_Mix.pth",
                 external_root / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
+                external_root / "weights" / "lgrad" / "LGrad-2class-Trainon-Progan_chair_horse.pth",
+                external_root / "weights" / "lgrad" / "LGrad-1class-Trainon-Progan_horse.pth",
                 external_root / "sidbench_weights" / "weights" / "lgrad" / "Lgrad_Mix.pth",
                 external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
+                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-2class-Trainon-Progan_chair_horse.pth",
+                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-1class-Trainon-Progan_horse.pth",
             ]
         )
 
@@ -237,6 +288,20 @@ def resolve_lgrad_preprocessing_ckpt(args: argparse.Namespace) -> Path:
     if resolved is None:
         raise FileNotFoundError(
             "Missing LGrad preprocessing checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
+def resolve_dire_preprocessing_ckpt(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "preprocessing" / "lsun_bedroom.pt",
+        args.external_root / "sidbench_weights" / "weights" / "preprocessing" / "lsun_bedroom.pt",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing DIRE preprocessing checkpoint. Checked:\n"
             + "\n".join(str(path) for path in candidates)
         )
     return resolved
@@ -437,6 +502,10 @@ def run_sidbench(df: pd.DataFrame, args: argparse.Namespace, cfg: DetectorConfig
         for i, token in enumerate(extra_args):
             if token == "weights/preprocessing/karras2019stylegan-bedrooms-256x256_discriminator.pth":
                 extra_args[i] = str(resolve_lgrad_preprocessing_ckpt(args))
+    elif cfg.name == "dire":
+        for i, token in enumerate(extra_args):
+            if token == "weights/preprocessing/lsun_bedroom.pt":
+                extra_args[i] = str(resolve_dire_preprocessing_ckpt(args))
     cmd.extend(extra_args)
     run(cmd, cwd=repo_root)
 
