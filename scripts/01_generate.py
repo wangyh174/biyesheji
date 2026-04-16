@@ -681,7 +681,7 @@ def main() -> None:
     for group, gender, profession in groups:
         registered_real = 0
         if args.real_source == "local":
-            local_group_dir = Path(args.project_root) / "data" / "real_samples" / group
+            local_group_dir = Path(args.project_root) / "data" / "real_samples" / f"{group}_after"
             local_files = list_local_real_files(local_group_dir)
             if not local_files:
                 print(f"  [warn] No local real images found for {group}: {local_group_dir}")

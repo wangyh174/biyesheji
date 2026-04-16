@@ -70,6 +70,8 @@ def generate_shuffled_images(data_dir, patch_n, seed):
             continue
         groups = [d for d in os.listdir(source["path"])
                   if os.path.isdir(os.path.join(source["path"], d))]
+        if source["label"] == "real":
+            groups = [d for d in groups if d.endswith("_after")]
         for group in groups:
             group_in = os.path.join(source["path"], group)
             group_out = os.path.join(output_dir, source["label"], group)

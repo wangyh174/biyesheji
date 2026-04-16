@@ -334,14 +334,14 @@ def build_official_preprocess(detector_name: str, lgrad_model: nn.Module | None 
 
     gen_transform = transforms.Compose(
         [
-            transforms.Resize((256, 256)),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
         ]
     )
     final_transform = transforms.Compose(
         [
-            transforms.Resize((256, 256)),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
         ]

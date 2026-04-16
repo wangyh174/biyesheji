@@ -794,6 +794,7 @@ def run_npr_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame
 
     transform = transforms.Compose(
         [
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
@@ -837,14 +838,14 @@ def run_lgrad_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFra
 
     grad_input_transform = transforms.Compose(
         [
-            transforms.Resize((256, 256)),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
         ]
     )
     classifier_transform = transforms.Compose(
         [
-            transforms.Resize((256, 256)),
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]
@@ -853,7 +854,7 @@ def run_lgrad_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFra
     paths = df["file_path"].astype(str).tolist()
     grad_loader = build_loader(paths, grad_input_transform, args)
     scores_by_path: Dict[str, float] = {}
-    use_amp = amp_enabled(args)
+    use_amp = False  # Disabled completely to fix RuntimeError: expected scalar type Half but found Float
 
     for batch_paths, grad_inputs in tqdm(grad_loader, desc="LGrad inference", leave=False):
         grad_inputs = grad_inputs.to(device=device, dtype=torch.float32)
@@ -909,6 +910,7 @@ def run_cnndetection_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.
 
     transform = transforms.Compose(
         [
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
         ]

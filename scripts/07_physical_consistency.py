@@ -52,6 +52,8 @@ def main():
         if not os.path.exists(source["path"]): continue
         
         groups = [d for d in os.listdir(source["path"]) if os.path.isdir(os.path.join(source["path"], d))]
+        if source["label"] == "real":
+            groups = [d for d in groups if d.endswith("_after")]
         
         for group in groups:
             group_dir = os.path.join(source["path"], group)
