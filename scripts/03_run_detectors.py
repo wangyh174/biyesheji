@@ -4,9 +4,17 @@ Stage 03: Run detector inference with released pretrained checkpoints.
 This replaces the previous proxy-feature + LogisticRegression baseline with
 pretrained detector inference. The implementation is intentionally split:
 
-- cnndetection / gram / lgrad / univfd / dire:
+- gram / univfd / dire:
     run through SIDBench, which exposes per-image prediction export and bundles
     released checkpoints for these detectors in a single weights archive.
+- cnndetection:
+    run through the official CNNDetection repository without relying on
+    SIDBench.
+- lgrad:
+    run through the official LGrad pipeline (gradient extraction + ResNet50
+    classifier) without relying on SIDBench.
+- npr:
+    run through the official NPR repository without relying on SIDBench.
 - f3net:
     run through the publicly released PyDeepFakeDet F3Net checkpoint.
 
@@ -47,6 +55,9 @@ from sklearn.metrics import roc_auc_score
 SIDBENCH_ARCHIVE_URL = "https://codeload.github.com/mever-team/sidbench/zip/refs/heads/main"
 SIDBENCH_WEIGHTS_URL = "https://drive.google.com/file/d/1YuJ2so_1LgOSRjJUqZL-L2EQmuJcdxQh/view?usp=sharing"
 PYDEEPFAKEDET_ARCHIVE_URL = "https://codeload.github.com/wdrink/PyDeepFakeDet/zip/refs/heads/main"
+LGRAD_OFFICIAL_ARCHIVE_URL = "https://codeload.github.com/chuangchuangtan/LGrad/zip/refs/heads/master"
+CNNDETECTION_OFFICIAL_ARCHIVE_URL = "https://codeload.github.com/PeterWang512/CNNDetection/zip/refs/heads/master"
+NPR_OFFICIAL_ARCHIVE_URL = "https://codeload.github.com/chuangchuangtan/NPR-DeepfakeDetection/zip/refs/heads/main"
 F3NET_RAW_CKPT_URL = "https://drive.google.com/file/d/1mUNeR-r5vi-dNtxw4wIBxGaLZculxfQR/view?usp=sharing"
 
 
@@ -63,11 +74,9 @@ class DetectorConfig:
 DETECTOR_CONFIGS: Dict[str, DetectorConfig] = {
     "cnndetection": DetectorConfig(
         name="cnndetection",
-        backend="sidbench",
+        backend="cnndetection_official",
         display_name="CNNDetection",
-        sidbench_model_name="CNNDetect",
         sidbench_ckpt_relpath="weights/cnndetect/blur_jpg_prob0.5.pth",
-        sidbench_extra=("--resizeSize", "256", "--cropSize", "256"),
     ),
     "gram": DetectorConfig(
         name="gram",
@@ -102,19 +111,15 @@ DETECTOR_CONFIGS: Dict[str, DetectorConfig] = {
     ),
     "lgrad": DetectorConfig(
         name="lgrad",
-        backend="sidbench",
+        backend="lgrad_official",
         display_name="LGrad",
-        sidbench_model_name="LGrad",
-        # Prefer the 4-class public checkpoint when multiple LGrad variants are present.
         sidbench_ckpt_relpath="weights/lgrad/LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
-        sidbench_extra=(
-            "--resizeSize",
-            "256",
-            "--cropSize",
-            "256",
-            "--LGradGenerativeModelPath",
-            "weights/preprocessing/karras2019stylegan-bedrooms-256x256_discriminator.pth",
-        ),
+    ),
+    "npr": DetectorConfig(
+        name="npr",
+        backend="npr_official",
+        display_name="NPR",
+        sidbench_ckpt_relpath="weights/npr/NPR.pth",
     ),
     "f3net": DetectorConfig(
         name="f3net",
@@ -256,20 +261,6 @@ def resolve_sidbench_checkpoint(args: argparse.Namespace, cfg: DetectorConfig) -
                 external_root / "sidbench_weights" / "weights" / "dire" / "lsun_stylegan.pth",
             ]
         )
-    elif cfg.name == "lgrad":
-        candidates.extend(
-            [
-                external_root / "weights" / "lgrad" / "Lgrad_Mix.pth",
-                external_root / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
-                external_root / "weights" / "lgrad" / "LGrad-2class-Trainon-Progan_chair_horse.pth",
-                external_root / "weights" / "lgrad" / "LGrad-1class-Trainon-Progan_horse.pth",
-                external_root / "sidbench_weights" / "weights" / "lgrad" / "Lgrad_Mix.pth",
-                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
-                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-2class-Trainon-Progan_chair_horse.pth",
-                external_root / "sidbench_weights" / "weights" / "lgrad" / "LGrad-1class-Trainon-Progan_horse.pth",
-            ]
-        )
-
     resolved = resolve_existing_path(candidates)
     if resolved is None:
         raise FileNotFoundError(
@@ -279,15 +270,61 @@ def resolve_sidbench_checkpoint(args: argparse.Namespace, cfg: DetectorConfig) -
     return resolved
 
 
+def resolve_lgrad_checkpoint(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "lgrad" / "Lgrad_Mix.pth",
+        args.external_root / "weights" / "lgrad" / "LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth",
+        args.external_root / "weights" / "lgrad" / "LGrad-2class-Trainon-Progan_chair_horse.pth",
+        args.external_root / "weights" / "lgrad" / "LGrad-1class-Trainon-Progan_horse.pth",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing local LGrad checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
+def resolve_cnndetection_checkpoint(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "cnndetect" / "blur_jpg_prob0.5.pth",
+        args.external_root / "weights" / "cnndetection" / "blur_jpg_prob0.5.pth",
+        args.external_root / "sidbench_weights" / "weights" / "cnndetect" / "blur_jpg_prob0.5.pth",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing local CNNDetection checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
 def resolve_lgrad_preprocessing_ckpt(args: argparse.Namespace) -> Path:
     candidates = [
         args.external_root / "weights" / "preprocessing" / "karras2019stylegan-bedrooms-256x256_discriminator.pth",
-        args.external_root / "sidbench_weights" / "weights" / "preprocessing" / "karras2019stylegan-bedrooms-256x256_discriminator.pth",
     ]
     resolved = resolve_existing_path(candidates)
     if resolved is None:
         raise FileNotFoundError(
             "Missing LGrad preprocessing checkpoint. Checked:\n"
+            + "\n".join(str(path) for path in candidates)
+        )
+    return resolved
+
+
+def resolve_npr_checkpoint(args: argparse.Namespace) -> Path:
+    candidates = [
+        args.external_root / "weights" / "npr" / "NPR.pth",
+        args.external_root / "weights" / "npr" / "model_epoch_last_3090.pth",
+        args.external_root / "NPR-DeepfakeDetection" / "NPR.pth",
+        args.external_root / "NPR-DeepfakeDetection" / "model_epoch_last_3090.pth",
+    ]
+    resolved = resolve_existing_path(candidates)
+    if resolved is None:
+        raise FileNotFoundError(
+            "Missing local NPR checkpoint. Checked:\n"
             + "\n".join(str(path) for path in candidates)
         )
     return resolved
@@ -541,6 +578,68 @@ def _strip_module_prefix(state_dict: Dict[str, object]) -> Dict[str, object]:
     return state_dict
 
 
+def _normalize_grad_uint8(grad_tensor) -> Image.Image:
+    grad_np = grad_tensor.detach().cpu().permute(1, 2, 0).numpy()
+    grad_np = grad_np - grad_np.min()
+    max_val = float(grad_np.max())
+    if max_val > 0:
+        grad_np = grad_np / max_val
+    grad_np = np.clip(grad_np * 255.0, 0, 255).astype(np.uint8)
+    return Image.fromarray(grad_np, mode="RGB")
+
+
+def _load_lgrad_classifier_model(repo_root: Path, checkpoint_path: Path):
+    import torch
+
+    sys.path.insert(0, str(repo_root / "CNNDetection"))
+    from networks.resnet import resnet50  # type: ignore
+
+    model = resnet50(num_classes=1)
+    ckpt = torch.load(checkpoint_path, map_location="cpu")
+    if isinstance(ckpt, dict):
+        state = ckpt.get("model", ckpt.get("state_dict", ckpt))
+    else:
+        state = ckpt
+    state = _strip_module_prefix(state)
+    model.load_state_dict(state, strict=False)
+    return model
+
+
+def _load_cnndetection_model(repo_root: Path, checkpoint_path: Path):
+    import torch
+
+    sys.path.insert(0, str(repo_root))
+    from networks.resnet import resnet50  # type: ignore
+
+    model = resnet50(num_classes=1)
+    ckpt = torch.load(checkpoint_path, map_location="cpu")
+    if isinstance(ckpt, dict):
+        state = ckpt.get("model", ckpt.get("state_dict", ckpt))
+    else:
+        state = ckpt
+    state = _strip_module_prefix(state)
+    model.load_state_dict(state, strict=False)
+    return model
+
+
+def _load_lgrad_gradient_model(repo_root: Path, preprocessing_ckpt: Path):
+    import torch
+
+    sys.path.insert(0, str(repo_root / "img2gad_pytorch"))
+    from models import build_model  # type: ignore
+
+    model = build_model(
+        gan_type="stylegan",
+        module="discriminator",
+        resolution=256,
+        label_size=0,
+        image_channels=3,
+    )
+    state = torch.load(preprocessing_ckpt, map_location="cpu")
+    model.load_state_dict(state, strict=True)
+    return model
+
+
 def _load_f3net_model(repo_root: Path, checkpoint_path: Path):
     import torch
 
@@ -567,6 +666,23 @@ def _load_f3net_model(repo_root: Path, checkpoint_path: Path):
         print(f"[warn] F3Net missing keys: {len(missing)}")
     if unexpected:
         print(f"[warn] F3Net unexpected keys: {len(unexpected)}")
+    return model
+
+
+def _load_npr_model(repo_root: Path, checkpoint_path: Path):
+    import torch
+
+    sys.path.insert(0, str(repo_root))
+    from networks.resnet import resnet50  # type: ignore
+
+    model = resnet50(num_classes=1)
+    ckpt = torch.load(checkpoint_path, map_location="cpu")
+    if isinstance(ckpt, dict):
+        state = ckpt.get("model", ckpt.get("state_dict", ckpt))
+    else:
+        state = ckpt
+    state = _strip_module_prefix(state)
+    model.load_state_dict(state, strict=True)
     return model
 
 
@@ -614,6 +730,145 @@ def run_f3net(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
     return out
 
 
+def run_npr_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
+    repo_root = ensure_archive(
+        NPR_OFFICIAL_ARCHIVE_URL,
+        args.external_root / "NPR-DeepfakeDetection",
+        "NPR-DeepfakeDetection-main",
+    )
+    checkpoint = resolve_npr_checkpoint(args)
+
+    import torch
+    from torchvision import transforms
+
+    device = args.device
+    model = _load_npr_model(repo_root, checkpoint).to(device)
+    model.eval()
+
+    transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
+
+    scores: List[float] = []
+    with torch.no_grad():
+        for path in df["file_path"].astype(str).tolist():
+            img = Image.open(path).convert("RGB")
+            width, height = img.size
+            if width % 2 == 1 or height % 2 == 1:
+                img = img.crop((0, 0, width - (width % 2), height - (height % 2)))
+            tensor = transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
+            score = float(model(tensor).sigmoid().flatten()[0].cpu().item())
+            scores.append(score)
+
+    out = df.copy()
+    out["detector_name"] = "npr"
+    out["score"] = scores
+    out["y_hat"] = (out["score"] >= 0.5).astype(int)
+    out["split"] = "test"
+    return out
+
+
+def run_lgrad_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
+    repo_root = ensure_archive(LGRAD_OFFICIAL_ARCHIVE_URL, args.external_root / "LGrad", "LGrad-master")
+    checkpoint = resolve_lgrad_checkpoint(args)
+    preprocessing_ckpt = resolve_lgrad_preprocessing_ckpt(args)
+
+    import torch
+    from torchvision import transforms
+
+    device = args.device
+    grad_model = _load_lgrad_gradient_model(repo_root, preprocessing_ckpt).to(device)
+    cls_model = _load_lgrad_classifier_model(repo_root, checkpoint).to(device)
+    grad_model.eval()
+    cls_model.eval()
+
+    grad_input_transform = transforms.Compose(
+        [
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.5, 0.5, 0.5], std=[0.5, 0.5, 0.5]),
+        ]
+    )
+    classifier_transform = transforms.Compose(
+        [
+            transforms.Resize((256, 256)),
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
+
+    scores: List[float] = []
+    for path in df["file_path"].astype(str).tolist():
+        img = Image.open(path).convert("RGB")
+        grad_input = grad_input_transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
+        grad_input.requires_grad_(True)
+
+        pre = grad_model(grad_input)
+        grad_model.zero_grad(set_to_none=True)
+        grad = torch.autograd.grad(
+            pre.sum(),
+            grad_input,
+            create_graph=False,
+            retain_graph=False,
+            allow_unused=False,
+        )[0][0]
+
+        grad_img = _normalize_grad_uint8(grad)
+        cls_input = classifier_transform(grad_img).unsqueeze(0).to(device=device, dtype=torch.float32)
+        with torch.no_grad():
+            score = float(cls_model(cls_input).sigmoid().flatten()[0].cpu().item())
+        scores.append(score)
+
+    out = df.copy()
+    out["detector_name"] = "lgrad"
+    out["score"] = scores
+    out["y_hat"] = (out["score"] >= 0.5).astype(int)
+    out["split"] = "test"
+    return out
+
+
+def run_cnndetection_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
+    repo_root = ensure_archive(
+        CNNDETECTION_OFFICIAL_ARCHIVE_URL,
+        args.external_root / "CNNDetection",
+        "CNNDetection-master",
+    )
+    ensure_requirements(repo_root / "requirements.txt", args.external_root / ".installed" / "cnndetection.ok")
+    checkpoint = resolve_cnndetection_checkpoint(args)
+
+    import torch
+    from torchvision import transforms
+
+    device = args.device
+    model = _load_cnndetection_model(repo_root, checkpoint).to(device)
+    model.eval()
+
+    transform = transforms.Compose(
+        [
+            transforms.ToTensor(),
+            transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225]),
+        ]
+    )
+
+    scores: List[float] = []
+    with torch.no_grad():
+        for path in df["file_path"].astype(str).tolist():
+            img = Image.open(path).convert("RGB")
+            tensor = transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
+            score = float(model(tensor).sigmoid().flatten()[0].cpu().item())
+            scores.append(score)
+
+    out = df.copy()
+    out["detector_name"] = "cnndetection"
+    out["score"] = scores
+    out["y_hat"] = (out["score"] >= 0.5).astype(int)
+    out["split"] = "test"
+    return out
+
+
 def main() -> None:
     args = parse_args()
     validate_runtime(args.device)
@@ -630,6 +885,12 @@ def main() -> None:
 
         if cfg.backend == "sidbench":
             out = run_sidbench(df, run_args, cfg)
+        elif cfg.backend == "cnndetection_official":
+            out = run_cnndetection_official(df, run_args)
+        elif cfg.backend == "lgrad_official":
+            out = run_lgrad_official(df, run_args)
+        elif cfg.backend == "npr_official":
+            out = run_npr_official(df, run_args)
         elif cfg.backend == "pydeepfakedet_f3net":
             out = run_f3net(df, run_args)
         else:

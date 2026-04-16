@@ -60,13 +60,17 @@ Important outputs are written under `data/` and `results/`.
 
 ## Detector Weights
 
-`LGrad` is supported in the current detector pipeline. Public checkpoints can come from either source:
+The current pipeline prefers official implementations for detectors when practical.
+
+`CNNDetection` official sources:
+
+- Official repo: `https://github.com/PeterWang512/CNNDetection`
+- Recommended checkpoint path: `.external_models/weights/cnndetect/blur_jpg_prob0.5.pth`
+
+`LGrad` is supported in the current detector pipeline. Public checkpoints should come from the official source:
 
 - Official repo: `https://github.com/chuangchuangtan/LGrad`
 - Official README weights folder: `https://drive.google.com/drive/folders/17-MAyCpMqyn4b_DFP2LekrmIgRovwoix?usp=share_link`
-- SIDBench repo: `https://github.com/mever-team/sidbench`
-- SIDBench weights archive: `https://drive.google.com/file/d/1YuJ2so_1LgOSRjJUqZL-L2EQmuJcdxQh/view?usp=sharing`
-
 Supported local LGrad checkpoint filenames include:
 
 - `LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth`
@@ -76,7 +80,6 @@ Supported local LGrad checkpoint filenames include:
 Place them under either of these directories:
 
 - `.external_models/weights/lgrad/`
-- `.external_models/sidbench_weights/weights/lgrad/`
 
 ## Practical Advice
 
