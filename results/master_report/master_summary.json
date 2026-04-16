@@ -1,0 +1,67 @@
+{
+  "generated_at": "2026-04-16T20:26:22.709803",
+  "n_detectors": 3,
+  "detectors": [
+    "cnndetection",
+    "lgrad",
+    "npr"
+  ],
+  "detector_results": [
+    {
+      "detector": "cnndetection",
+      "status": "ok",
+      "accuracy": 0.6527777777777778,
+      "auc": 0.637987012987013,
+      "max_gap_fpr": 0.0,
+      "max_gap_fnr": 0.2857142857142857,
+      "fm_eo_pct": 28.57142857142857,
+      "fdp_pct": 11.11111111111111,
+      "ffpr_pct": 0.0,
+      "foae_pct": 11.111111111111105,
+      "ci_fpr_low": 0.0,
+      "ci_fpr_high": 0.0
+    },
+    {
+      "detector": "lgrad",
+      "status": "ok",
+      "accuracy": 0.9027777777777778,
+      "auc": 0.9732142857142857,
+      "max_gap_fpr": 0.2727272727272727,
+      "max_gap_fnr": 0.14285714285714285,
+      "fm_eo_pct": 27.27272727272727,
+      "fdp_pct": 16.666666666666668,
+      "ffpr_pct": 27.27272727272727,
+      "foae_pct": 16.666666666666664,
+      "ci_fpr_low": 0.09090909090909091,
+      "ci_fpr_high": 0.5454545454545454
+    },
+    {
+      "detector": "npr",
+      "status": "ok",
+      "accuracy": 0.9722222222222222,
+      "auc": 0.976461038961039,
+      "max_gap_fpr": 0.18181818181818182,
+      "max_gap_fnr": 0.0,
+      "fm_eo_pct": 18.181818181818183,
+      "fdp_pct": 11.11111111111111,
+      "ffpr_pct": 18.181818181818183,
+      "foae_pct": 11.111111111111116,
+      "ci_fpr_low": 0.0,
+      "ci_fpr_high": 0.45454545454545453
+    }
+  ],
+  "high_pass_results": [
+    {
+      "detector": "cnndetection",
+      "highpass_auc": 0.5401190476190476
+    },
+    {
+      "detector": "lgrad",
+      "highpass_auc": 0.6036309523809523
+    },
+    {
+      "detector": "npr",
+      "highpass_auc": 0.4645436507936508
+    }
+  ]
+}

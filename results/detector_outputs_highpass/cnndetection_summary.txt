@@ -1,0 +1,5 @@
+detector=cnndetection
+backend=pretrained
+accuracy=0.124269
+auc=0.540119
+n_total=684

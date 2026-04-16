@@ -41,7 +41,8 @@ data/real_samples/
 data/shuffled_8x8/
 data/shuffled_*/
 data/high_pass_residuals/
-results/
+# Removed results/ because we want to track thesis charts and reports
+
 models/
 __pycache__/
 *.zip
@@ -49,3 +50,4 @@ __pycache__/
 *.md
 !README.md
 !docs/*.md
+!results/**/*.md

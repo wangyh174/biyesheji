@@ -1,0 +1,685 @@
+id,group,y_true,file_path,prompt,detector_name,score,y_hat,split
+fake_female-doctor_0000,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0000.png,,lgrad,5.640037431886024e-19,0,test
+fake_female-doctor_0001,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0001.png,,lgrad,1.1971127231456867e-15,0,test
+fake_female-doctor_0002,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0002.png,,lgrad,7.287303119068392e-15,0,test
+fake_female-doctor_0003,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0003.png,,lgrad,7.151679422279233e-13,0,test
+fake_female-doctor_0004,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0004.png,,lgrad,1.1848698020996973e-13,0,test
+fake_female-doctor_0005,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0005.png,,lgrad,5.932827212083483e-18,0,test
+fake_female-doctor_0006,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0006.png,,lgrad,6.26426193992123e-17,0,test
+fake_female-doctor_0007,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0007.png,,lgrad,2.903384455597846e-13,0,test
+fake_female-doctor_0008,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0008.png,,lgrad,2.6455776453012878e-14,0,test
+fake_female-doctor_0009,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0009.png,,lgrad,6.840742637655156e-17,0,test
+fake_female-doctor_0010,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0010.png,,lgrad,9.220761090431018e-13,0,test
+fake_female-doctor_0011,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0011.png,,lgrad,7.505487394497369e-19,0,test
+fake_female-doctor_0012,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0012.png,,lgrad,1.0324344677792308e-11,0,test
+fake_female-doctor_0013,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0013.png,,lgrad,2.416497557611308e-10,0,test
+fake_female-doctor_0014,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0014.png,,lgrad,1.8491112775079893e-13,0,test
+fake_female-doctor_0015,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0015.png,,lgrad,4.849787021629637e-13,0,test
+fake_female-doctor_0016,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0016.png,,lgrad,4.3316611690775997e-13,0,test
+fake_female-doctor_0017,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0017.png,,lgrad,1.2316263460487864e-12,0,test
+fake_female-doctor_0018,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0018.png,,lgrad,1.4037638806829104e-15,0,test
+fake_female-doctor_0019,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0019.png,,lgrad,8.033474215230068e-17,0,test
+fake_female-doctor_0020,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0020.png,,lgrad,5.920053475474133e-18,0,test
+fake_female-doctor_0021,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0021.png,,lgrad,3.093413623337213e-17,0,test
+fake_female-doctor_0022,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0022.png,,lgrad,9.204169002484386e-14,0,test
+fake_female-doctor_0023,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0023.png,,lgrad,1.3794677782062812e-14,0,test
+fake_female-doctor_0024,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0024.png,,lgrad,2.5481131152530876e-21,0,test
+fake_female-doctor_0025,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0025.png,,lgrad,1.3893779182705401e-10,0,test
+fake_female-doctor_0026,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0026.png,,lgrad,1.3842301966331085e-18,0,test
+fake_female-doctor_0027,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0027.png,,lgrad,1.0591654506578174e-12,0,test
+fake_female-doctor_0028,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0028.png,,lgrad,4.6166360825837245e-16,0,test
+fake_female-doctor_0029,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0029.png,,lgrad,3.1454293210580585e-15,0,test
+fake_female-doctor_0030,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0030.png,,lgrad,1.0518173788540142e-12,0,test
+fake_female-doctor_0031,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0031.png,,lgrad,8.444129022948754e-17,0,test
+fake_female-doctor_0032,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0032.png,,lgrad,1.6129004869972624e-13,0,test
+fake_female-doctor_0033,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0033.png,,lgrad,7.353028825899047e-17,0,test
+fake_female-doctor_0034,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0034.png,,lgrad,4.407275743104267e-16,0,test
+fake_female-doctor_0035,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0035.png,,lgrad,1.2594111493832933e-15,0,test
+fake_female-doctor_0036,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0036.png,,lgrad,8.13588690920286e-19,0,test
+fake_female-doctor_0037,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0037.png,,lgrad,9.211472548042553e-18,0,test
+fake_female-doctor_0038,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0038.png,,lgrad,1.9744400039043682e-18,0,test
+fake_female-doctor_0039,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0039.png,,lgrad,4.958688864723672e-18,0,test
+fake_female-doctor_0040,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0040.png,,lgrad,5.98646024245475e-13,0,test
+fake_female-doctor_0041,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0041.png,,lgrad,3.605192875597062e-15,0,test
+fake_female-doctor_0042,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0042.png,,lgrad,2.4270863541779e-16,0,test
+fake_female-doctor_0043,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0043.png,,lgrad,2.864977352579068e-12,0,test
+fake_female-doctor_0044,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0044.png,,lgrad,1.8002516794998757e-12,0,test
+fake_female-doctor_0045,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0045.png,,lgrad,1.8616130859072655e-10,0,test
+fake_female-doctor_0046,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0046.png,,lgrad,4.425916284942627e-13,0,test
+fake_female-doctor_0047,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0047.png,,lgrad,1.920792219939696e-13,0,test
+fake_female-doctor_0048,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0048.png,,lgrad,1.6863980440502864e-14,0,test
+fake_female-doctor_0049,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0049.png,,lgrad,1.3163261713272645e-12,0,test
+fake_female-doctor_0050,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0050.png,,lgrad,4.726522992437587e-12,0,test
+fake_female-doctor_0051,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0051.png,,lgrad,2.998571079535353e-17,0,test
+fake_female-doctor_0052,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0052.png,,lgrad,6.098079680105783e-11,0,test
+fake_female-doctor_0053,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0053.png,,lgrad,9.985734434432222e-14,0,test
+fake_female-doctor_0054,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0054.png,,lgrad,5.071960212932325e-12,0,test
+fake_female-doctor_0055,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0055.png,,lgrad,2.7727702445190516e-07,0,test
+fake_female-doctor_0056,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0056.png,,lgrad,9.717294108041105e-14,0,test
+fake_female-doctor_0057,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0057.png,,lgrad,1.1522526671190169e-17,0,test
+fake_female-doctor_0058,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0058.png,,lgrad,1.916537615797285e-15,0,test
+fake_female-doctor_0059,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0059.png,,lgrad,2.2253079191058793e-17,0,test
+fake_female-doctor_0060,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0060.png,,lgrad,1.7910880976057184e-14,0,test
+fake_female-doctor_0061,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0061.png,,lgrad,6.323770175044319e-13,0,test
+fake_female-doctor_0062,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0062.png,,lgrad,1.3179304869659347e-10,0,test
+fake_female-doctor_0063,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0063.png,,lgrad,3.220214124668937e-17,0,test
+fake_female-doctor_0064,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0064.png,,lgrad,4.951843324769336e-19,0,test
+fake_female-doctor_0065,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0065.png,,lgrad,1.2102236546240874e-08,0,test
+fake_female-doctor_0066,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0066.png,,lgrad,1.2022519896740338e-15,0,test
+fake_female-doctor_0067,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0067.png,,lgrad,1.3734385129844304e-16,0,test
+fake_female-doctor_0068,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0068.png,,lgrad,1.1689184342689174e-10,0,test
+fake_female-doctor_0069,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0069.png,,lgrad,1.1593377999377786e-17,0,test
+fake_female-doctor_0070,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0070.png,,lgrad,2.803753501666864e-17,0,test
+fake_female-doctor_0071,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0071.png,,lgrad,8.477773198083474e-14,0,test
+fake_female-doctor_0072,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0072.png,,lgrad,1.2138961515999387e-17,0,test
+fake_female-doctor_0073,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0073.png,,lgrad,8.582186102458565e-15,0,test
+fake_female-doctor_0074,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0074.png,,lgrad,3.3730211447546583e-15,0,test
+fake_female-doctor_0075,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0075.png,,lgrad,3.277009306273948e-12,0,test
+fake_female-doctor_0076,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0076.png,,lgrad,6.354238424495506e-13,0,test
+fake_female-doctor_0077,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0077.png,,lgrad,1.5654181916664386e-14,0,test
+fake_female-doctor_0078,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0078.png,,lgrad,1.259007112973387e-12,0,test
+fake_female-doctor_0079,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0079.png,,lgrad,2.204805782390906e-12,0,test
+fake_female-doctor_0080,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0080.png,,lgrad,1.299954275524502e-15,0,test
+fake_female-doctor_0081,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0081.png,,lgrad,7.705836294578938e-13,0,test
+fake_female-doctor_0082,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0082.png,,lgrad,4.0766162147376495e-12,0,test
+fake_female-doctor_0083,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0083.png,,lgrad,1.5991060472314578e-14,0,test
+fake_female-doctor_0084,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0084.png,,lgrad,1.855130056461953e-14,0,test
+fake_female-doctor_0085,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0085.png,,lgrad,1.441314142959938e-14,0,test
+fake_female-doctor_0086,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0086.png,,lgrad,2.0666174121389963e-13,0,test
+fake_female-doctor_0087,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0087.png,,lgrad,6.640143150022983e-18,0,test
+fake_female-doctor_0088,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0088.png,,lgrad,2.434684940634535e-13,0,test
+fake_female-doctor_0089,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0089.png,,lgrad,8.673007747772584e-18,0,test
+fake_female-doctor_0090,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0090.png,,lgrad,2.5201703517021418e-14,0,test
+fake_female-doctor_0091,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0091.png,,lgrad,2.7116550243297746e-14,0,test
+fake_female-doctor_0092,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0092.png,,lgrad,3.369002993247605e-11,0,test
+fake_female-doctor_0093,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0093.png,,lgrad,1.1766604357532628e-10,0,test
+fake_female-doctor_0094,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0094.png,,lgrad,3.3131844609595687e-16,0,test
+fake_female-doctor_0095,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0095.png,,lgrad,5.449470745938793e-15,0,test
+fake_female-doctor_0096,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0096.png,,lgrad,1.2426815767975683e-19,0,test
+fake_female-doctor_0097,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0097.png,,lgrad,1.34312214128407e-10,0,test
+fake_female-doctor_0098,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0098.png,,lgrad,6.844150354963496e-13,0,test
+fake_female-doctor_0099,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0099.png,,lgrad,1.070998715547933e-16,0,test
+fake_female-doctor_0100,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0100.png,,lgrad,1.2796831889099304e-15,0,test
+fake_female-doctor_0101,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0101.png,,lgrad,2.251051678975216e-15,0,test
+fake_female-doctor_0102,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0102.png,,lgrad,2.0095230084294267e-18,0,test
+fake_female-doctor_0103,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0103.png,,lgrad,1.8750429540189545e-15,0,test
+fake_female-doctor_0104,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0104.png,,lgrad,2.071693299427065e-16,0,test
+fake_female-doctor_0105,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0105.png,,lgrad,4.2645124627774256e-13,0,test
+fake_female-doctor_0106,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0106.png,,lgrad,1.667930606067105e-18,0,test
+fake_female-doctor_0107,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0107.png,,lgrad,3.600008478094494e-17,0,test
+fake_female-doctor_0108,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0108.png,,lgrad,5.325820468498568e-20,0,test
+fake_female-doctor_0109,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0109.png,,lgrad,1.3513854965618854e-11,0,test
+fake_female-doctor_0110,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0110.png,,lgrad,3.830700151210469e-16,0,test
+fake_female-doctor_0111,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0111.png,,lgrad,6.650651980088379e-14,0,test
+fake_female-doctor_0112,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0112.png,,lgrad,6.6673376821163415e-15,0,test
+fake_female-doctor_0113,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0113.png,,lgrad,1.9167241745971226e-19,0,test
+fake_female-doctor_0114,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0114.png,,lgrad,6.523790622298131e-12,0,test
+fake_female-doctor_0115,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0115.png,,lgrad,6.950168441830775e-16,0,test
+fake_female-doctor_0116,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0116.png,,lgrad,2.2945185722679333e-14,0,test
+fake_female-doctor_0117,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0117.png,,lgrad,3.1676450894404075e-15,0,test
+fake_female-doctor_0118,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0118.png,,lgrad,3.583278015669225e-14,0,test
+fake_female-doctor_0119,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0119.png,,lgrad,2.8994742465814592e-15,0,test
+fake_female-doctor_0120,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0120.png,,lgrad,1.7352108587346572e-14,0,test
+fake_female-doctor_0121,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0121.png,,lgrad,5.236887922551066e-15,0,test
+fake_female-doctor_0122,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0122.png,,lgrad,3.8983070244080764e-11,0,test
+fake_female-doctor_0123,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0123.png,,lgrad,3.613688616058023e-15,0,test
+fake_female-doctor_0124,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0124.png,,lgrad,1.166014713168545e-14,0,test
+fake_female-doctor_0125,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0125.png,,lgrad,3.612658674816138e-13,0,test
+fake_female-doctor_0126,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0126.png,,lgrad,3.7203191373923195e-13,0,test
+fake_female-doctor_0127,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0127.png,,lgrad,3.1565147631112955e-13,0,test
+fake_female-doctor_0128,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0128.png,,lgrad,6.831452551516058e-19,0,test
+fake_female-doctor_0129,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0129.png,,lgrad,7.297374510217836e-11,0,test
+fake_female-doctor_0130,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0130.png,,lgrad,4.8921467835679865e-15,0,test
+fake_female-doctor_0131,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0131.png,,lgrad,1.7177408800916893e-11,0,test
+fake_female-doctor_0132,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0132.png,,lgrad,2.946097955435628e-13,0,test
+fake_female-doctor_0133,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0133.png,,lgrad,2.6426793696063267e-13,0,test
+fake_female-doctor_0134,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0134.png,,lgrad,1.5512133244577342e-11,0,test
+fake_female-doctor_0135,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0135.png,,lgrad,1.2946115533762903e-12,0,test
+fake_female-doctor_0136,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0136.png,,lgrad,8.885765218766123e-18,0,test
+fake_female-doctor_0137,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0137.png,,lgrad,8.311657839852465e-14,0,test
+fake_female-doctor_0138,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0138.png,,lgrad,2.7577291062099644e-16,0,test
+fake_female-doctor_0139,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0139.png,,lgrad,4.968035531571768e-13,0,test
+fake_female-doctor_0140,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0140.png,,lgrad,3.352250348405876e-17,0,test
+fake_female-doctor_0141,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0141.png,,lgrad,4.610343140240558e-13,0,test
+fake_female-doctor_0142,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0142.png,,lgrad,8.706867658228503e-15,0,test
+fake_female-doctor_0143,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0143.png,,lgrad,2.2738950479495035e-13,0,test
+fake_female-doctor_0144,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0144.png,,lgrad,2.398661442539439e-14,0,test
+fake_female-doctor_0145,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0145.png,,lgrad,7.03903367593739e-07,0,test
+fake_female-doctor_0146,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0146.png,,lgrad,1.4874000697773226e-08,0,test
+fake_female-doctor_0147,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0147.png,,lgrad,9.003069150652701e-14,0,test
+fake_female-doctor_0148,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0148.png,,lgrad,3.746834572069873e-15,0,test
+fake_female-doctor_0149,female-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-doctor/fake_female-doctor_0149.png,,lgrad,4.2530727829429685e-18,0,test
+fake_female-nurse_0000,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0000.png,,lgrad,2.540169951551624e-13,0,test
+fake_female-nurse_0001,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0001.png,,lgrad,8.875360527431125e-19,0,test
+fake_female-nurse_0002,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0002.png,,lgrad,2.9186055444863817e-15,0,test
+fake_female-nurse_0003,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0003.png,,lgrad,1.3798370224193945e-09,0,test
+fake_female-nurse_0004,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0004.png,,lgrad,3.104563157726591e-16,0,test
+fake_female-nurse_0005,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0005.png,,lgrad,2.276732745171566e-17,0,test
+fake_female-nurse_0006,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0006.png,,lgrad,1.2977105487746964e-14,0,test
+fake_female-nurse_0007,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0007.png,,lgrad,5.237827282089571e-15,0,test
+fake_female-nurse_0008,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0008.png,,lgrad,4.881725737217917e-15,0,test
+fake_female-nurse_0009,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0009.png,,lgrad,4.769786945106472e-15,0,test
+fake_female-nurse_0010,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0010.png,,lgrad,8.71480943914196e-15,0,test
+fake_female-nurse_0011,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0011.png,,lgrad,2.1495885244872913e-14,0,test
+fake_female-nurse_0012,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0012.png,,lgrad,1.9243885524271483e-14,0,test
+fake_female-nurse_0013,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0013.png,,lgrad,5.064827407650071e-19,0,test
+fake_female-nurse_0014,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0014.png,,lgrad,4.367406230502274e-14,0,test
+fake_female-nurse_0015,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0015.png,,lgrad,2.1789590531201553e-14,0,test
+fake_female-nurse_0016,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0016.png,,lgrad,1.9023341438212512e-15,0,test
+fake_female-nurse_0017,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0017.png,,lgrad,6.334601011699105e-16,0,test
+fake_female-nurse_0018,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0018.png,,lgrad,6.9106224852267216e-15,0,test
+fake_female-nurse_0019,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0019.png,,lgrad,7.602460176530737e-17,0,test
+fake_female-nurse_0020,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0020.png,,lgrad,8.96018242241281e-12,0,test
+fake_female-nurse_0021,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0021.png,,lgrad,8.374010179737165e-16,0,test
+fake_female-nurse_0022,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0022.png,,lgrad,5.6201855777766874e-14,0,test
+fake_female-nurse_0023,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0023.png,,lgrad,1.999425845971691e-14,0,test
+fake_female-nurse_0024,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0024.png,,lgrad,2.4595750225169717e-18,0,test
+fake_female-nurse_0025,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0025.png,,lgrad,5.768140634321859e-15,0,test
+fake_female-nurse_0026,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0026.png,,lgrad,4.048828546737715e-12,0,test
+fake_female-nurse_0027,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0027.png,,lgrad,5.056908125751491e-13,0,test
+fake_female-nurse_0028,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0028.png,,lgrad,2.8836828758205257e-12,0,test
+fake_female-nurse_0029,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0029.png,,lgrad,1.2248464347233646e-16,0,test
+fake_female-nurse_0030,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0030.png,,lgrad,2.49125698369157e-13,0,test
+fake_female-nurse_0031,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0031.png,,lgrad,6.233205344561253e-16,0,test
+fake_female-nurse_0032,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0032.png,,lgrad,1.0049265863898427e-09,0,test
+fake_female-nurse_0033,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0033.png,,lgrad,5.638875243125387e-19,0,test
+fake_female-nurse_0034,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0034.png,,lgrad,6.448095062180827e-15,0,test
+fake_female-nurse_0035,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0035.png,,lgrad,1.93650310218891e-17,0,test
+fake_female-nurse_0036,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0036.png,,lgrad,1.711079086579026e-12,0,test
+fake_female-nurse_0037,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0037.png,,lgrad,1.1499696486283706e-16,0,test
+fake_female-nurse_0038,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0038.png,,lgrad,1.275116730953263e-12,0,test
+fake_female-nurse_0039,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0039.png,,lgrad,4.767606258783766e-14,0,test
+fake_female-nurse_0040,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0040.png,,lgrad,1.5497030048106097e-10,0,test
+fake_female-nurse_0041,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0041.png,,lgrad,5.413974136218207e-16,0,test
+fake_female-nurse_0042,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0042.png,,lgrad,4.2018740253386925e-17,0,test
+fake_female-nurse_0043,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0043.png,,lgrad,1.2231399703840906e-12,0,test
+fake_female-nurse_0044,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0044.png,,lgrad,3.5591801665478567e-17,0,test
+fake_female-nurse_0045,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0045.png,,lgrad,3.766558176465651e-09,0,test
+fake_female-nurse_0046,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0046.png,,lgrad,2.5513123650408934e-14,0,test
+fake_female-nurse_0047,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0047.png,,lgrad,1.9366058756631332e-10,0,test
+fake_female-nurse_0048,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0048.png,,lgrad,3.9100129282595725e-15,0,test
+fake_female-nurse_0049,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0049.png,,lgrad,1.3416281974265587e-12,0,test
+fake_female-nurse_0050,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0050.png,,lgrad,4.855097308345199e-14,0,test
+fake_female-nurse_0051,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0051.png,,lgrad,6.267108897066291e-16,0,test
+fake_female-nurse_0052,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0052.png,,lgrad,3.2391323239074066e-13,0,test
+fake_female-nurse_0053,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0053.png,,lgrad,1.1153072240857647e-17,0,test
+fake_female-nurse_0054,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0054.png,,lgrad,1.0354451693314238e-16,0,test
+fake_female-nurse_0055,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0055.png,,lgrad,2.350223422993569e-13,0,test
+fake_female-nurse_0056,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0056.png,,lgrad,3.134452875204474e-14,0,test
+fake_female-nurse_0057,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0057.png,,lgrad,3.166098619036958e-15,0,test
+fake_female-nurse_0058,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0058.png,,lgrad,6.803260212129292e-12,0,test
+fake_female-nurse_0059,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0059.png,,lgrad,6.876653109791353e-13,0,test
+fake_female-nurse_0060,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0060.png,,lgrad,1.5887080190017298e-15,0,test
+fake_female-nurse_0061,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0061.png,,lgrad,5.7817998876292815e-15,0,test
+fake_female-nurse_0062,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0062.png,,lgrad,6.49807339420062e-15,0,test
+fake_female-nurse_0063,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0063.png,,lgrad,5.196010180279209e-13,0,test
+fake_female-nurse_0064,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0064.png,,lgrad,3.0766287535207437e-19,0,test
+fake_female-nurse_0065,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0065.png,,lgrad,2.410490969155521e-13,0,test
+fake_female-nurse_0066,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0066.png,,lgrad,2.0597560641014102e-15,0,test
+fake_female-nurse_0067,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0067.png,,lgrad,2.659851868351219e-17,0,test
+fake_female-nurse_0068,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0068.png,,lgrad,5.897513217372369e-18,0,test
+fake_female-nurse_0069,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0069.png,,lgrad,3.273157908449155e-14,0,test
+fake_female-nurse_0070,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0070.png,,lgrad,2.270327141887761e-14,0,test
+fake_female-nurse_0071,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0071.png,,lgrad,6.438790039337006e-12,0,test
+fake_female-nurse_0072,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0072.png,,lgrad,1.4427255764592606e-17,0,test
+fake_female-nurse_0073,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0073.png,,lgrad,2.2608363918236608e-15,0,test
+fake_female-nurse_0074,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0074.png,,lgrad,1.9424352751262752e-11,0,test
+fake_female-nurse_0075,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0075.png,,lgrad,1.8471697467027756e-16,0,test
+fake_female-nurse_0076,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0076.png,,lgrad,2.0281819800007267e-19,0,test
+fake_female-nurse_0077,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0077.png,,lgrad,6.068179609513592e-15,0,test
+fake_female-nurse_0078,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0078.png,,lgrad,7.4297817899722095e-16,0,test
+fake_female-nurse_0079,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0079.png,,lgrad,1.6032917181385553e-12,0,test
+fake_female-nurse_0080,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0080.png,,lgrad,2.543592625873626e-17,0,test
+fake_female-nurse_0081,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0081.png,,lgrad,3.3094707508814507e-16,0,test
+fake_female-nurse_0082,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0082.png,,lgrad,1.7546185593721365e-16,0,test
+fake_female-nurse_0083,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0083.png,,lgrad,2.8040102585290004e-17,0,test
+fake_female-nurse_0084,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0084.png,,lgrad,4.6046543992041625e-14,0,test
+fake_female-nurse_0085,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0085.png,,lgrad,2.833803721194461e-12,0,test
+fake_female-nurse_0086,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0086.png,,lgrad,4.555252981324745e-15,0,test
+fake_female-nurse_0087,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0087.png,,lgrad,3.376644016478414e-12,0,test
+fake_female-nurse_0088,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0088.png,,lgrad,2.371904434065328e-15,0,test
+fake_female-nurse_0089,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0089.png,,lgrad,1.124814358281694e-16,0,test
+fake_female-nurse_0090,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0090.png,,lgrad,4.389723448020716e-13,0,test
+fake_female-nurse_0091,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0091.png,,lgrad,5.32235852324759e-16,0,test
+fake_female-nurse_0092,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0092.png,,lgrad,1.8613560648140614e-19,0,test
+fake_female-nurse_0093,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0093.png,,lgrad,4.348476006360569e-12,0,test
+fake_female-nurse_0094,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0094.png,,lgrad,1.694347850600918e-15,0,test
+fake_female-nurse_0095,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0095.png,,lgrad,3.683528600141508e-15,0,test
+fake_female-nurse_0096,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0096.png,,lgrad,4.973385418771681e-12,0,test
+fake_female-nurse_0097,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0097.png,,lgrad,1.2699748784333279e-14,0,test
+fake_female-nurse_0098,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0098.png,,lgrad,4.688191566730449e-13,0,test
+fake_female-nurse_0099,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0099.png,,lgrad,3.2566104421981844e-15,0,test
+fake_female-nurse_0100,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0100.png,,lgrad,1.2721535954044317e-15,0,test
+fake_female-nurse_0101,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0101.png,,lgrad,3.95289351381653e-13,0,test
+fake_female-nurse_0102,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0102.png,,lgrad,4.3425738079392673e-16,0,test
+fake_female-nurse_0103,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0103.png,,lgrad,5.049618763495328e-14,0,test
+fake_female-nurse_0104,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0104.png,,lgrad,2.5852809493483164e-20,0,test
+fake_female-nurse_0105,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0105.png,,lgrad,8.402066070884243e-14,0,test
+fake_female-nurse_0106,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0106.png,,lgrad,1.800538274791645e-14,0,test
+fake_female-nurse_0107,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0107.png,,lgrad,2.407220690142653e-12,0,test
+fake_female-nurse_0108,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0108.png,,lgrad,4.18444270932402e-15,0,test
+fake_female-nurse_0109,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0109.png,,lgrad,4.146418553288827e-15,0,test
+fake_female-nurse_0110,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0110.png,,lgrad,4.872999603795303e-15,0,test
+fake_female-nurse_0111,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0111.png,,lgrad,1.3217862321026263e-15,0,test
+fake_female-nurse_0112,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0112.png,,lgrad,8.734636177566357e-17,0,test
+fake_female-nurse_0113,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0113.png,,lgrad,1.197918500506212e-12,0,test
+fake_female-nurse_0114,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0114.png,,lgrad,1.8770100556900546e-16,0,test
+fake_female-nurse_0115,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0115.png,,lgrad,8.548915156510184e-13,0,test
+fake_female-nurse_0116,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0116.png,,lgrad,7.498858915007574e-16,0,test
+fake_female-nurse_0117,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0117.png,,lgrad,3.566245695186101e-18,0,test
+fake_female-nurse_0118,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0118.png,,lgrad,2.3095105048629187e-16,0,test
+fake_female-nurse_0119,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0119.png,,lgrad,1.26541992487815e-13,0,test
+fake_female-nurse_0120,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0120.png,,lgrad,3.8162317696801814e-16,0,test
+fake_female-nurse_0121,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0121.png,,lgrad,2.4847258626319528e-18,0,test
+fake_female-nurse_0122,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0122.png,,lgrad,2.247789860974458e-16,0,test
+fake_female-nurse_0123,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0123.png,,lgrad,8.357712037634218e-14,0,test
+fake_female-nurse_0124,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0124.png,,lgrad,3.9604533167520925e-14,0,test
+fake_female-nurse_0125,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0125.png,,lgrad,1.1249465248219792e-10,0,test
+fake_female-nurse_0126,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0126.png,,lgrad,1.1080994283230953e-14,0,test
+fake_female-nurse_0127,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0127.png,,lgrad,2.911625672985507e-20,0,test
+fake_female-nurse_0128,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0128.png,,lgrad,1.1118952113198244e-11,0,test
+fake_female-nurse_0129,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0129.png,,lgrad,1.6307553994242968e-13,0,test
+fake_female-nurse_0130,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0130.png,,lgrad,7.28087498603168e-14,0,test
+fake_female-nurse_0131,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0131.png,,lgrad,1.5147368223004248e-14,0,test
+fake_female-nurse_0132,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0132.png,,lgrad,5.967646624256695e-14,0,test
+fake_female-nurse_0133,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0133.png,,lgrad,3.4340401806649964e-16,0,test
+fake_female-nurse_0134,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0134.png,,lgrad,4.1150143832529e-15,0,test
+fake_female-nurse_0135,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0135.png,,lgrad,4.528571614925703e-11,0,test
+fake_female-nurse_0136,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0136.png,,lgrad,4.034060068759727e-19,0,test
+fake_female-nurse_0137,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0137.png,,lgrad,3.968430421586427e-18,0,test
+fake_female-nurse_0138,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0138.png,,lgrad,2.860616948939347e-14,0,test
+fake_female-nurse_0139,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0139.png,,lgrad,1.954397870957184e-15,0,test
+fake_female-nurse_0140,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0140.png,,lgrad,6.236161587125366e-10,0,test
+fake_female-nurse_0141,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0141.png,,lgrad,1.4450860484366973e-13,0,test
+fake_female-nurse_0142,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0142.png,,lgrad,2.1938745285012237e-19,0,test
+fake_female-nurse_0143,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0143.png,,lgrad,9.680366230835347e-11,0,test
+fake_female-nurse_0144,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0144.png,,lgrad,2.0352634711568417e-14,0,test
+fake_female-nurse_0145,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0145.png,,lgrad,2.5453909694648754e-15,0,test
+fake_female-nurse_0146,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0146.png,,lgrad,1.053337668316097e-15,0,test
+fake_female-nurse_0147,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0147.png,,lgrad,1.9673748392255936e-16,0,test
+fake_female-nurse_0148,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0148.png,,lgrad,2.73869098192924e-16,0,test
+fake_female-nurse_0149,female-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/female-nurse/fake_female-nurse_0149.png,,lgrad,1.4938842263917396e-13,0,test
+fake_male-doctor_0000,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0000.png,,lgrad,2.0591724981054214e-17,0,test
+fake_male-doctor_0001,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0001.png,,lgrad,2.4390943908700335e-14,0,test
+fake_male-doctor_0002,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0002.png,,lgrad,8.622422030925628e-14,0,test
+fake_male-doctor_0003,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0003.png,,lgrad,3.395379680540267e-12,0,test
+fake_male-doctor_0004,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0004.png,,lgrad,3.582902271853823e-14,0,test
+fake_male-doctor_0005,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0005.png,,lgrad,1.5028279837543267e-15,0,test
+fake_male-doctor_0006,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0006.png,,lgrad,1.080010430046241e-12,0,test
+fake_male-doctor_0007,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0007.png,,lgrad,4.9694432596725235e-11,0,test
+fake_male-doctor_0008,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0008.png,,lgrad,1.3906503918792272e-14,0,test
+fake_male-doctor_0009,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0009.png,,lgrad,1.9467530280312996e-18,0,test
+fake_male-doctor_0010,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0010.png,,lgrad,4.228689880897418e-12,0,test
+fake_male-doctor_0011,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0011.png,,lgrad,6.836226727818984e-18,0,test
+fake_male-doctor_0012,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0012.png,,lgrad,6.61046694813705e-12,0,test
+fake_male-doctor_0013,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0013.png,,lgrad,4.1196419783536345e-14,0,test
+fake_male-doctor_0014,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0014.png,,lgrad,6.980113174098583e-16,0,test
+fake_male-doctor_0015,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0015.png,,lgrad,8.645139073406162e-16,0,test
+fake_male-doctor_0016,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0016.png,,lgrad,9.428713371043354e-14,0,test
+fake_male-doctor_0017,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0017.png,,lgrad,1.5924493847055757e-14,0,test
+fake_male-doctor_0018,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0018.png,,lgrad,4.022710079556606e-16,0,test
+fake_male-doctor_0019,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0019.png,,lgrad,9.36360264321963e-18,0,test
+fake_male-doctor_0020,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0020.png,,lgrad,2.892279694311269e-17,0,test
+fake_male-doctor_0021,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0021.png,,lgrad,1.231561023714927e-15,0,test
+fake_male-doctor_0022,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0022.png,,lgrad,1.943663008319163e-10,0,test
+fake_male-doctor_0023,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0023.png,,lgrad,5.532894089177627e-14,0,test
+fake_male-doctor_0024,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0024.png,,lgrad,9.161955035033291e-18,0,test
+fake_male-doctor_0025,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0025.png,,lgrad,5.76308545698935e-14,0,test
+fake_male-doctor_0026,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0026.png,,lgrad,6.345740884618928e-19,0,test
+fake_male-doctor_0027,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0027.png,,lgrad,1.3973708258216422e-12,0,test
+fake_male-doctor_0028,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0028.png,,lgrad,1.7992997770974878e-13,0,test
+fake_male-doctor_0029,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0029.png,,lgrad,3.622447529655695e-14,0,test
+fake_male-doctor_0030,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0030.png,,lgrad,3.7670750850302137e-13,0,test
+fake_male-doctor_0031,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0031.png,,lgrad,1.2612863878325165e-11,0,test
+fake_male-doctor_0032,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0032.png,,lgrad,2.8414473898785708e-11,0,test
+fake_male-doctor_0033,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0033.png,,lgrad,6.464452454238434e-14,0,test
+fake_male-doctor_0034,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0034.png,,lgrad,8.478170422654419e-12,0,test
+fake_male-doctor_0035,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0035.png,,lgrad,2.4323025418857697e-14,0,test
+fake_male-doctor_0036,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0036.png,,lgrad,1.417497185845747e-14,0,test
+fake_male-doctor_0037,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0037.png,,lgrad,3.8608013198757226e-17,0,test
+fake_male-doctor_0038,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0038.png,,lgrad,9.87949583524262e-17,0,test
+fake_male-doctor_0039,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0039.png,,lgrad,2.8464986037745124e-14,0,test
+fake_male-doctor_0040,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0040.png,,lgrad,1.0397945005014009e-10,0,test
+fake_male-doctor_0041,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0041.png,,lgrad,5.634384582977413e-18,0,test
+fake_male-doctor_0042,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0042.png,,lgrad,2.691416622991966e-20,0,test
+fake_male-doctor_0043,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0043.png,,lgrad,6.065237721786243e-12,0,test
+fake_male-doctor_0044,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0044.png,,lgrad,2.5466961438985747e-12,0,test
+fake_male-doctor_0045,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0045.png,,lgrad,5.0098765136397105e-09,0,test
+fake_male-doctor_0046,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0046.png,,lgrad,6.608034432142862e-12,0,test
+fake_male-doctor_0047,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0047.png,,lgrad,4.6579712309480215e-11,0,test
+fake_male-doctor_0048,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0048.png,,lgrad,1.1064243210512359e-07,0,test
+fake_male-doctor_0049,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0049.png,,lgrad,1.0651292266803183e-13,0,test
+fake_male-doctor_0050,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0050.png,,lgrad,3.65407221624911e-13,0,test
+fake_male-doctor_0051,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0051.png,,lgrad,9.11680317450193e-19,0,test
+fake_male-doctor_0052,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0052.png,,lgrad,1.8027404222187293e-11,0,test
+fake_male-doctor_0053,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0053.png,,lgrad,3.7664834494572155e-14,0,test
+fake_male-doctor_0054,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0054.png,,lgrad,6.305012067997495e-11,0,test
+fake_male-doctor_0055,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0055.png,,lgrad,1.0755212692670213e-11,0,test
+fake_male-doctor_0056,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0056.png,,lgrad,7.78676011982339e-16,0,test
+fake_male-doctor_0057,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0057.png,,lgrad,1.4510157459943896e-17,0,test
+fake_male-doctor_0058,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0058.png,,lgrad,5.11731270490365e-15,0,test
+fake_male-doctor_0059,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0059.png,,lgrad,1.7860322486025526e-18,0,test
+fake_male-doctor_0060,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0060.png,,lgrad,1.3165483074117478e-14,0,test
+fake_male-doctor_0061,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0061.png,,lgrad,8.811880261930249e-13,0,test
+fake_male-doctor_0062,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0062.png,,lgrad,3.4360992648202124e-15,0,test
+fake_male-doctor_0063,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0063.png,,lgrad,3.123592422042687e-13,0,test
+fake_male-doctor_0064,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0064.png,,lgrad,5.534207286707403e-16,0,test
+fake_male-doctor_0065,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0065.png,,lgrad,2.846397118005939e-09,0,test
+fake_male-doctor_0066,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0066.png,,lgrad,4.5144213345858775e-14,0,test
+fake_male-doctor_0067,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0067.png,,lgrad,1.4883644726634859e-16,0,test
+fake_male-doctor_0068,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0068.png,,lgrad,4.4968664751100784e-13,0,test
+fake_male-doctor_0069,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0069.png,,lgrad,1.6671214105382082e-12,0,test
+fake_male-doctor_0070,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0070.png,,lgrad,1.466256217908434e-17,0,test
+fake_male-doctor_0071,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0071.png,,lgrad,4.2636805471183485e-18,0,test
+fake_male-doctor_0072,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0072.png,,lgrad,1.8012541231699814e-20,0,test
+fake_male-doctor_0073,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0073.png,,lgrad,1.8438531680219777e-13,0,test
+fake_male-doctor_0074,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0074.png,,lgrad,2.1077112494563566e-13,0,test
+fake_male-doctor_0075,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0075.png,,lgrad,2.620275307493869e-12,0,test
+fake_male-doctor_0076,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0076.png,,lgrad,3.9240250046708447e-13,0,test
+fake_male-doctor_0077,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0077.png,,lgrad,8.092792928848791e-13,0,test
+fake_male-doctor_0078,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0078.png,,lgrad,2.405397387349184e-13,0,test
+fake_male-doctor_0079,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0079.png,,lgrad,2.0026692198300226e-15,0,test
+fake_male-doctor_0080,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0080.png,,lgrad,1.59962551559735e-13,0,test
+fake_male-doctor_0081,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0081.png,,lgrad,5.952658071323169e-12,0,test
+fake_male-doctor_0082,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0082.png,,lgrad,7.047605121018874e-12,0,test
+fake_male-doctor_0083,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0083.png,,lgrad,7.213012823880033e-16,0,test
+fake_male-doctor_0084,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0084.png,,lgrad,8.90813962715507e-16,0,test
+fake_male-doctor_0085,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0085.png,,lgrad,2.507887209296652e-16,0,test
+fake_male-doctor_0086,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0086.png,,lgrad,9.792391507043585e-13,0,test
+fake_male-doctor_0087,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0087.png,,lgrad,1.629756442647623e-14,0,test
+fake_male-doctor_0088,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0088.png,,lgrad,3.1305069213977132e-12,0,test
+fake_male-doctor_0089,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0089.png,,lgrad,6.551936642832995e-15,0,test
+fake_male-doctor_0090,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0090.png,,lgrad,2.536444183959502e-15,0,test
+fake_male-doctor_0091,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0091.png,,lgrad,1.5632953915753478e-12,0,test
+fake_male-doctor_0092,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0092.png,,lgrad,3.198055709141556e-10,0,test
+fake_male-doctor_0093,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0093.png,,lgrad,6.573132593779007e-10,0,test
+fake_male-doctor_0094,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0094.png,,lgrad,4.696155800369754e-17,0,test
+fake_male-doctor_0095,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0095.png,,lgrad,1.8459784753305924e-13,0,test
+fake_male-doctor_0096,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0096.png,,lgrad,3.3001131543966588e-18,0,test
+fake_male-doctor_0097,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0097.png,,lgrad,2.196707713734286e-13,0,test
+fake_male-doctor_0098,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0098.png,,lgrad,1.3294438883093562e-09,0,test
+fake_male-doctor_0099,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0099.png,,lgrad,1.612731583633477e-20,0,test
+fake_male-doctor_0100,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0100.png,,lgrad,5.839109713324034e-14,0,test
+fake_male-doctor_0101,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0101.png,,lgrad,2.640784726309908e-13,0,test
+fake_male-doctor_0102,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0102.png,,lgrad,8.354647641837642e-15,0,test
+fake_male-doctor_0103,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0103.png,,lgrad,2.444190166227006e-17,0,test
+fake_male-doctor_0104,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0104.png,,lgrad,2.1825943491231813e-14,0,test
+fake_male-doctor_0105,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0105.png,,lgrad,1.0244214458044929e-15,0,test
+fake_male-doctor_0106,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0106.png,,lgrad,5.943754281210198e-15,0,test
+fake_male-doctor_0107,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0107.png,,lgrad,6.854616772633386e-16,0,test
+fake_male-doctor_0108,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0108.png,,lgrad,1.5577707494081973e-16,0,test
+fake_male-doctor_0109,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0109.png,,lgrad,2.0345249790443276e-11,0,test
+fake_male-doctor_0110,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0110.png,,lgrad,1.734511839712738e-11,0,test
+fake_male-doctor_0111,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0111.png,,lgrad,6.981954517846795e-15,0,test
+fake_male-doctor_0112,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0112.png,,lgrad,5.91296958342629e-17,0,test
+fake_male-doctor_0113,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0113.png,,lgrad,1.4675740277973054e-13,0,test
+fake_male-doctor_0114,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0114.png,,lgrad,9.024199573368086e-14,0,test
+fake_male-doctor_0115,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0115.png,,lgrad,1.992791783343633e-16,0,test
+fake_male-doctor_0116,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0116.png,,lgrad,2.8864834081485384e-16,0,test
+fake_male-doctor_0117,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0117.png,,lgrad,2.2089505879287656e-17,0,test
+fake_male-doctor_0118,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0118.png,,lgrad,5.973571247028242e-13,0,test
+fake_male-doctor_0119,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0119.png,,lgrad,5.410157405757879e-15,0,test
+fake_male-doctor_0120,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0120.png,,lgrad,3.6202129932133673e-16,0,test
+fake_male-doctor_0121,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0121.png,,lgrad,1.1025392268493306e-05,0,test
+fake_male-doctor_0122,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0122.png,,lgrad,4.388438312692483e-15,0,test
+fake_male-doctor_0123,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0123.png,,lgrad,2.2325852172305934e-14,0,test
+fake_male-doctor_0124,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0124.png,,lgrad,3.326431262161238e-16,0,test
+fake_male-doctor_0125,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0125.png,,lgrad,3.339124224517598e-13,0,test
+fake_male-doctor_0126,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0126.png,,lgrad,1.6003388189828917e-14,0,test
+fake_male-doctor_0127,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0127.png,,lgrad,5.559587078901584e-13,0,test
+fake_male-doctor_0128,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0128.png,,lgrad,3.5794558853738585e-16,0,test
+fake_male-doctor_0129,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0129.png,,lgrad,1.1004855360319254e-10,0,test
+fake_male-doctor_0130,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0130.png,,lgrad,6.628348564463593e-11,0,test
+fake_male-doctor_0131,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0131.png,,lgrad,6.580585732328858e-17,0,test
+fake_male-doctor_0132,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0132.png,,lgrad,2.660422914141456e-15,0,test
+fake_male-doctor_0133,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0133.png,,lgrad,1.4597669462982862e-15,0,test
+fake_male-doctor_0134,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0134.png,,lgrad,1.8879929358176645e-13,0,test
+fake_male-doctor_0135,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0135.png,,lgrad,1.1237928643215156e-10,0,test
+fake_male-doctor_0136,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0136.png,,lgrad,4.5199270487430304e-14,0,test
+fake_male-doctor_0137,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0137.png,,lgrad,1.1757551312760461e-12,0,test
+fake_male-doctor_0138,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0138.png,,lgrad,5.69407531108429e-14,0,test
+fake_male-doctor_0139,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0139.png,,lgrad,2.3425178897334975e-12,0,test
+fake_male-doctor_0140,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0140.png,,lgrad,3.5713168940144577e-14,0,test
+fake_male-doctor_0141,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0141.png,,lgrad,4.216641358995021e-12,0,test
+fake_male-doctor_0142,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0142.png,,lgrad,8.072466238756397e-15,0,test
+fake_male-doctor_0143,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0143.png,,lgrad,3.275784250569147e-16,0,test
+fake_male-doctor_0144,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0144.png,,lgrad,6.256119212087741e-13,0,test
+fake_male-doctor_0145,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0145.png,,lgrad,5.168876936710587e-13,0,test
+fake_male-doctor_0146,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0146.png,,lgrad,7.212064712797117e-12,0,test
+fake_male-doctor_0147,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0147.png,,lgrad,9.403753817305294e-13,0,test
+fake_male-doctor_0148,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0148.png,,lgrad,1.6801814363163266e-15,0,test
+fake_male-doctor_0149,male-doctor,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-doctor/fake_male-doctor_0149.png,,lgrad,1.0202816889959276e-11,0,test
+fake_male-nurse_0000,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0000.png,,lgrad,2.4781223656510174e-15,0,test
+fake_male-nurse_0001,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0001.png,,lgrad,2.1347137309861215e-20,0,test
+fake_male-nurse_0002,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0002.png,,lgrad,6.395810788841253e-17,0,test
+fake_male-nurse_0003,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0003.png,,lgrad,8.603596215453133e-14,0,test
+fake_male-nurse_0004,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0004.png,,lgrad,3.000758211249392e-16,0,test
+fake_male-nurse_0005,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0005.png,,lgrad,5.931721585271388e-13,0,test
+fake_male-nurse_0006,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0006.png,,lgrad,2.9677042073794624e-13,0,test
+fake_male-nurse_0007,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0007.png,,lgrad,1.991861513279289e-19,0,test
+fake_male-nurse_0008,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0008.png,,lgrad,4.689018541937512e-15,0,test
+fake_male-nurse_0009,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0009.png,,lgrad,3.1696951027330263e-18,0,test
+fake_male-nurse_0010,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0010.png,,lgrad,4.194991234132651e-15,0,test
+fake_male-nurse_0011,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0011.png,,lgrad,5.457958863103228e-15,0,test
+fake_male-nurse_0012,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0012.png,,lgrad,1.5723365479992252e-18,0,test
+fake_male-nurse_0013,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0013.png,,lgrad,3.4824925828303105e-17,0,test
+fake_male-nurse_0014,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0014.png,,lgrad,1.6500937037111987e-14,0,test
+fake_male-nurse_0015,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0015.png,,lgrad,5.949192815066722e-17,0,test
+fake_male-nurse_0016,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0016.png,,lgrad,1.313873836117363e-11,0,test
+fake_male-nurse_0017,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0017.png,,lgrad,6.349973715250035e-13,0,test
+fake_male-nurse_0018,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0018.png,,lgrad,1.3233750033314617e-12,0,test
+fake_male-nurse_0019,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0019.png,,lgrad,6.601328113369238e-17,0,test
+fake_male-nurse_0020,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0020.png,,lgrad,7.152484826633554e-09,0,test
+fake_male-nurse_0021,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0021.png,,lgrad,1.1692395370053316e-14,0,test
+fake_male-nurse_0022,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0022.png,,lgrad,1.970409512636051e-12,0,test
+fake_male-nurse_0023,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0023.png,,lgrad,4.9452389079635596e-18,0,test
+fake_male-nurse_0024,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0024.png,,lgrad,1.881058136987185e-18,0,test
+fake_male-nurse_0025,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0025.png,,lgrad,8.126827336085718e-12,0,test
+fake_male-nurse_0026,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0026.png,,lgrad,7.318811897673305e-15,0,test
+fake_male-nurse_0027,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0027.png,,lgrad,3.755499383695238e-11,0,test
+fake_male-nurse_0028,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0028.png,,lgrad,1.0293850800512268e-14,0,test
+fake_male-nurse_0029,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0029.png,,lgrad,2.0685976587026466e-16,0,test
+fake_male-nurse_0030,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0030.png,,lgrad,3.014012861513038e-07,0,test
+fake_male-nurse_0031,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0031.png,,lgrad,5.661401542554314e-18,0,test
+fake_male-nurse_0032,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0032.png,,lgrad,8.320712174825218e-11,0,test
+fake_male-nurse_0033,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0033.png,,lgrad,1.806030498763267e-11,0,test
+fake_male-nurse_0034,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0034.png,,lgrad,1.1739415863021296e-13,0,test
+fake_male-nurse_0035,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0035.png,,lgrad,1.1445615709002564e-14,0,test
+fake_male-nurse_0036,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0036.png,,lgrad,5.506301320391989e-14,0,test
+fake_male-nurse_0037,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0037.png,,lgrad,9.543294396406975e-18,0,test
+fake_male-nurse_0038,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0038.png,,lgrad,8.241025049871009e-12,0,test
+fake_male-nurse_0039,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0039.png,,lgrad,3.7026676863449737e-11,0,test
+fake_male-nurse_0040,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0040.png,,lgrad,1.0791600288939662e-06,0,test
+fake_male-nurse_0041,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0041.png,,lgrad,9.011594638910769e-13,0,test
+fake_male-nurse_0042,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0042.png,,lgrad,4.639304272439026e-16,0,test
+fake_male-nurse_0043,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0043.png,,lgrad,1.5708999983186553e-15,0,test
+fake_male-nurse_0044,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0044.png,,lgrad,2.0436462174226386e-14,0,test
+fake_male-nurse_0045,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0045.png,,lgrad,8.443922006051707e-09,0,test
+fake_male-nurse_0046,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0046.png,,lgrad,1.7452532474759863e-12,0,test
+fake_male-nurse_0047,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0047.png,,lgrad,4.109837317879282e-15,0,test
+fake_male-nurse_0048,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0048.png,,lgrad,1.072184230801844e-16,0,test
+fake_male-nurse_0049,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0049.png,,lgrad,7.635001138261988e-12,0,test
+fake_male-nurse_0050,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0050.png,,lgrad,1.568124319631381e-12,0,test
+fake_male-nurse_0051,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0051.png,,lgrad,2.2596086589256463e-18,0,test
+fake_male-nurse_0052,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0052.png,,lgrad,1.4906622485856558e-13,0,test
+fake_male-nurse_0053,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0053.png,,lgrad,2.1915966152866e-14,0,test
+fake_male-nurse_0054,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0054.png,,lgrad,7.591244930913498e-17,0,test
+fake_male-nurse_0055,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0055.png,,lgrad,1.0862140742585804e-16,0,test
+fake_male-nurse_0056,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0056.png,,lgrad,6.386035363709075e-13,0,test
+fake_male-nurse_0057,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0057.png,,lgrad,4.825128491203756e-11,0,test
+fake_male-nurse_0058,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0058.png,,lgrad,2.880097419236116e-13,0,test
+fake_male-nurse_0059,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0059.png,,lgrad,2.706548305042426e-15,0,test
+fake_male-nurse_0060,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0060.png,,lgrad,7.30795252871369e-13,0,test
+fake_male-nurse_0061,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0061.png,,lgrad,9.222180988701159e-14,0,test
+fake_male-nurse_0062,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0062.png,,lgrad,6.842165722886762e-13,0,test
+fake_male-nurse_0063,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0063.png,,lgrad,1.1315950346896253e-12,0,test
+fake_male-nurse_0064,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0064.png,,lgrad,6.849993560928153e-15,0,test
+fake_male-nurse_0065,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0065.png,,lgrad,1.1419003763391e-12,0,test
+fake_male-nurse_0066,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0066.png,,lgrad,1.747228663230413e-19,0,test
+fake_male-nurse_0067,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0067.png,,lgrad,4.4912583716102614e-14,0,test
+fake_male-nurse_0068,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0068.png,,lgrad,3.7907428118797576e-14,0,test
+fake_male-nurse_0069,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0069.png,,lgrad,2.0416066840583946e-12,0,test
+fake_male-nurse_0070,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0070.png,,lgrad,2.2855926767126214e-16,0,test
+fake_male-nurse_0071,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0071.png,,lgrad,1.1317864816851686e-17,0,test
+fake_male-nurse_0072,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0072.png,,lgrad,2.053288721049301e-18,0,test
+fake_male-nurse_0073,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0073.png,,lgrad,5.070327787319454e-15,0,test
+fake_male-nurse_0074,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0074.png,,lgrad,2.3408532057178633e-11,0,test
+fake_male-nurse_0075,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0075.png,,lgrad,7.623192170829601e-14,0,test
+fake_male-nurse_0076,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0076.png,,lgrad,3.272970256571497e-18,0,test
+fake_male-nurse_0077,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0077.png,,lgrad,5.652146528589697e-10,0,test
+fake_male-nurse_0078,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0078.png,,lgrad,2.6831391201769547e-16,0,test
+fake_male-nurse_0079,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0079.png,,lgrad,6.602619839757295e-11,0,test
+fake_male-nurse_0080,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0080.png,,lgrad,1.057358952998022e-12,0,test
+fake_male-nurse_0081,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0081.png,,lgrad,7.592077178007303e-19,0,test
+fake_male-nurse_0082,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0082.png,,lgrad,1.898704934596984e-12,0,test
+fake_male-nurse_0083,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0083.png,,lgrad,5.4306220394008983e-17,0,test
+fake_male-nurse_0084,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0084.png,,lgrad,2.836457197591402e-13,0,test
+fake_male-nurse_0085,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0085.png,,lgrad,8.878954213602361e-18,0,test
+fake_male-nurse_0086,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0086.png,,lgrad,2.737144007541187e-13,0,test
+fake_male-nurse_0087,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0087.png,,lgrad,3.244736293886441e-12,0,test
+fake_male-nurse_0088,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0088.png,,lgrad,8.233489465195595e-18,0,test
+fake_male-nurse_0089,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0089.png,,lgrad,1.0000263421169886e-12,0,test
+fake_male-nurse_0090,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0090.png,,lgrad,2.654834631212605e-13,0,test
+fake_male-nurse_0091,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0091.png,,lgrad,1.378104227955923e-12,0,test
+fake_male-nurse_0092,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0092.png,,lgrad,6.631411457284908e-14,0,test
+fake_male-nurse_0093,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0093.png,,lgrad,3.4734598010344175e-12,0,test
+fake_male-nurse_0094,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0094.png,,lgrad,3.4891449149002498e-15,0,test
+fake_male-nurse_0095,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0095.png,,lgrad,7.279686492927563e-16,0,test
+fake_male-nurse_0096,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0096.png,,lgrad,9.8617134373062e-19,0,test
+fake_male-nurse_0097,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0097.png,,lgrad,3.801614838899736e-12,0,test
+fake_male-nurse_0098,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0098.png,,lgrad,3.139084911934226e-17,0,test
+fake_male-nurse_0099,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0099.png,,lgrad,1.0088221057136249e-11,0,test
+fake_male-nurse_0100,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0100.png,,lgrad,4.900047059867027e-15,0,test
+fake_male-nurse_0101,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0101.png,,lgrad,1.650454187381023e-12,0,test
+fake_male-nurse_0102,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0102.png,,lgrad,2.9768071688196507e-14,0,test
+fake_male-nurse_0103,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0103.png,,lgrad,8.386240486768504e-12,0,test
+fake_male-nurse_0104,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0104.png,,lgrad,3.900845757520699e-10,0,test
+fake_male-nurse_0105,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0105.png,,lgrad,1.1323692677978059e-10,0,test
+fake_male-nurse_0106,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0106.png,,lgrad,1.5659511024452037e-16,0,test
+fake_male-nurse_0107,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0107.png,,lgrad,7.132386722246212e-14,0,test
+fake_male-nurse_0108,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0108.png,,lgrad,5.473394659656857e-20,0,test
+fake_male-nurse_0109,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0109.png,,lgrad,5.382548629029316e-09,0,test
+fake_male-nurse_0110,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0110.png,,lgrad,1.1942005544163248e-11,0,test
+fake_male-nurse_0111,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0111.png,,lgrad,3.801889025822902e-09,0,test
+fake_male-nurse_0112,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0112.png,,lgrad,5.548127929300151e-12,0,test
+fake_male-nurse_0113,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0113.png,,lgrad,5.86509243949429e-11,0,test
+fake_male-nurse_0114,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0114.png,,lgrad,4.3986092725648756e-16,0,test
+fake_male-nurse_0115,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0115.png,,lgrad,6.906291094566086e-10,0,test
+fake_male-nurse_0116,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0116.png,,lgrad,7.962456987698797e-15,0,test
+fake_male-nurse_0117,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0117.png,,lgrad,7.102785373747089e-12,0,test
+fake_male-nurse_0118,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0118.png,,lgrad,1.785343747839896e-11,0,test
+fake_male-nurse_0119,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0119.png,,lgrad,7.41629540417792e-18,0,test
+fake_male-nurse_0120,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0120.png,,lgrad,1.5314598547644387e-12,0,test
+fake_male-nurse_0121,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0121.png,,lgrad,1.5202616943099656e-11,0,test
+fake_male-nurse_0122,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0122.png,,lgrad,2.4874229991701064e-15,0,test
+fake_male-nurse_0123,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0123.png,,lgrad,1.7786306993471546e-15,0,test
+fake_male-nurse_0124,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0124.png,,lgrad,1.4153603289379646e-10,0,test
+fake_male-nurse_0125,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0125.png,,lgrad,3.59805102378985e-10,0,test
+fake_male-nurse_0126,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0126.png,,lgrad,1.859844916962672e-11,0,test
+fake_male-nurse_0127,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0127.png,,lgrad,1.6561234605916297e-09,0,test
+fake_male-nurse_0128,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0128.png,,lgrad,4.795973731000491e-13,0,test
+fake_male-nurse_0129,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0129.png,,lgrad,5.944137351860594e-16,0,test
+fake_male-nurse_0130,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0130.png,,lgrad,4.497183128848289e-17,0,test
+fake_male-nurse_0131,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0131.png,,lgrad,1.786331499387117e-11,0,test
+fake_male-nurse_0132,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0132.png,,lgrad,1.100223038353167e-14,0,test
+fake_male-nurse_0133,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0133.png,,lgrad,3.40903588452908e-14,0,test
+fake_male-nurse_0134,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0134.png,,lgrad,6.046396022751921e-13,0,test
+fake_male-nurse_0135,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0135.png,,lgrad,8.105158211257901e-11,0,test
+fake_male-nurse_0136,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0136.png,,lgrad,2.2257144247756454e-14,0,test
+fake_male-nurse_0137,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0137.png,,lgrad,5.15038532655776e-13,0,test
+fake_male-nurse_0138,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0138.png,,lgrad,1.8278742302852043e-14,0,test
+fake_male-nurse_0139,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0139.png,,lgrad,7.5019819254841e-15,0,test
+fake_male-nurse_0140,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0140.png,,lgrad,6.588972396122036e-14,0,test
+fake_male-nurse_0141,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0141.png,,lgrad,5.732034580319123e-08,0,test
+fake_male-nurse_0142,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0142.png,,lgrad,3.806372173825243e-17,0,test
+fake_male-nurse_0143,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0143.png,,lgrad,7.931539869332482e-10,0,test
+fake_male-nurse_0144,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0144.png,,lgrad,1.9362484705853777e-13,0,test
+fake_male-nurse_0145,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0145.png,,lgrad,1.6471530736583695e-11,0,test
+fake_male-nurse_0146,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0146.png,,lgrad,1.9746147262873076e-13,0,test
+fake_male-nurse_0147,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0147.png,,lgrad,1.8812027131366593e-13,0,test
+fake_male-nurse_0148,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0148.png,,lgrad,8.322664779569777e-11,0,test
+fake_male-nurse_0149,male-nurse,1,/content/drive/MyDrive/project/data/high_pass_residuals/fake/male-nurse/fake_male-nurse_0149.png,,lgrad,1.4684777148410218e-18,0,test
+fd (12)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (12)_aligned.png,,lgrad,5.846522263047603e-21,0,test
+fd (13)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (13)_aligned.png,,lgrad,3.9911238376710845e-12,0,test
+fd (14)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (14)_aligned.png,,lgrad,5.649052121805935e-14,0,test
+fd (18)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (18)_aligned.png,,lgrad,8.893292562340356e-18,0,test
+fd (20)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (20)_aligned.png,,lgrad,1.2346408487460335e-17,0,test
+fd (21)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (21)_aligned.png,,lgrad,2.8002382487613095e-16,0,test
+fd (22)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (22)_aligned.png,,lgrad,2.0818182733250978e-08,0,test
+fd (23)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (23)_aligned.png,,lgrad,5.1592106800963266e-18,0,test
+fd (24)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (24)_aligned.png,,lgrad,3.577450852508589e-15,0,test
+fd (26)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (26)_aligned.png,,lgrad,7.996365410643282e-15,0,test
+fd (28)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (28)_aligned.png,,lgrad,1.4190484578672163e-16,0,test
+fd (29)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (29)_aligned.png,,lgrad,4.6359742894618375e-14,0,test
+fd (3)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (3)_aligned.png,,lgrad,3.478098268544184e-17,0,test
+fd (30)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (30)_aligned.png,,lgrad,9.157921003564301e-14,0,test
+fd (31)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (31)_aligned.png,,lgrad,3.791156682765698e-17,0,test
+fd (32)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (32)_aligned.png,,lgrad,3.0887789548295075e-10,0,test
+fd (35)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (35)_aligned.png,,lgrad,1.9411286339703245e-14,0,test
+fd (36)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (36)_aligned.png,,lgrad,3.719503594012963e-09,0,test
+fd (37)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (37)_aligned.png,,lgrad,8.485287993076351e-12,0,test
+fd (39)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (39)_aligned.png,,lgrad,2.991586579154104e-12,0,test
+fd (43)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (43)_aligned.png,,lgrad,3.862646845849112e-15,0,test
+fd (44)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (44)_aligned.png,,lgrad,1.5550488414312058e-12,0,test
+fd (46)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (46)_aligned.png,,lgrad,1.1427538331842263e-13,0,test
+fd (49)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (49)_aligned.png,,lgrad,4.173695819987053e-16,0,test
+fd (5)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (5)_aligned.png,,lgrad,3.560822470216607e-10,0,test
+fd (50)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (50)_aligned.png,,lgrad,2.910175581427731e-17,0,test
+fd (6)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-doctor_after/fd (6)_aligned.png,,lgrad,1.0426904443167758e-17,0,test
+fn (1)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (1)_aligned.png,,lgrad,5.400281001592894e-15,0,test
+fn (10)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (10)_aligned.png,,lgrad,5.100135508699321e-18,0,test
+fn (17)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (17)_aligned.png,,lgrad,1.0020587807332663e-14,0,test
+fn (27)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (27)_aligned.png,,lgrad,1.6314117483144652e-13,0,test
+fn (28)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (28)_aligned.png,,lgrad,3.140023980305155e-14,0,test
+fn (3)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (3)_aligned.png,,lgrad,6.765700060742605e-14,0,test
+fn (37)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (37)_aligned.png,,lgrad,7.4049883521006e-14,0,test
+fn (4)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (4)_aligned.png,,lgrad,3.334951571954343e-19,0,test
+fn (40)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (40)_aligned.png,,lgrad,4.217283417873578e-20,0,test
+fn (41)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (41)_aligned.png,,lgrad,3.590333325781403e-13,0,test
+fn (42)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (42)_aligned.png,,lgrad,2.918627779101247e-15,0,test
+fn (43)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (43)_aligned.png,,lgrad,1.512413557833383e-17,0,test
+fn (44)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (44)_aligned.png,,lgrad,6.963043236749922e-15,0,test
+fn (47)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (47)_aligned.png,,lgrad,3.2734699553869234e-14,0,test
+fn (5)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (5)_aligned.png,,lgrad,1.3239504806921999e-16,0,test
+fn (7)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (7)_aligned.png,,lgrad,1.6847182241911594e-16,0,test
+fn (9)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/female-nurse_after/fn (9)_aligned.png,,lgrad,2.9684129346695066e-16,0,test
+md (10)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (10)_aligned.png,,lgrad,5.073964946794964e-15,0,test
+md (14)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (14)_aligned.png,,lgrad,3.737933028380923e-19,0,test
+md (15)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (15)_aligned.png,,lgrad,6.267008396607099e-14,0,test
+md (17)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (17)_aligned.png,,lgrad,2.1890858402243488e-14,0,test
+md (19)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (19)_aligned.png,,lgrad,9.100456499488985e-11,0,test
+md (21)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (21)_aligned.png,,lgrad,6.662706635356347e-16,0,test
+md (23)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (23)_aligned.png,,lgrad,1.7719669852719866e-15,0,test
+md (29)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (29)_aligned.png,,lgrad,3.2308252346244584e-14,0,test
+md (3)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (3)_aligned.png,,lgrad,5.081132116078156e-15,0,test
+md (33)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (33)_aligned.png,,lgrad,4.01798226259111e-18,0,test
+md (34)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (34)_aligned.png,,lgrad,1.1022604067011978e-14,0,test
+md (36)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (36)_aligned.png,,lgrad,1.225663598392046e-10,0,test
+md (37)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (37)_aligned.png,,lgrad,7.422363369541038e-15,0,test
+md (38)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (38)_aligned.png,,lgrad,2.9378345675768226e-19,0,test
+md (39)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (39)_aligned.png,,lgrad,4.121057817747772e-17,0,test
+md (4)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (4)_aligned.png,,lgrad,1.58119709992574e-17,0,test
+md (40)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (40)_aligned.png,,lgrad,8.827970499796292e-15,0,test
+md (42)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (42)_aligned.png,,lgrad,4.1341392115201714e-11,0,test
+md (43)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (43)_aligned.png,,lgrad,1.9028285146009162e-14,0,test
+md (45)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (45)_aligned.png,,lgrad,1.3755416957924628e-15,0,test
+md (46)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (46)_aligned.png,,lgrad,8.910697836062367e-14,0,test
+md (47)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (47)_aligned.png,,lgrad,7.4929111555310725e-16,0,test
+md (48)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (48)_aligned.png,,lgrad,6.91598730819168e-19,0,test
+md (49)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (49)_aligned.png,,lgrad,3.3844633909665967e-13,0,test
+md (50)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (50)_aligned.png,,lgrad,1.6391303484871165e-18,0,test
+md (7)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (7)_aligned.png,,lgrad,1.6239390111014576e-17,0,test
+md (9)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-doctor_after/md (9)_aligned.png,,lgrad,1.5733580085222485e-16,0,test
+mn (11)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (11)_aligned.png,,lgrad,9.36647593117795e-15,0,test
+mn (15)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (15)_aligned.png,,lgrad,6.336277001370784e-21,0,test
+mn (19)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (19)_aligned.png,,lgrad,1.0248352213992266e-16,0,test
+mn (2)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (2)_aligned.png,,lgrad,6.993782300633797e-17,0,test
+mn (22)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (22)_aligned.png,,lgrad,5.723795494917781e-16,0,test
+mn (33)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (33)_aligned.png,,lgrad,6.336277001370784e-21,0,test
+mn (35)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (35)_aligned.png,,lgrad,1.0778468611211983e-17,0,test
+mn (36)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (36)_aligned.png,,lgrad,6.664671391804974e-14,0,test
+mn (37)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (37)_aligned.png,,lgrad,1.9000712953026614e-15,0,test
+mn (39)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (39)_aligned.png,,lgrad,7.269374989113397e-13,0,test
+mn (40)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (40)_aligned.png,,lgrad,3.833397575064845e-12,0,test
+mn (41)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (41)_aligned.png,,lgrad,8.682537488814654e-19,0,test
+mn (7)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/high_pass_residuals/real/male-nurse_after/mn (7)_aligned.png,,lgrad,8.012709961681408e-13,0,test

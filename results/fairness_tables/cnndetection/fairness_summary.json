@@ -1,0 +1,54 @@
+{
+  "overall": {
+    "n": 72,
+    "detector_name": "cnndetection",
+    "accuracy": 0.6527777777777778,
+    "auc": 0.637987012987013,
+    "accuracy_disparity": 0.11111111111111105,
+    "max_gap_fpr": 0.0,
+    "max_gap_fnr": 0.2857142857142857,
+    "worst_group_error": 0.3888888888888889,
+    "fm_eo": 0.2857142857142857,
+    "fdp": 0.1111111111111111,
+    "ffpr": 0.0,
+    "foae": 0.11111111111111105,
+    "fm_eo_pct": 28.57142857142857,
+    "fdp_pct": 11.11111111111111,
+    "ffpr_pct": 0.0,
+    "foae_pct": 11.111111111111105
+  },
+  "bootstrap_ci_95": {
+    "accuracy_disparity": {
+      "ci_low": 0.0,
+      "ci_high": 0.2777777777777777
+    },
+    "max_gap_fpr": {
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    "max_gap_fnr": {
+      "ci_low": 0.0,
+      "ci_high": 0.7142857142857143
+    },
+    "worst_group_error": {
+      "ci_low": 0.3888888888888889,
+      "ci_high": 0.3888888888888889
+    },
+    "fm_eo": {
+      "ci_low": 0.0,
+      "ci_high": 0.7142857142857143
+    },
+    "fdp": {
+      "ci_low": 0.0,
+      "ci_high": 0.2777777777777778
+    },
+    "ffpr": {
+      "ci_low": 0.0,
+      "ci_high": 0.0
+    },
+    "foae": {
+      "ci_low": 0.0,
+      "ci_high": 0.2777777777777777
+    }
+  }
+}

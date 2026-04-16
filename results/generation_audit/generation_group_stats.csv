@@ -1,0 +1,9 @@
+y_true,group,n,quality_mean,quality_std,source_model
+0,female-doctor,50,-9.786108916368763,5.828713599701464,real_photograph
+0,female-nurse,50,-6.047101427136677,4.460479649066187,real_photograph
+0,male-doctor,50,-10.37793921127268,6.9574925811516675,real_photograph
+0,male-nurse,41,-10.229236236151918,7.244993392270535,real_photograph
+1,female-doctor,150,-4.265960284640881,3.2020445638861315,runwayml/stable-diffusion-v1-5
+1,female-nurse,150,-3.6451467256822148,2.4036698290503593,runwayml/stable-diffusion-v1-5
+1,male-doctor,150,-4.507498024147171,3.1356777874228547,runwayml/stable-diffusion-v1-5
+1,male-nurse,150,-4.05680020710231,2.06864990453952,runwayml/stable-diffusion-v1-5

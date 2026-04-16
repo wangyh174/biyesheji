@@ -1,0 +1,5 @@
+detector=lgrad
+backend=pretrained
+accuracy=0.985380
+auc=0.986190
+n_total=684

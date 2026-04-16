@@ -1,0 +1,685 @@
+id,group,y_true,file_path,prompt,detector_name,score,y_hat,split
+fake_female-doctor_0000,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0000.png,,cnndetection,1.9333818188655024e-16,0,test
+fake_female-doctor_0001,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0001.png,,cnndetection,6.030978769503131e-15,0,test
+fake_female-doctor_0002,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0002.png,,cnndetection,4.045748625003398e-08,0,test
+fake_female-doctor_0003,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0003.png,,cnndetection,1.5230657481879462e-05,0,test
+fake_female-doctor_0004,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0004.png,,cnndetection,3.41825654004424e-07,0,test
+fake_female-doctor_0005,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0005.png,,cnndetection,6.152987225505058e-06,0,test
+fake_female-doctor_0006,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0006.png,,cnndetection,7.835060955585504e-08,0,test
+fake_female-doctor_0007,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0007.png,,cnndetection,1.1763797706408011e-14,0,test
+fake_female-doctor_0008,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0008.png,,cnndetection,1.4209505967699432e-11,0,test
+fake_female-doctor_0009,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0009.png,,cnndetection,1.1343097468252683e-11,0,test
+fake_female-doctor_0010,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0010.png,,cnndetection,1.1166989555277951e-10,0,test
+fake_female-doctor_0011,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0011.png,,cnndetection,2.5163593875277e-08,0,test
+fake_female-doctor_0012,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0012.png,,cnndetection,1.972007623862737e-08,0,test
+fake_female-doctor_0013,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0013.png,,cnndetection,2.9434696902086444e-09,0,test
+fake_female-doctor_0014,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0014.png,,cnndetection,7.557551860801898e-14,0,test
+fake_female-doctor_0015,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0015.png,,cnndetection,1.9505800992192235e-06,0,test
+fake_female-doctor_0016,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0016.png,,cnndetection,4.0594108630109815e-10,0,test
+fake_female-doctor_0017,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0017.png,,cnndetection,7.079852815117249e-10,0,test
+fake_female-doctor_0018,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0018.png,,cnndetection,1.7126620832641493e-07,0,test
+fake_female-doctor_0019,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0019.png,,cnndetection,1.185917065165353e-16,0,test
+fake_female-doctor_0020,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0020.png,,cnndetection,4.856236524020119e-10,0,test
+fake_female-doctor_0021,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0021.png,,cnndetection,5.553326461876784e-12,0,test
+fake_female-doctor_0022,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0022.png,,cnndetection,5.602195374265762e-10,0,test
+fake_female-doctor_0023,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0023.png,,cnndetection,2.088655861598454e-07,0,test
+fake_female-doctor_0024,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0024.png,,cnndetection,3.97169088728333e-08,0,test
+fake_female-doctor_0025,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0025.png,,cnndetection,1.3280301337792455e-12,0,test
+fake_female-doctor_0026,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0026.png,,cnndetection,2.4474621548170594e-12,0,test
+fake_female-doctor_0027,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0027.png,,cnndetection,1.1261132000853213e-12,0,test
+fake_female-doctor_0028,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0028.png,,cnndetection,4.594486954518501e-14,0,test
+fake_female-doctor_0029,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0029.png,,cnndetection,7.502775648295237e-17,0,test
+fake_female-doctor_0030,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0030.png,,cnndetection,1.4976667128685506e-10,0,test
+fake_female-doctor_0031,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0031.png,,cnndetection,3.854121910507047e-09,0,test
+fake_female-doctor_0032,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0032.png,,cnndetection,7.810269222812902e-14,0,test
+fake_female-doctor_0033,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0033.png,,cnndetection,3.1342139994450235e-10,0,test
+fake_female-doctor_0034,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0034.png,,cnndetection,3.764304406378427e-12,0,test
+fake_female-doctor_0035,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0035.png,,cnndetection,4.736129821658608e-10,0,test
+fake_female-doctor_0036,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0036.png,,cnndetection,1.1326115284364391e-13,0,test
+fake_female-doctor_0037,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0037.png,,cnndetection,2.055219709973244e-07,0,test
+fake_female-doctor_0038,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0038.png,,cnndetection,4.448464600154134e-12,0,test
+fake_female-doctor_0039,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0039.png,,cnndetection,4.402015640891932e-09,0,test
+fake_female-doctor_0040,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0040.png,,cnndetection,6.14048539120983e-14,0,test
+fake_female-doctor_0041,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0041.png,,cnndetection,4.557165158203171e-15,0,test
+fake_female-doctor_0042,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0042.png,,cnndetection,2.45132104718937e-12,0,test
+fake_female-doctor_0043,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0043.png,,cnndetection,1.6976722250205967e-09,0,test
+fake_female-doctor_0044,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0044.png,,cnndetection,4.05025180061358e-11,0,test
+fake_female-doctor_0045,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0045.png,,cnndetection,1.554796764426103e-12,0,test
+fake_female-doctor_0046,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0046.png,,cnndetection,2.402343568519427e-07,0,test
+fake_female-doctor_0047,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0047.png,,cnndetection,2.243215618361489e-16,0,test
+fake_female-doctor_0048,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0048.png,,cnndetection,2.0655605004193944e-10,0,test
+fake_female-doctor_0049,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0049.png,,cnndetection,7.120528522364111e-08,0,test
+fake_female-doctor_0050,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0050.png,,cnndetection,1.6079857985493856e-13,0,test
+fake_female-doctor_0051,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0051.png,,cnndetection,2.5560161507552333e-15,0,test
+fake_female-doctor_0052,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0052.png,,cnndetection,1.4439414074141066e-11,0,test
+fake_female-doctor_0053,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0053.png,,cnndetection,1.565015173390135e-14,0,test
+fake_female-doctor_0054,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0054.png,,cnndetection,5.238459110934457e-10,0,test
+fake_female-doctor_0055,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0055.png,,cnndetection,4.3600906218799196e-10,0,test
+fake_female-doctor_0056,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0056.png,,cnndetection,1.0902239111487688e-09,0,test
+fake_female-doctor_0057,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0057.png,,cnndetection,3.573308370117406e-13,0,test
+fake_female-doctor_0058,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0058.png,,cnndetection,1.992653403393163e-10,0,test
+fake_female-doctor_0059,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0059.png,,cnndetection,3.111761159857451e-08,0,test
+fake_female-doctor_0060,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0060.png,,cnndetection,6.810219055353173e-12,0,test
+fake_female-doctor_0061,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0061.png,,cnndetection,1.422804318806925e-09,0,test
+fake_female-doctor_0062,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0062.png,,cnndetection,3.895018529931349e-09,0,test
+fake_female-doctor_0063,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0063.png,,cnndetection,6.241221190035617e-13,0,test
+fake_female-doctor_0064,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0064.png,,cnndetection,3.2018590795206137e-13,0,test
+fake_female-doctor_0065,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0065.png,,cnndetection,2.4382879928452894e-05,0,test
+fake_female-doctor_0066,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0066.png,,cnndetection,4.644014305021352e-16,0,test
+fake_female-doctor_0067,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0067.png,,cnndetection,5.319717648159805e-13,0,test
+fake_female-doctor_0068,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0068.png,,cnndetection,1.1002438753636695e-14,0,test
+fake_female-doctor_0069,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0069.png,,cnndetection,7.665096335429666e-10,0,test
+fake_female-doctor_0070,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0070.png,,cnndetection,3.433391248108819e-05,0,test
+fake_female-doctor_0071,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0071.png,,cnndetection,6.359449633563941e-10,0,test
+fake_female-doctor_0072,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0072.png,,cnndetection,3.654193731595723e-15,0,test
+fake_female-doctor_0073,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0073.png,,cnndetection,1.303696762988693e-06,0,test
+fake_female-doctor_0074,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0074.png,,cnndetection,6.729830488438893e-07,0,test
+fake_female-doctor_0075,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0075.png,,cnndetection,9.07572228335525e-18,0,test
+fake_female-doctor_0076,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0076.png,,cnndetection,3.5150140575979094e-08,0,test
+fake_female-doctor_0077,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0077.png,,cnndetection,8.516687910464782e-10,0,test
+fake_female-doctor_0078,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0078.png,,cnndetection,9.305772125101086e-11,0,test
+fake_female-doctor_0079,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0079.png,,cnndetection,1.1454254428625021e-12,0,test
+fake_female-doctor_0080,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0080.png,,cnndetection,1.2997635953637676e-11,0,test
+fake_female-doctor_0081,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0081.png,,cnndetection,4.718989955743158e-13,0,test
+fake_female-doctor_0082,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0082.png,,cnndetection,9.65159434159446e-17,0,test
+fake_female-doctor_0083,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0083.png,,cnndetection,1.8819934055613885e-08,0,test
+fake_female-doctor_0084,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0084.png,,cnndetection,7.325310358297088e-10,0,test
+fake_female-doctor_0085,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0085.png,,cnndetection,1.5101459579364152e-12,0,test
+fake_female-doctor_0086,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0086.png,,cnndetection,3.815345955837657e-11,0,test
+fake_female-doctor_0087,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0087.png,,cnndetection,7.26591356525752e-12,0,test
+fake_female-doctor_0088,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0088.png,,cnndetection,2.940318821753607e-11,0,test
+fake_female-doctor_0089,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0089.png,,cnndetection,1.6107861572356441e-12,0,test
+fake_female-doctor_0090,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0090.png,,cnndetection,4.260997885910042e-14,0,test
+fake_female-doctor_0091,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0091.png,,cnndetection,1.5948600773363353e-10,0,test
+fake_female-doctor_0092,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0092.png,,cnndetection,5.2414350637519647e-11,0,test
+fake_female-doctor_0093,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0093.png,,cnndetection,1.5814288084354394e-14,0,test
+fake_female-doctor_0094,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0094.png,,cnndetection,2.2262951898666117e-11,0,test
+fake_female-doctor_0095,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0095.png,,cnndetection,1.4719391261408532e-09,0,test
+fake_female-doctor_0096,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0096.png,,cnndetection,2.940908896075477e-14,0,test
+fake_female-doctor_0097,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0097.png,,cnndetection,2.1420905327307338e-10,0,test
+fake_female-doctor_0098,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0098.png,,cnndetection,9.921060382112046e-07,0,test
+fake_female-doctor_0099,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0099.png,,cnndetection,1.306060186216651e-12,0,test
+fake_female-doctor_0100,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0100.png,,cnndetection,6.354230208671652e-08,0,test
+fake_female-doctor_0101,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0101.png,,cnndetection,3.4516370916208575e-17,0,test
+fake_female-doctor_0102,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0102.png,,cnndetection,1.2299791706027463e-05,0,test
+fake_female-doctor_0103,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0103.png,,cnndetection,8.607675283656135e-08,0,test
+fake_female-doctor_0104,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0104.png,,cnndetection,2.3510695411452405e-14,0,test
+fake_female-doctor_0105,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0105.png,,cnndetection,8.82844760781154e-05,0,test
+fake_female-doctor_0106,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0106.png,,cnndetection,1.2675337446310664e-09,0,test
+fake_female-doctor_0107,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0107.png,,cnndetection,3.3219038710581637e-16,0,test
+fake_female-doctor_0108,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0108.png,,cnndetection,1.787356504120985e-12,0,test
+fake_female-doctor_0109,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0109.png,,cnndetection,6.194707857787307e-09,0,test
+fake_female-doctor_0110,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0110.png,,cnndetection,3.8599278440187845e-08,0,test
+fake_female-doctor_0111,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0111.png,,cnndetection,2.6273679412658346e-11,0,test
+fake_female-doctor_0112,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0112.png,,cnndetection,1.300921176339287e-12,0,test
+fake_female-doctor_0113,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0113.png,,cnndetection,1.6291085813691097e-08,0,test
+fake_female-doctor_0114,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0114.png,,cnndetection,2.083852379541895e-08,0,test
+fake_female-doctor_0115,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0115.png,,cnndetection,7.993670725348068e-10,0,test
+fake_female-doctor_0116,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0116.png,,cnndetection,1.903639468281426e-09,0,test
+fake_female-doctor_0117,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0117.png,,cnndetection,2.0847865534606713e-12,0,test
+fake_female-doctor_0118,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0118.png,,cnndetection,9.419248836648971e-16,0,test
+fake_female-doctor_0119,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0119.png,,cnndetection,6.601121038674052e-11,0,test
+fake_female-doctor_0120,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0120.png,,cnndetection,4.947584442832609e-12,0,test
+fake_female-doctor_0121,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0121.png,,cnndetection,2.5035842843301737e-10,0,test
+fake_female-doctor_0122,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0122.png,,cnndetection,1.5322671950701583e-11,0,test
+fake_female-doctor_0123,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0123.png,,cnndetection,7.645547064373537e-13,0,test
+fake_female-doctor_0124,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0124.png,,cnndetection,1.2966637541467207e-06,0,test
+fake_female-doctor_0125,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0125.png,,cnndetection,1.4777339352178842e-09,0,test
+fake_female-doctor_0126,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0126.png,,cnndetection,9.105116834107196e-13,0,test
+fake_female-doctor_0127,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0127.png,,cnndetection,9.053546215671837e-13,0,test
+fake_female-doctor_0128,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0128.png,,cnndetection,8.068971879549025e-11,0,test
+fake_female-doctor_0129,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0129.png,,cnndetection,6.350224979103508e-14,0,test
+fake_female-doctor_0130,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0130.png,,cnndetection,7.049030196354389e-12,0,test
+fake_female-doctor_0131,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0131.png,,cnndetection,9.39993505255643e-09,0,test
+fake_female-doctor_0132,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0132.png,,cnndetection,2.8966623544235404e-10,0,test
+fake_female-doctor_0133,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0133.png,,cnndetection,6.288890849054374e-12,0,test
+fake_female-doctor_0134,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0134.png,,cnndetection,7.802486413042986e-13,0,test
+fake_female-doctor_0135,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0135.png,,cnndetection,1.0292469099226764e-08,0,test
+fake_female-doctor_0136,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0136.png,,cnndetection,3.213525556766683e-10,0,test
+fake_female-doctor_0137,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0137.png,,cnndetection,1.8098881209249696e-16,0,test
+fake_female-doctor_0138,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0138.png,,cnndetection,9.212722679998939e-14,0,test
+fake_female-doctor_0139,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0139.png,,cnndetection,1.259854554014339e-09,0,test
+fake_female-doctor_0140,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0140.png,,cnndetection,2.3081447864115034e-09,0,test
+fake_female-doctor_0141,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0141.png,,cnndetection,2.579648389655631e-05,0,test
+fake_female-doctor_0142,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0142.png,,cnndetection,1.7230715343430347e-07,0,test
+fake_female-doctor_0143,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0143.png,,cnndetection,1.0429919081178518e-11,0,test
+fake_female-doctor_0144,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0144.png,,cnndetection,2.9737545759189743e-10,0,test
+fake_female-doctor_0145,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0145.png,,cnndetection,3.01358176067523e-17,0,test
+fake_female-doctor_0146,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0146.png,,cnndetection,3.8381478550952863e-11,0,test
+fake_female-doctor_0147,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0147.png,,cnndetection,1.1362515746002333e-12,0,test
+fake_female-doctor_0148,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0148.png,,cnndetection,1.7283247188970563e-07,0,test
+fake_female-doctor_0149,female-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-doctor/fake_female-doctor_0149.png,,cnndetection,1.1411933030502919e-11,0,test
+fake_female-nurse_0000,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0000.png,,cnndetection,2.212668069601076e-11,0,test
+fake_female-nurse_0001,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0001.png,,cnndetection,1.2904138258022215e-15,0,test
+fake_female-nurse_0002,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0002.png,,cnndetection,4.129899547344884e-11,0,test
+fake_female-nurse_0003,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0003.png,,cnndetection,2.1197921890037108e-11,0,test
+fake_female-nurse_0004,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0004.png,,cnndetection,1.1748040378734004e-05,0,test
+fake_female-nurse_0005,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0005.png,,cnndetection,6.809506233082345e-15,0,test
+fake_female-nurse_0006,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0006.png,,cnndetection,1.5471769698738314e-11,0,test
+fake_female-nurse_0007,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0007.png,,cnndetection,1.646372593810952e-09,0,test
+fake_female-nurse_0008,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0008.png,,cnndetection,2.2941863686565256e-10,0,test
+fake_female-nurse_0009,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0009.png,,cnndetection,3.6349680318688293e-14,0,test
+fake_female-nurse_0010,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0010.png,,cnndetection,1.7880663563119015e-06,0,test
+fake_female-nurse_0011,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0011.png,,cnndetection,1.8270398527420184e-08,0,test
+fake_female-nurse_0012,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0012.png,,cnndetection,3.5213328021706236e-13,0,test
+fake_female-nurse_0013,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0013.png,,cnndetection,4.624195298674749e-06,0,test
+fake_female-nurse_0014,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0014.png,,cnndetection,2.172896973462457e-09,0,test
+fake_female-nurse_0015,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0015.png,,cnndetection,4.8265628720400855e-06,0,test
+fake_female-nurse_0016,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0016.png,,cnndetection,6.386233555866205e-12,0,test
+fake_female-nurse_0017,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0017.png,,cnndetection,6.478038938606545e-11,0,test
+fake_female-nurse_0018,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0018.png,,cnndetection,1.0662268323358148e-05,0,test
+fake_female-nurse_0019,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0019.png,,cnndetection,1.17749843209225e-09,0,test
+fake_female-nurse_0020,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0020.png,,cnndetection,1.16994129939485e-08,0,test
+fake_female-nurse_0021,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0021.png,,cnndetection,1.3442439694699715e-07,0,test
+fake_female-nurse_0022,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0022.png,,cnndetection,1.2017982095602342e-11,0,test
+fake_female-nurse_0023,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0023.png,,cnndetection,1.6754934245577502e-11,0,test
+fake_female-nurse_0024,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0024.png,,cnndetection,3.1389524313141237e-10,0,test
+fake_female-nurse_0025,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0025.png,,cnndetection,2.3940383096082707e-12,0,test
+fake_female-nurse_0026,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0026.png,,cnndetection,7.610948546746266e-13,0,test
+fake_female-nurse_0027,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0027.png,,cnndetection,1.9698128544964888e-11,0,test
+fake_female-nurse_0028,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0028.png,,cnndetection,1.5160535587338542e-12,0,test
+fake_female-nurse_0029,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0029.png,,cnndetection,1.2018652739698155e-10,0,test
+fake_female-nurse_0030,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0030.png,,cnndetection,1.3552361273136415e-12,0,test
+fake_female-nurse_0031,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0031.png,,cnndetection,3.1599677301902274e-12,0,test
+fake_female-nurse_0032,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0032.png,,cnndetection,2.4917369501054054e-07,0,test
+fake_female-nurse_0033,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0033.png,,cnndetection,3.9104044438284524e-13,0,test
+fake_female-nurse_0034,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0034.png,,cnndetection,1.155989041469463e-12,0,test
+fake_female-nurse_0035,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0035.png,,cnndetection,5.107324915906101e-16,0,test
+fake_female-nurse_0036,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0036.png,,cnndetection,1.7922561004746207e-11,0,test
+fake_female-nurse_0037,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0037.png,,cnndetection,2.6315971624057966e-10,0,test
+fake_female-nurse_0038,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0038.png,,cnndetection,2.8872854107575563e-10,0,test
+fake_female-nurse_0039,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0039.png,,cnndetection,8.507348200469805e-15,0,test
+fake_female-nurse_0040,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0040.png,,cnndetection,1.0265486238836274e-09,0,test
+fake_female-nurse_0041,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0041.png,,cnndetection,1.0919113920329626e-13,0,test
+fake_female-nurse_0042,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0042.png,,cnndetection,1.9690768113256318e-11,0,test
+fake_female-nurse_0043,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0043.png,,cnndetection,6.209053271533094e-10,0,test
+fake_female-nurse_0044,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0044.png,,cnndetection,1.9409805726111444e-14,0,test
+fake_female-nurse_0045,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0045.png,,cnndetection,4.254384171342718e-12,0,test
+fake_female-nurse_0046,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0046.png,,cnndetection,1.9361369452131072e-10,0,test
+fake_female-nurse_0047,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0047.png,,cnndetection,5.819407101622356e-18,0,test
+fake_female-nurse_0048,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0048.png,,cnndetection,8.486911173832823e-11,0,test
+fake_female-nurse_0049,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0049.png,,cnndetection,2.656479467552219e-14,0,test
+fake_female-nurse_0050,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0050.png,,cnndetection,6.701556966152468e-15,0,test
+fake_female-nurse_0051,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0051.png,,cnndetection,1.5895494920314945e-09,0,test
+fake_female-nurse_0052,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0052.png,,cnndetection,4.07720569545883e-13,0,test
+fake_female-nurse_0053,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0053.png,,cnndetection,4.353569948989389e-09,0,test
+fake_female-nurse_0054,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0054.png,,cnndetection,2.727502113053504e-10,0,test
+fake_female-nurse_0055,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0055.png,,cnndetection,4.998880864803823e-09,0,test
+fake_female-nurse_0056,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0056.png,,cnndetection,1.555156524390977e-11,0,test
+fake_female-nurse_0057,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0057.png,,cnndetection,5.4888666944918896e-09,0,test
+fake_female-nurse_0058,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0058.png,,cnndetection,7.603651042131787e-09,0,test
+fake_female-nurse_0059,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0059.png,,cnndetection,3.486700132174919e-13,0,test
+fake_female-nurse_0060,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0060.png,,cnndetection,2.5358808477572714e-13,0,test
+fake_female-nurse_0061,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0061.png,,cnndetection,1.2372354009360098e-11,0,test
+fake_female-nurse_0062,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0062.png,,cnndetection,2.2547193062258386e-13,0,test
+fake_female-nurse_0063,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0063.png,,cnndetection,9.55631165311388e-08,0,test
+fake_female-nurse_0064,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0064.png,,cnndetection,2.776665786186072e-09,0,test
+fake_female-nurse_0065,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0065.png,,cnndetection,1.4688835217602225e-11,0,test
+fake_female-nurse_0066,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0066.png,,cnndetection,1.2814319943086554e-15,0,test
+fake_female-nurse_0067,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0067.png,,cnndetection,1.1309126513947901e-13,0,test
+fake_female-nurse_0068,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0068.png,,cnndetection,1.2274649352495004e-10,0,test
+fake_female-nurse_0069,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0069.png,,cnndetection,1.2360124035382114e-09,0,test
+fake_female-nurse_0070,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0070.png,,cnndetection,6.137131691730247e-08,0,test
+fake_female-nurse_0071,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0071.png,,cnndetection,1.5024440025435126e-11,0,test
+fake_female-nurse_0072,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0072.png,,cnndetection,1.969820487279783e-11,0,test
+fake_female-nurse_0073,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0073.png,,cnndetection,3.0411887201250987e-13,0,test
+fake_female-nurse_0074,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0074.png,,cnndetection,8.347360888442956e-13,0,test
+fake_female-nurse_0075,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0075.png,,cnndetection,5.1664921230099026e-09,0,test
+fake_female-nurse_0076,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0076.png,,cnndetection,6.828904020039772e-07,0,test
+fake_female-nurse_0077,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0077.png,,cnndetection,1.1202573659829795e-06,0,test
+fake_female-nurse_0078,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0078.png,,cnndetection,1.4112520874132173e-10,0,test
+fake_female-nurse_0079,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0079.png,,cnndetection,2.088557798929358e-10,0,test
+fake_female-nurse_0080,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0080.png,,cnndetection,1.219306078326099e-08,0,test
+fake_female-nurse_0081,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0081.png,,cnndetection,7.016353720246116e-07,0,test
+fake_female-nurse_0082,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0082.png,,cnndetection,6.217526493657033e-10,0,test
+fake_female-nurse_0083,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0083.png,,cnndetection,2.956704557058288e-16,0,test
+fake_female-nurse_0084,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0084.png,,cnndetection,2.05489336484177e-12,0,test
+fake_female-nurse_0085,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0085.png,,cnndetection,4.108461071350433e-10,0,test
+fake_female-nurse_0086,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0086.png,,cnndetection,1.3265374718685052e-06,0,test
+fake_female-nurse_0087,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0087.png,,cnndetection,1.139880438927321e-07,0,test
+fake_female-nurse_0088,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0088.png,,cnndetection,4.995090932812538e-15,0,test
+fake_female-nurse_0089,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0089.png,,cnndetection,9.384240001963917e-06,0,test
+fake_female-nurse_0090,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0090.png,,cnndetection,5.0221365260894046e-11,0,test
+fake_female-nurse_0091,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0091.png,,cnndetection,5.427180232997486e-11,0,test
+fake_female-nurse_0092,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0092.png,,cnndetection,1.9136706108646706e-11,0,test
+fake_female-nurse_0093,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0093.png,,cnndetection,3.062128328679137e-11,0,test
+fake_female-nurse_0094,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0094.png,,cnndetection,6.662803642143444e-10,0,test
+fake_female-nurse_0095,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0095.png,,cnndetection,8.02489466877887e-06,0,test
+fake_female-nurse_0096,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0096.png,,cnndetection,5.342557993226471e-12,0,test
+fake_female-nurse_0097,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0097.png,,cnndetection,2.6808696542134644e-15,0,test
+fake_female-nurse_0098,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0098.png,,cnndetection,6.636578845307104e-16,0,test
+fake_female-nurse_0099,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0099.png,,cnndetection,2.7446304365123912e-17,0,test
+fake_female-nurse_0100,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0100.png,,cnndetection,7.359881948332259e-08,0,test
+fake_female-nurse_0101,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0101.png,,cnndetection,1.9666621404098179e-16,0,test
+fake_female-nurse_0102,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0102.png,,cnndetection,1.7540012682299572e-14,0,test
+fake_female-nurse_0103,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0103.png,,cnndetection,2.5652238647600085e-14,0,test
+fake_female-nurse_0104,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0104.png,,cnndetection,2.0556572000174356e-09,0,test
+fake_female-nurse_0105,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0105.png,,cnndetection,8.830254947655037e-16,0,test
+fake_female-nurse_0106,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0106.png,,cnndetection,1.9184810684524933e-10,0,test
+fake_female-nurse_0107,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0107.png,,cnndetection,1.387443437049496e-12,0,test
+fake_female-nurse_0108,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0108.png,,cnndetection,2.066611313501776e-15,0,test
+fake_female-nurse_0109,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0109.png,,cnndetection,7.94526222591685e-09,0,test
+fake_female-nurse_0110,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0110.png,,cnndetection,2.9379937371842857e-10,0,test
+fake_female-nurse_0111,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0111.png,,cnndetection,4.163663720578451e-15,0,test
+fake_female-nurse_0112,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0112.png,,cnndetection,5.849978840103201e-14,0,test
+fake_female-nurse_0113,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0113.png,,cnndetection,4.679743531165077e-15,0,test
+fake_female-nurse_0114,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0114.png,,cnndetection,1.686443817710756e-13,0,test
+fake_female-nurse_0115,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0115.png,,cnndetection,2.2901834508676222e-12,0,test
+fake_female-nurse_0116,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0116.png,,cnndetection,1.1260138871663217e-13,0,test
+fake_female-nurse_0117,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0117.png,,cnndetection,1.6128304204318655e-12,0,test
+fake_female-nurse_0118,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0118.png,,cnndetection,1.3664691936570578e-13,0,test
+fake_female-nurse_0119,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0119.png,,cnndetection,3.722209172829505e-12,0,test
+fake_female-nurse_0120,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0120.png,,cnndetection,1.9181086840375228e-13,0,test
+fake_female-nurse_0121,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0121.png,,cnndetection,4.85846883828845e-14,0,test
+fake_female-nurse_0122,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0122.png,,cnndetection,6.752335135473686e-09,0,test
+fake_female-nurse_0123,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0123.png,,cnndetection,1.8944011290211726e-11,0,test
+fake_female-nurse_0124,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0124.png,,cnndetection,2.8035068710963174e-10,0,test
+fake_female-nurse_0125,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0125.png,,cnndetection,1.882643573480891e-06,0,test
+fake_female-nurse_0126,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0126.png,,cnndetection,5.35094006186591e-16,0,test
+fake_female-nurse_0127,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0127.png,,cnndetection,6.162994115044285e-09,0,test
+fake_female-nurse_0128,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0128.png,,cnndetection,3.2134191734265035e-15,0,test
+fake_female-nurse_0129,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0129.png,,cnndetection,8.041758547960853e-08,0,test
+fake_female-nurse_0130,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0130.png,,cnndetection,2.050126214625525e-11,0,test
+fake_female-nurse_0131,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0131.png,,cnndetection,2.6572525513302026e-08,0,test
+fake_female-nurse_0132,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0132.png,,cnndetection,1.3181277900772836e-12,0,test
+fake_female-nurse_0133,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0133.png,,cnndetection,1.2745460936658404e-11,0,test
+fake_female-nurse_0134,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0134.png,,cnndetection,8.999207358039579e-14,0,test
+fake_female-nurse_0135,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0135.png,,cnndetection,9.193724408618383e-15,0,test
+fake_female-nurse_0136,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0136.png,,cnndetection,1.717034714885728e-17,0,test
+fake_female-nurse_0137,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0137.png,,cnndetection,3.226793499067071e-09,0,test
+fake_female-nurse_0138,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0138.png,,cnndetection,5.2992762955561545e-11,0,test
+fake_female-nurse_0139,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0139.png,,cnndetection,4.612302761941578e-10,0,test
+fake_female-nurse_0140,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0140.png,,cnndetection,1.507324267572413e-14,0,test
+fake_female-nurse_0141,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0141.png,,cnndetection,1.0092522249784824e-13,0,test
+fake_female-nurse_0142,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0142.png,,cnndetection,1.251014374557824e-12,0,test
+fake_female-nurse_0143,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0143.png,,cnndetection,3.259688390521917e-14,0,test
+fake_female-nurse_0144,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0144.png,,cnndetection,3.2584859289974677e-12,0,test
+fake_female-nurse_0145,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0145.png,,cnndetection,1.7661761830822797e-08,0,test
+fake_female-nurse_0146,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0146.png,,cnndetection,2.1675075068117167e-09,0,test
+fake_female-nurse_0147,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0147.png,,cnndetection,3.1818329221389163e-11,0,test
+fake_female-nurse_0148,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0148.png,,cnndetection,1.0712980490505588e-14,0,test
+fake_female-nurse_0149,female-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/female-nurse/fake_female-nurse_0149.png,,cnndetection,0.036685165017843246,0,test
+fake_male-doctor_0000,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0000.png,,cnndetection,1.0825619990622649e-15,0,test
+fake_male-doctor_0001,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0001.png,,cnndetection,1.1575444602840435e-08,0,test
+fake_male-doctor_0002,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0002.png,,cnndetection,3.778525235753616e-12,0,test
+fake_male-doctor_0003,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0003.png,,cnndetection,1.5765619265271057e-14,0,test
+fake_male-doctor_0004,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0004.png,,cnndetection,1.217717073009883e-11,0,test
+fake_male-doctor_0005,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0005.png,,cnndetection,4.577293211127653e-09,0,test
+fake_male-doctor_0006,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0006.png,,cnndetection,3.1222185725710005e-08,0,test
+fake_male-doctor_0007,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0007.png,,cnndetection,1.1533575421893713e-15,0,test
+fake_male-doctor_0008,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0008.png,,cnndetection,3.975947071577224e-10,0,test
+fake_male-doctor_0009,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0009.png,,cnndetection,1.0548160261913964e-10,0,test
+fake_male-doctor_0010,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0010.png,,cnndetection,1.4714842677676643e-07,0,test
+fake_male-doctor_0011,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0011.png,,cnndetection,3.4493104376985377e-15,0,test
+fake_male-doctor_0012,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0012.png,,cnndetection,1.1004709449480288e-05,0,test
+fake_male-doctor_0013,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0013.png,,cnndetection,1.5351951243721632e-15,0,test
+fake_male-doctor_0014,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0014.png,,cnndetection,1.0059227406600257e-07,0,test
+fake_male-doctor_0015,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0015.png,,cnndetection,3.875220500049181e-08,0,test
+fake_male-doctor_0016,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0016.png,,cnndetection,3.888018650522601e-13,0,test
+fake_male-doctor_0017,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0017.png,,cnndetection,6.68454712155625e-13,0,test
+fake_male-doctor_0018,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0018.png,,cnndetection,2.492469564074895e-09,0,test
+fake_male-doctor_0019,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0019.png,,cnndetection,2.0140646962707454e-12,0,test
+fake_male-doctor_0020,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0020.png,,cnndetection,3.494216363735675e-13,0,test
+fake_male-doctor_0021,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0021.png,,cnndetection,4.683302357033625e-13,0,test
+fake_male-doctor_0022,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0022.png,,cnndetection,4.191565317057666e-09,0,test
+fake_male-doctor_0023,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0023.png,,cnndetection,1.6031817800382653e-12,0,test
+fake_male-doctor_0024,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0024.png,,cnndetection,5.5762825468264055e-09,0,test
+fake_male-doctor_0025,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0025.png,,cnndetection,1.4709516157201952e-12,0,test
+fake_male-doctor_0026,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0026.png,,cnndetection,4.041759371631315e-09,0,test
+fake_male-doctor_0027,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0027.png,,cnndetection,1.5543372811066547e-08,0,test
+fake_male-doctor_0028,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0028.png,,cnndetection,1.2693364432312027e-16,0,test
+fake_male-doctor_0029,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0029.png,,cnndetection,3.892125286479456e-15,0,test
+fake_male-doctor_0030,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0030.png,,cnndetection,1.8386870801953559e-13,0,test
+fake_male-doctor_0031,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0031.png,,cnndetection,1.4828902550334533e-08,0,test
+fake_male-doctor_0032,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0032.png,,cnndetection,3.154450442174883e-13,0,test
+fake_male-doctor_0033,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0033.png,,cnndetection,6.09226696868248e-11,0,test
+fake_male-doctor_0034,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0034.png,,cnndetection,1.4999222697209547e-10,0,test
+fake_male-doctor_0035,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0035.png,,cnndetection,3.415728257964018e-13,0,test
+fake_male-doctor_0036,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0036.png,,cnndetection,2.1577405660833104e-12,0,test
+fake_male-doctor_0037,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0037.png,,cnndetection,1.9198681069942415e-14,0,test
+fake_male-doctor_0038,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0038.png,,cnndetection,5.999977363633623e-15,0,test
+fake_male-doctor_0039,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0039.png,,cnndetection,2.6821014742495208e-08,0,test
+fake_male-doctor_0040,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0040.png,,cnndetection,1.0711228318150898e-13,0,test
+fake_male-doctor_0041,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0041.png,,cnndetection,4.744630910380465e-09,0,test
+fake_male-doctor_0042,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0042.png,,cnndetection,2.1974499759380706e-05,0,test
+fake_male-doctor_0043,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0043.png,,cnndetection,1.1951342693272693e-12,0,test
+fake_male-doctor_0044,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0044.png,,cnndetection,5.80409997841258e-10,0,test
+fake_male-doctor_0045,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0045.png,,cnndetection,1.2889422602163636e-12,0,test
+fake_male-doctor_0046,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0046.png,,cnndetection,1.1601149481066386e-06,0,test
+fake_male-doctor_0047,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0047.png,,cnndetection,3.2422176583584393e-16,0,test
+fake_male-doctor_0048,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0048.png,,cnndetection,5.453409457345515e-08,0,test
+fake_male-doctor_0049,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0049.png,,cnndetection,5.422056048587365e-08,0,test
+fake_male-doctor_0050,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0050.png,,cnndetection,4.5159143091666465e-09,0,test
+fake_male-doctor_0051,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0051.png,,cnndetection,5.169809372262968e-11,0,test
+fake_male-doctor_0052,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0052.png,,cnndetection,8.982512650357322e-12,0,test
+fake_male-doctor_0053,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0053.png,,cnndetection,1.8177191696278072e-10,0,test
+fake_male-doctor_0054,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0054.png,,cnndetection,4.30299025577785e-12,0,test
+fake_male-doctor_0055,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0055.png,,cnndetection,2.042914726274603e-09,0,test
+fake_male-doctor_0056,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0056.png,,cnndetection,1.181508623576688e-11,0,test
+fake_male-doctor_0057,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0057.png,,cnndetection,1.1385228697313732e-12,0,test
+fake_male-doctor_0058,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0058.png,,cnndetection,1.9366474569848524e-13,0,test
+fake_male-doctor_0059,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0059.png,,cnndetection,1.6249175616156464e-10,0,test
+fake_male-doctor_0060,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0060.png,,cnndetection,4.344011816925786e-10,0,test
+fake_male-doctor_0061,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0061.png,,cnndetection,6.307184108322872e-09,0,test
+fake_male-doctor_0062,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0062.png,,cnndetection,7.116101841120326e-08,0,test
+fake_male-doctor_0063,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0063.png,,cnndetection,2.833922332912131e-12,0,test
+fake_male-doctor_0064,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0064.png,,cnndetection,5.0679569048306394e-12,0,test
+fake_male-doctor_0065,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0065.png,,cnndetection,0.002000833163037896,0,test
+fake_male-doctor_0066,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0066.png,,cnndetection,1.2441213576524059e-15,0,test
+fake_male-doctor_0067,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0067.png,,cnndetection,3.007730242643447e-07,0,test
+fake_male-doctor_0068,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0068.png,,cnndetection,8.434700090407935e-16,0,test
+fake_male-doctor_0069,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0069.png,,cnndetection,2.39153179681581e-13,0,test
+fake_male-doctor_0070,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0070.png,,cnndetection,2.869789073045581e-09,0,test
+fake_male-doctor_0071,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0071.png,,cnndetection,5.516997882842878e-12,0,test
+fake_male-doctor_0072,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0072.png,,cnndetection,3.124988298458444e-16,0,test
+fake_male-doctor_0073,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0073.png,,cnndetection,1.5794436755504746e-16,0,test
+fake_male-doctor_0074,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0074.png,,cnndetection,3.028520836889648e-11,0,test
+fake_male-doctor_0075,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0075.png,,cnndetection,1.4015054308064157e-12,0,test
+fake_male-doctor_0076,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0076.png,,cnndetection,3.037431139940594e-10,0,test
+fake_male-doctor_0077,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0077.png,,cnndetection,0.0007325067999772727,0,test
+fake_male-doctor_0078,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0078.png,,cnndetection,7.069215852072933e-15,0,test
+fake_male-doctor_0079,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0079.png,,cnndetection,2.2982143965677437e-11,0,test
+fake_male-doctor_0080,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0080.png,,cnndetection,2.641720731055841e-10,0,test
+fake_male-doctor_0081,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0081.png,,cnndetection,1.2608189232238276e-12,0,test
+fake_male-doctor_0082,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0082.png,,cnndetection,4.078930186776804e-14,0,test
+fake_male-doctor_0083,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0083.png,,cnndetection,5.909157052563785e-10,0,test
+fake_male-doctor_0084,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0084.png,,cnndetection,4.619995705446023e-11,0,test
+fake_male-doctor_0085,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0085.png,,cnndetection,1.384518855899325e-13,0,test
+fake_male-doctor_0086,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0086.png,,cnndetection,3.769290435329253e-12,0,test
+fake_male-doctor_0087,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0087.png,,cnndetection,1.163278611215901e-07,0,test
+fake_male-doctor_0088,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0088.png,,cnndetection,0.00011414372420404106,0,test
+fake_male-doctor_0089,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0089.png,,cnndetection,3.721335227527934e-16,0,test
+fake_male-doctor_0090,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0090.png,,cnndetection,8.293617223922075e-15,0,test
+fake_male-doctor_0091,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0091.png,,cnndetection,5.14090270353762e-10,0,test
+fake_male-doctor_0092,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0092.png,,cnndetection,5.394045060331913e-14,0,test
+fake_male-doctor_0093,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0093.png,,cnndetection,1.5228380622483995e-12,0,test
+fake_male-doctor_0094,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0094.png,,cnndetection,1.0432480657129872e-08,0,test
+fake_male-doctor_0095,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0095.png,,cnndetection,5.065277974836135e-09,0,test
+fake_male-doctor_0096,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0096.png,,cnndetection,4.28254098849834e-10,0,test
+fake_male-doctor_0097,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0097.png,,cnndetection,1.0133656934419033e-11,0,test
+fake_male-doctor_0098,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0098.png,,cnndetection,7.77523712081063e-10,0,test
+fake_male-doctor_0099,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0099.png,,cnndetection,3.603069231861156e-11,0,test
+fake_male-doctor_0100,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0100.png,,cnndetection,2.0758666053471986e-12,0,test
+fake_male-doctor_0101,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0101.png,,cnndetection,2.0877672923802493e-08,0,test
+fake_male-doctor_0102,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0102.png,,cnndetection,1.230188312328906e-10,0,test
+fake_male-doctor_0103,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0103.png,,cnndetection,0.0005828694556839764,0,test
+fake_male-doctor_0104,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0104.png,,cnndetection,1.2342585287150598e-11,0,test
+fake_male-doctor_0105,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0105.png,,cnndetection,5.74840557099332e-11,0,test
+fake_male-doctor_0106,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0106.png,,cnndetection,9.751447913042277e-12,0,test
+fake_male-doctor_0107,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0107.png,,cnndetection,4.599188868290027e-13,0,test
+fake_male-doctor_0108,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0108.png,,cnndetection,8.200891002526842e-14,0,test
+fake_male-doctor_0109,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0109.png,,cnndetection,7.169828064590433e-10,0,test
+fake_male-doctor_0110,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0110.png,,cnndetection,5.824908155642461e-13,0,test
+fake_male-doctor_0111,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0111.png,,cnndetection,8.63080629187607e-08,0,test
+fake_male-doctor_0112,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0112.png,,cnndetection,1.4048079106238065e-12,0,test
+fake_male-doctor_0113,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0113.png,,cnndetection,1.16536031668932e-15,0,test
+fake_male-doctor_0114,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0114.png,,cnndetection,7.8295540110288e-18,0,test
+fake_male-doctor_0115,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0115.png,,cnndetection,2.0214161941534137e-11,0,test
+fake_male-doctor_0116,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0116.png,,cnndetection,1.69634417623854e-10,0,test
+fake_male-doctor_0117,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0117.png,,cnndetection,2.4719880005810713e-13,0,test
+fake_male-doctor_0118,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0118.png,,cnndetection,2.3034543022992793e-11,0,test
+fake_male-doctor_0119,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0119.png,,cnndetection,3.0524760236821935e-12,0,test
+fake_male-doctor_0120,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0120.png,,cnndetection,8.517280036812735e-08,0,test
+fake_male-doctor_0121,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0121.png,,cnndetection,3.26262785677045e-08,0,test
+fake_male-doctor_0122,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0122.png,,cnndetection,1.80081145308153e-12,0,test
+fake_male-doctor_0123,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0123.png,,cnndetection,2.2583961610533887e-12,0,test
+fake_male-doctor_0124,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0124.png,,cnndetection,2.7983387244375326e-15,0,test
+fake_male-doctor_0125,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0125.png,,cnndetection,6.069890250148813e-12,0,test
+fake_male-doctor_0126,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0126.png,,cnndetection,3.789577332491412e-11,0,test
+fake_male-doctor_0127,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0127.png,,cnndetection,4.637385527667126e-12,0,test
+fake_male-doctor_0128,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0128.png,,cnndetection,9.451824739548087e-12,0,test
+fake_male-doctor_0129,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0129.png,,cnndetection,1.2004116811681342e-08,0,test
+fake_male-doctor_0130,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0130.png,,cnndetection,2.7211546817923482e-12,0,test
+fake_male-doctor_0131,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0131.png,,cnndetection,1.8362793382208087e-13,0,test
+fake_male-doctor_0132,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0132.png,,cnndetection,1.624239615418202e-13,0,test
+fake_male-doctor_0133,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0133.png,,cnndetection,1.1527535176414361e-10,0,test
+fake_male-doctor_0134,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0134.png,,cnndetection,2.0295001945669355e-07,0,test
+fake_male-doctor_0135,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0135.png,,cnndetection,7.110952382483049e-10,0,test
+fake_male-doctor_0136,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0136.png,,cnndetection,4.496480965343608e-09,0,test
+fake_male-doctor_0137,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0137.png,,cnndetection,1.7766606106306426e-06,0,test
+fake_male-doctor_0138,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0138.png,,cnndetection,1.781940039968788e-09,0,test
+fake_male-doctor_0139,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0139.png,,cnndetection,5.975170438432542e-07,0,test
+fake_male-doctor_0140,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0140.png,,cnndetection,5.5131774701067116e-09,0,test
+fake_male-doctor_0141,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0141.png,,cnndetection,2.6086018678483924e-08,0,test
+fake_male-doctor_0142,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0142.png,,cnndetection,1.0297151326055243e-10,0,test
+fake_male-doctor_0143,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0143.png,,cnndetection,1.8922644358099205e-06,0,test
+fake_male-doctor_0144,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0144.png,,cnndetection,1.8383286559675582e-10,0,test
+fake_male-doctor_0145,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0145.png,,cnndetection,9.661154255075077e-13,0,test
+fake_male-doctor_0146,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0146.png,,cnndetection,5.107690664732725e-14,0,test
+fake_male-doctor_0147,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0147.png,,cnndetection,9.837786141275728e-10,0,test
+fake_male-doctor_0148,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0148.png,,cnndetection,1.076646688469296e-10,0,test
+fake_male-doctor_0149,male-doctor,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-doctor/fake_male-doctor_0149.png,,cnndetection,1.4492585478365072e-06,0,test
+fake_male-nurse_0000,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0000.png,,cnndetection,2.4277568887523526e-13,0,test
+fake_male-nurse_0001,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0001.png,,cnndetection,6.652003167045839e-12,0,test
+fake_male-nurse_0002,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0002.png,,cnndetection,1.0515550874786003e-15,0,test
+fake_male-nurse_0003,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0003.png,,cnndetection,8.785247377664229e-13,0,test
+fake_male-nurse_0004,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0004.png,,cnndetection,1.9752936265826637e-12,0,test
+fake_male-nurse_0005,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0005.png,,cnndetection,1.1577940212462168e-12,0,test
+fake_male-nurse_0006,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0006.png,,cnndetection,1.1658930487712382e-09,0,test
+fake_male-nurse_0007,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0007.png,,cnndetection,1.5088314779987573e-14,0,test
+fake_male-nurse_0008,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0008.png,,cnndetection,5.3200543334241956e-05,0,test
+fake_male-nurse_0009,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0009.png,,cnndetection,4.501798849605894e-14,0,test
+fake_male-nurse_0010,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0010.png,,cnndetection,0.0001236473472090438,0,test
+fake_male-nurse_0011,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0011.png,,cnndetection,4.24935815701577e-11,0,test
+fake_male-nurse_0012,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0012.png,,cnndetection,9.552876267804322e-10,0,test
+fake_male-nurse_0013,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0013.png,,cnndetection,1.4716377530650526e-14,0,test
+fake_male-nurse_0014,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0014.png,,cnndetection,1.768284407788201e-10,0,test
+fake_male-nurse_0015,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0015.png,,cnndetection,2.4201590391482074e-18,0,test
+fake_male-nurse_0016,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0016.png,,cnndetection,9.646291543319307e-10,0,test
+fake_male-nurse_0017,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0017.png,,cnndetection,4.2547024931005595e-11,0,test
+fake_male-nurse_0018,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0018.png,,cnndetection,7.6494314354969e-12,0,test
+fake_male-nurse_0019,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0019.png,,cnndetection,2.777013780605811e-14,0,test
+fake_male-nurse_0020,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0020.png,,cnndetection,1.123915847542345e-12,0,test
+fake_male-nurse_0021,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0021.png,,cnndetection,9.290022917607388e-11,0,test
+fake_male-nurse_0022,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0022.png,,cnndetection,5.868197927583196e-09,0,test
+fake_male-nurse_0023,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0023.png,,cnndetection,4.141785581168733e-08,0,test
+fake_male-nurse_0024,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0024.png,,cnndetection,3.610626686523233e-09,0,test
+fake_male-nurse_0025,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0025.png,,cnndetection,1.8914945998371735e-11,0,test
+fake_male-nurse_0026,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0026.png,,cnndetection,2.514418395715978e-10,0,test
+fake_male-nurse_0027,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0027.png,,cnndetection,1.773143480932049e-07,0,test
+fake_male-nurse_0028,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0028.png,,cnndetection,2.74880769188246e-12,0,test
+fake_male-nurse_0029,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0029.png,,cnndetection,7.624793019189724e-10,0,test
+fake_male-nurse_0030,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0030.png,,cnndetection,5.510130546282355e-12,0,test
+fake_male-nurse_0031,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0031.png,,cnndetection,5.811120334930919e-11,0,test
+fake_male-nurse_0032,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0032.png,,cnndetection,1.515789733730344e-07,0,test
+fake_male-nurse_0033,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0033.png,,cnndetection,3.154337901989379e-12,0,test
+fake_male-nurse_0034,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0034.png,,cnndetection,6.796856133473028e-11,0,test
+fake_male-nurse_0035,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0035.png,,cnndetection,1.799511060995851e-11,0,test
+fake_male-nurse_0036,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0036.png,,cnndetection,5.932572575556572e-12,0,test
+fake_male-nurse_0037,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0037.png,,cnndetection,2.6255789433067295e-15,0,test
+fake_male-nurse_0038,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0038.png,,cnndetection,1.505181257410726e-10,0,test
+fake_male-nurse_0039,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0039.png,,cnndetection,2.1081292800317897e-07,0,test
+fake_male-nurse_0040,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0040.png,,cnndetection,5.3306685003917664e-05,0,test
+fake_male-nurse_0041,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0041.png,,cnndetection,1.207067540538731e-12,0,test
+fake_male-nurse_0042,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0042.png,,cnndetection,9.328775816067059e-13,0,test
+fake_male-nurse_0043,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0043.png,,cnndetection,1.854544784407608e-08,0,test
+fake_male-nurse_0044,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0044.png,,cnndetection,1.9642912296724546e-10,0,test
+fake_male-nurse_0045,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0045.png,,cnndetection,1.7108180106958915e-12,0,test
+fake_male-nurse_0046,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0046.png,,cnndetection,1.30548905561724e-13,0,test
+fake_male-nurse_0047,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0047.png,,cnndetection,1.4489364152936446e-09,0,test
+fake_male-nurse_0048,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0048.png,,cnndetection,1.4481812084699182e-14,0,test
+fake_male-nurse_0049,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0049.png,,cnndetection,5.783101428291637e-11,0,test
+fake_male-nurse_0050,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0050.png,,cnndetection,5.766776911276779e-15,0,test
+fake_male-nurse_0051,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0051.png,,cnndetection,2.8097871794009743e-13,0,test
+fake_male-nurse_0052,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0052.png,,cnndetection,3.8022468379948035e-19,0,test
+fake_male-nurse_0053,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0053.png,,cnndetection,2.0469752327122474e-20,0,test
+fake_male-nurse_0054,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0054.png,,cnndetection,3.1235953527766844e-15,0,test
+fake_male-nurse_0055,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0055.png,,cnndetection,1.1853134576286783e-12,0,test
+fake_male-nurse_0056,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0056.png,,cnndetection,3.3409097970754642e-12,0,test
+fake_male-nurse_0057,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0057.png,,cnndetection,6.27056878643728e-11,0,test
+fake_male-nurse_0058,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0058.png,,cnndetection,3.016443345105202e-11,0,test
+fake_male-nurse_0059,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0059.png,,cnndetection,1.6281161141495915e-10,0,test
+fake_male-nurse_0060,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0060.png,,cnndetection,3.288680318291881e-06,0,test
+fake_male-nurse_0061,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0061.png,,cnndetection,1.5249851078105725e-13,0,test
+fake_male-nurse_0062,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0062.png,,cnndetection,3.6629541066979243e-10,0,test
+fake_male-nurse_0063,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0063.png,,cnndetection,1.1520369380679796e-10,0,test
+fake_male-nurse_0064,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0064.png,,cnndetection,1.0765248776098283e-15,0,test
+fake_male-nurse_0065,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0065.png,,cnndetection,9.786164933967001e-11,0,test
+fake_male-nurse_0066,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0066.png,,cnndetection,2.317081920620188e-16,0,test
+fake_male-nurse_0067,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0067.png,,cnndetection,6.58883809057792e-13,0,test
+fake_male-nurse_0068,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0068.png,,cnndetection,2.260464818798491e-12,0,test
+fake_male-nurse_0069,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0069.png,,cnndetection,3.020028237904482e-12,0,test
+fake_male-nurse_0070,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0070.png,,cnndetection,2.0372559195180884e-10,0,test
+fake_male-nurse_0071,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0071.png,,cnndetection,7.214327334310877e-14,0,test
+fake_male-nurse_0072,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0072.png,,cnndetection,3.815349186760131e-13,0,test
+fake_male-nurse_0073,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0073.png,,cnndetection,7.509736935632687e-16,0,test
+fake_male-nurse_0074,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0074.png,,cnndetection,1.3932272224792541e-08,0,test
+fake_male-nurse_0075,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0075.png,,cnndetection,9.143936996469648e-11,0,test
+fake_male-nurse_0076,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0076.png,,cnndetection,5.385582604877648e-11,0,test
+fake_male-nurse_0077,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0077.png,,cnndetection,5.6839491446858403e-11,0,test
+fake_male-nurse_0078,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0078.png,,cnndetection,3.5406736136750494e-14,0,test
+fake_male-nurse_0079,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0079.png,,cnndetection,0.00034270682954229414,0,test
+fake_male-nurse_0080,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0080.png,,cnndetection,4.3550291151106535e-10,0,test
+fake_male-nurse_0081,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0081.png,,cnndetection,1.1545352407438259e-07,0,test
+fake_male-nurse_0082,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0082.png,,cnndetection,2.5054419734086945e-14,0,test
+fake_male-nurse_0083,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0083.png,,cnndetection,3.878497523146507e-11,0,test
+fake_male-nurse_0084,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0084.png,,cnndetection,7.126389728979651e-14,0,test
+fake_male-nurse_0085,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0085.png,,cnndetection,2.5210862043822946e-12,0,test
+fake_male-nurse_0086,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0086.png,,cnndetection,7.566248427792743e-07,0,test
+fake_male-nurse_0087,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0087.png,,cnndetection,2.34622813798796e-13,0,test
+fake_male-nurse_0088,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0088.png,,cnndetection,1.9692144889079115e-16,0,test
+fake_male-nurse_0089,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0089.png,,cnndetection,4.213646376260982e-10,0,test
+fake_male-nurse_0090,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0090.png,,cnndetection,3.812665294589124e-09,0,test
+fake_male-nurse_0091,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0091.png,,cnndetection,4.1187031456502154e-06,0,test
+fake_male-nurse_0092,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0092.png,,cnndetection,3.6778206435883476e-07,0,test
+fake_male-nurse_0093,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0093.png,,cnndetection,1.3350340832829488e-09,0,test
+fake_male-nurse_0094,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0094.png,,cnndetection,2.7846820335741818e-11,0,test
+fake_male-nurse_0095,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0095.png,,cnndetection,7.082807257363655e-11,0,test
+fake_male-nurse_0096,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0096.png,,cnndetection,2.182004305972124e-13,0,test
+fake_male-nurse_0097,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0097.png,,cnndetection,2.9814187143401005e-12,0,test
+fake_male-nurse_0098,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0098.png,,cnndetection,6.36214171623184e-14,0,test
+fake_male-nurse_0099,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0099.png,,cnndetection,2.5908853208201407e-15,0,test
+fake_male-nurse_0100,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0100.png,,cnndetection,4.1598872241831175e-14,0,test
+fake_male-nurse_0101,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0101.png,,cnndetection,1.2376785818446479e-08,0,test
+fake_male-nurse_0102,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0102.png,,cnndetection,2.9715170457233976e-16,0,test
+fake_male-nurse_0103,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0103.png,,cnndetection,7.722116696085024e-11,0,test
+fake_male-nurse_0104,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0104.png,,cnndetection,8.607757706613484e-08,0,test
+fake_male-nurse_0105,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0105.png,,cnndetection,9.111958285340852e-14,0,test
+fake_male-nurse_0106,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0106.png,,cnndetection,3.83882460324933e-13,0,test
+fake_male-nurse_0107,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0107.png,,cnndetection,3.4703733942396736e-16,0,test
+fake_male-nurse_0108,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0108.png,,cnndetection,1.1979933711714352e-09,0,test
+fake_male-nurse_0109,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0109.png,,cnndetection,4.567594674882713e-13,0,test
+fake_male-nurse_0110,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0110.png,,cnndetection,7.049169487269735e-18,0,test
+fake_male-nurse_0111,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0111.png,,cnndetection,7.342838004298358e-10,0,test
+fake_male-nurse_0112,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0112.png,,cnndetection,0.0017449486767873168,0,test
+fake_male-nurse_0113,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0113.png,,cnndetection,2.1587117734253575e-16,0,test
+fake_male-nurse_0114,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0114.png,,cnndetection,1.3861928174668304e-15,0,test
+fake_male-nurse_0115,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0115.png,,cnndetection,4.2846125952733516e-12,0,test
+fake_male-nurse_0116,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0116.png,,cnndetection,1.1937429343633621e-11,0,test
+fake_male-nurse_0117,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0117.png,,cnndetection,1.9173831532019918e-18,0,test
+fake_male-nurse_0118,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0118.png,,cnndetection,1.418610384718022e-08,0,test
+fake_male-nurse_0119,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0119.png,,cnndetection,3.1494512452498588e-15,0,test
+fake_male-nurse_0120,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0120.png,,cnndetection,3.818224679386393e-17,0,test
+fake_male-nurse_0121,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0121.png,,cnndetection,1.0184910337329711e-07,0,test
+fake_male-nurse_0122,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0122.png,,cnndetection,1.920430747759383e-08,0,test
+fake_male-nurse_0123,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0123.png,,cnndetection,8.57658648961701e-12,0,test
+fake_male-nurse_0124,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0124.png,,cnndetection,1.1057302629069454e-07,0,test
+fake_male-nurse_0125,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0125.png,,cnndetection,5.589786879894865e-12,0,test
+fake_male-nurse_0126,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0126.png,,cnndetection,1.2875460697614471e-09,0,test
+fake_male-nurse_0127,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0127.png,,cnndetection,1.1411280098627685e-07,0,test
+fake_male-nurse_0128,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0128.png,,cnndetection,1.3171341650289056e-17,0,test
+fake_male-nurse_0129,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0129.png,,cnndetection,7.805341928346365e-10,0,test
+fake_male-nurse_0130,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0130.png,,cnndetection,3.1424173248371815e-16,0,test
+fake_male-nurse_0131,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0131.png,,cnndetection,1.0814276557580271e-10,0,test
+fake_male-nurse_0132,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0132.png,,cnndetection,1.752946529251509e-12,0,test
+fake_male-nurse_0133,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0133.png,,cnndetection,3.0401880184605535e-15,0,test
+fake_male-nurse_0134,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0134.png,,cnndetection,2.9127819947682987e-12,0,test
+fake_male-nurse_0135,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0135.png,,cnndetection,2.7535571513073818e-15,0,test
+fake_male-nurse_0136,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0136.png,,cnndetection,3.644150606274543e-11,0,test
+fake_male-nurse_0137,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0137.png,,cnndetection,3.866845510458461e-09,0,test
+fake_male-nurse_0138,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0138.png,,cnndetection,3.188770404646382e-19,0,test
+fake_male-nurse_0139,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0139.png,,cnndetection,1.2102177593398267e-10,0,test
+fake_male-nurse_0140,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0140.png,,cnndetection,2.3121903053497945e-16,0,test
+fake_male-nurse_0141,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0141.png,,cnndetection,6.988257195139624e-11,0,test
+fake_male-nurse_0142,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0142.png,,cnndetection,1.2697337755870897e-12,0,test
+fake_male-nurse_0143,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0143.png,,cnndetection,1.3533175448332546e-11,0,test
+fake_male-nurse_0144,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0144.png,,cnndetection,3.585621730084476e-11,0,test
+fake_male-nurse_0145,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0145.png,,cnndetection,3.913518042963915e-08,0,test
+fake_male-nurse_0146,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0146.png,,cnndetection,1.27556491472038e-15,0,test
+fake_male-nurse_0147,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0147.png,,cnndetection,2.703984258722869e-11,0,test
+fake_male-nurse_0148,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0148.png,,cnndetection,1.3207587387859595e-14,0,test
+fake_male-nurse_0149,male-nurse,1,/content/drive/MyDrive/project/data/shuffled_2x2/fake/male-nurse/fake_male-nurse_0149.png,,cnndetection,9.521620540908771e-07,0,test
+fd (12)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (12)_aligned.png,,cnndetection,5.046593698487811e-11,0,test
+fd (13)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (13)_aligned.png,,cnndetection,7.961653927672906e-18,0,test
+fd (14)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (14)_aligned.png,,cnndetection,2.3639802820250866e-17,0,test
+fd (18)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (18)_aligned.png,,cnndetection,1.5120358036382203e-13,0,test
+fd (20)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (20)_aligned.png,,cnndetection,7.113563356142549e-07,0,test
+fd (21)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (21)_aligned.png,,cnndetection,5.2920660204274633e-14,0,test
+fd (22)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (22)_aligned.png,,cnndetection,1.700573371010705e-08,0,test
+fd (23)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (23)_aligned.png,,cnndetection,1.3608697351872586e-16,0,test
+fd (24)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (24)_aligned.png,,cnndetection,4.758281442474033e-12,0,test
+fd (26)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (26)_aligned.png,,cnndetection,1.895401370577421e-12,0,test
+fd (28)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (28)_aligned.png,,cnndetection,1.5928155464607619e-16,0,test
+fd (29)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (29)_aligned.png,,cnndetection,2.985145550887802e-12,0,test
+fd (3)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (3)_aligned.png,,cnndetection,4.932921890857624e-16,0,test
+fd (30)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (30)_aligned.png,,cnndetection,1.9667989838764027e-14,0,test
+fd (31)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (31)_aligned.png,,cnndetection,5.498967709134661e-13,0,test
+fd (32)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (32)_aligned.png,,cnndetection,5.602088237743885e-10,0,test
+fd (35)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (35)_aligned.png,,cnndetection,7.12699789863578e-15,0,test
+fd (36)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (36)_aligned.png,,cnndetection,4.604711976268752e-16,0,test
+fd (37)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (37)_aligned.png,,cnndetection,1.0257235472026596e-15,0,test
+fd (39)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (39)_aligned.png,,cnndetection,1.4701446657272577e-11,0,test
+fd (43)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (43)_aligned.png,,cnndetection,6.958573162130222e-10,0,test
+fd (44)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (44)_aligned.png,,cnndetection,4.781904852559776e-14,0,test
+fd (46)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (46)_aligned.png,,cnndetection,4.5835089196311074e-11,0,test
+fd (49)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (49)_aligned.png,,cnndetection,4.116400553755284e-09,0,test
+fd (5)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (5)_aligned.png,,cnndetection,4.765566430364743e-08,0,test
+fd (50)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (50)_aligned.png,,cnndetection,2.1815227575772145e-12,0,test
+fd (6)_aligned,female-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-doctor_after/fd (6)_aligned.png,,cnndetection,4.969562539258732e-09,0,test
+fn (1)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (1)_aligned.png,,cnndetection,1.1847557829946674e-15,0,test
+fn (10)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (10)_aligned.png,,cnndetection,1.502115820951588e-17,0,test
+fn (17)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (17)_aligned.png,,cnndetection,5.722088384715884e-14,0,test
+fn (27)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (27)_aligned.png,,cnndetection,1.2212704805780739e-12,0,test
+fn (28)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (28)_aligned.png,,cnndetection,5.0056042210505636e-14,0,test
+fn (3)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (3)_aligned.png,,cnndetection,8.631448854268253e-12,0,test
+fn (37)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (37)_aligned.png,,cnndetection,1.2582496554543708e-14,0,test
+fn (4)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (4)_aligned.png,,cnndetection,5.895314902176448e-16,0,test
+fn (40)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (40)_aligned.png,,cnndetection,1.1430487632801967e-12,0,test
+fn (41)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (41)_aligned.png,,cnndetection,2.113916463750143e-12,0,test
+fn (42)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (42)_aligned.png,,cnndetection,5.131796029789193e-12,0,test
+fn (43)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (43)_aligned.png,,cnndetection,6.764889513739554e-17,0,test
+fn (44)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (44)_aligned.png,,cnndetection,1.0099521113621397e-15,0,test
+fn (47)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (47)_aligned.png,,cnndetection,1.2225299319615221e-18,0,test
+fn (5)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (5)_aligned.png,,cnndetection,1.5256135384947994e-13,0,test
+fn (7)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (7)_aligned.png,,cnndetection,5.873670690451083e-14,0,test
+fn (9)_aligned,female-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/female-nurse_after/fn (9)_aligned.png,,cnndetection,7.128874076613948e-15,0,test
+md (10)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (10)_aligned.png,,cnndetection,1.688157773294119e-11,0,test
+md (14)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (14)_aligned.png,,cnndetection,4.744826280431762e-18,0,test
+md (15)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (15)_aligned.png,,cnndetection,9.725536983751226e-06,0,test
+md (17)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (17)_aligned.png,,cnndetection,3.692083802315366e-14,0,test
+md (19)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (19)_aligned.png,,cnndetection,8.863287881410997e-10,0,test
+md (21)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (21)_aligned.png,,cnndetection,5.841626413646449e-18,0,test
+md (23)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (23)_aligned.png,,cnndetection,1.1967537421123109e-12,0,test
+md (29)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (29)_aligned.png,,cnndetection,1.2015380912444584e-09,0,test
+md (3)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (3)_aligned.png,,cnndetection,4.33528560273011e-11,0,test
+md (33)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (33)_aligned.png,,cnndetection,3.772520813072333e-06,0,test
+md (34)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (34)_aligned.png,,cnndetection,3.7970509203478445e-15,0,test
+md (36)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (36)_aligned.png,,cnndetection,3.777460982901104e-11,0,test
+md (37)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (37)_aligned.png,,cnndetection,3.1697927616036736e-10,0,test
+md (38)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (38)_aligned.png,,cnndetection,8.880094467915434e-13,0,test
+md (39)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (39)_aligned.png,,cnndetection,1.0351998275617406e-17,0,test
+md (4)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (4)_aligned.png,,cnndetection,7.294005690780016e-15,0,test
+md (40)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (40)_aligned.png,,cnndetection,2.77332219411619e-08,0,test
+md (42)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (42)_aligned.png,,cnndetection,2.38722402956526e-10,0,test
+md (43)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (43)_aligned.png,,cnndetection,1.5963194528012536e-05,0,test
+md (45)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (45)_aligned.png,,cnndetection,2.511925945025695e-10,0,test
+md (46)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (46)_aligned.png,,cnndetection,2.5570218753251557e-14,0,test
+md (47)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (47)_aligned.png,,cnndetection,2.6126659863345836e-11,0,test
+md (48)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (48)_aligned.png,,cnndetection,1.622342615803518e-08,0,test
+md (49)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (49)_aligned.png,,cnndetection,8.537957840726307e-11,0,test
+md (50)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (50)_aligned.png,,cnndetection,1.9343542045913154e-10,0,test
+md (7)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (7)_aligned.png,,cnndetection,5.407616624553472e-16,0,test
+md (9)_aligned,male-doctor_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-doctor_after/md (9)_aligned.png,,cnndetection,1.6408895353592357e-09,0,test
+mn (11)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (11)_aligned.png,,cnndetection,6.597979686249624e-17,0,test
+mn (15)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (15)_aligned.png,,cnndetection,2.095212736218533e-14,0,test
+mn (19)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (19)_aligned.png,,cnndetection,1.0551981182820982e-18,0,test
+mn (2)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (2)_aligned.png,,cnndetection,7.736261175943226e-13,0,test
+mn (22)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (22)_aligned.png,,cnndetection,9.484936707576663e-14,0,test
+mn (33)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (33)_aligned.png,,cnndetection,2.7394176337069975e-12,0,test
+mn (35)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (35)_aligned.png,,cnndetection,8.883584514708665e-13,0,test
+mn (36)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (36)_aligned.png,,cnndetection,5.256597566082044e-13,0,test
+mn (37)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (37)_aligned.png,,cnndetection,8.81054737088445e-14,0,test
+mn (39)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (39)_aligned.png,,cnndetection,9.381123671934818e-14,0,test
+mn (40)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (40)_aligned.png,,cnndetection,3.2077948153644287e-13,0,test
+mn (41)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (41)_aligned.png,,cnndetection,2.561040162163408e-07,0,test
+mn (7)_aligned,male-nurse_after,0,/content/drive/MyDrive/project/data/shuffled_2x2/real/male-nurse_after/mn (7)_aligned.png,,cnndetection,4.893172445008531e-07,0,test

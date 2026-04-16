@@ -1,0 +1,5 @@
+detector=npr
+backend=pretrained
+accuracy=0.972222
+auc=0.976461
+n_total=72

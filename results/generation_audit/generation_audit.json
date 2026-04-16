@@ -1,0 +1,12 @@
+{
+  "summary": {
+    "count_gap_y0": 9.0,
+    "quality_gap_y0": 4.330837784136004,
+    "count_gap_y1": 0.0,
+    "quality_gap_y1": 0.8623512984649566
+  },
+  "notes": [
+    "This audit captures generation-side imbalance before detector training/evaluation.",
+    "If count/quality gaps are large, detector fairness conclusions may be confounded."
+  ]
+}
