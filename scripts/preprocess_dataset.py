@@ -31,7 +31,7 @@ def process_real_images_strict(input_dir, output_dir, metadata_list, group_name,
     # 0.35 = 标准半身照 (推荐科研使用，极其严格)
     # 0.2  = 远景宽视野 (如果你实在缺数据，可以改回0.2)
     # ==========================================
-    FACE_TARGET_RATIO = 0.16
+    FACE_TARGET_RATIO = 0.3
     
     print(f"--> 正在处理组别: {group_name} | 候选总数: {len(image_paths)}")
 

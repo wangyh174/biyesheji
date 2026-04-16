@@ -17,3 +17,4 @@ scikit-learn
 tabulate
 matplotlib
 gdown
+mtcnn
