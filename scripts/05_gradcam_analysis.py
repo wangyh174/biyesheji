@@ -90,6 +90,11 @@ def parse_args() -> argparse.Namespace:
         choices=["cpu", "cuda"],
         help="Inference device for Grad-CAM. Default is cuda.",
     )
+    parser.add_argument(
+        "--amp",
+        action="store_true",
+        help="Enable AMP for compatible Grad-CAM forward paths on CUDA.",
+    )
     return parser.parse_args()
 
 
@@ -114,9 +119,11 @@ def load_stage03_module(project_root: Path):
 
 
 class GradCAM:
-    def __init__(self, model: nn.Module, target_layer: nn.Module) -> None:
+    def __init__(self, model: nn.Module, target_layer: nn.Module, device: str = "cuda", use_amp: bool = False) -> None:
         self.model = model
         self.target_layer = target_layer
+        self.device = device
+        self.use_amp = bool(use_amp and device == "cuda")
         self.activations = None
         self.gradients = None
         self._fwd_handle = target_layer.register_forward_hook(self._save_activation)
@@ -134,7 +141,8 @@ class GradCAM:
 
     def generate(self, input_tensor: torch.Tensor, score_selector: Callable[[object], torch.Tensor]) -> Tuple[np.ndarray, float]:
         self.model.zero_grad(set_to_none=True)
-        output = self.model(input_tensor)
+        with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=self.use_amp):
+            output = self.model(input_tensor)
         score = score_selector(output)
         if score.ndim > 0:
             score = score.reshape(-1)[0]
@@ -524,7 +532,7 @@ def main() -> None:
     target_df = select_target_df(df, args.analyze_all, args.only_false_negative, args.max_per_group)
     target_df.to_csv(args.output_dir / "analyzed_samples.csv", index=False, encoding="utf-8")
 
-    print(f"Generating Grad-CAM for detector={detector_name}, samples={len(target_df)}")
+    print(f"Generating Grad-CAM for detector={detector_name}, samples={len(target_df)}, amp={args.amp}")
     if len(target_df) == 0:
         note = args.output_dir / "README_GradCAM.txt"
         note.write_text("No samples selected for Grad-CAM analysis.", encoding="utf-8")
@@ -533,7 +541,7 @@ def main() -> None:
     model, preprocess_fn, target_layer, score_selector, device = load_detector_components(
         detector_name, args.project_root, args.external_root, args.device
     )
-    gradcam = GradCAM(model, target_layer)
+    gradcam = GradCAM(model, target_layer, device=device, use_amp=args.amp and detector_name in {"cnndetection", "npr", "f3net"})
 
     try:
         for _, row in target_df.iterrows():

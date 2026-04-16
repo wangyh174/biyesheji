@@ -1,31 +1,21 @@
 """
 Stage 03: Run detector inference with released pretrained checkpoints.
 
-This replaces the previous proxy-feature + LogisticRegression baseline with
-pretrained detector inference. The implementation is intentionally split:
+Current thesis default detector set:
+- cnndetection
+- lgrad
+- npr
 
-- gram / univfd / dire:
-    run through SIDBench, which exposes per-image prediction export and bundles
-    released checkpoints for these detectors in a single weights archive.
-- cnndetection:
-    run through the official CNNDetection repository without relying on
-    SIDBench.
-- lgrad:
-    run through the official LGrad pipeline (gradient extraction + ResNet50
-    classifier) without relying on SIDBench.
-- npr:
-    run through the official NPR repository without relying on SIDBench.
-- f3net:
-    run through the publicly released PyDeepFakeDet F3Net checkpoint.
+This script still keeps optional compatibility backends (for example f3net,
+gram, univfd, dire), but they are not part of the current default experiment
+path unless explicitly requested via --detector.
 
 Notes
 -----
 1) The script is designed for Colab/runtime execution. It downloads source zips
    and weights on demand into `.external_models/`.
-2) F3Net / GramNet public checkpoints come from PyDeepFakeDet's released model
-   zoo. CNNDetection uses the official Wang et al. detector family; LGrad
-   accepts the public checkpoint filenames released by the authors and reused
-   by SIDBench benchmarks.
+2) CNNDetection uses the official Wang et al. detector family; LGrad uses the
+   public LGrad checkpoints; NPR uses the official NPR release.
 3) All rows are marked as split='test' because these are pretrained models,
    not train/test-split logistic baselines.
 """
@@ -50,6 +40,8 @@ import numpy as np
 import pandas as pd
 from PIL import Image
 from sklearn.metrics import roc_auc_score
+from torch.utils.data import DataLoader, Dataset
+from tqdm.auto import tqdm
 
 
 SIDBENCH_ARCHIVE_URL = "https://codeload.github.com/mever-team/sidbench/zip/refs/heads/main"
@@ -139,7 +131,10 @@ def parse_args() -> argparse.Namespace:
         "--detector",
         type=str,
         default="cnndetection",
-        help="Detector name, comma-separated list, or 'all'.",
+        help=(
+            "Detector name, comma-separated list, or 'all'. "
+            "Current thesis default set is cnndetection,lgrad,npr."
+        ),
     )
     parser.add_argument("--input-dir", type=Path, default=None,
                         help="If set, scan this directory for images instead of using --metadata-in CSV.")
@@ -153,6 +148,14 @@ def parse_args() -> argparse.Namespace:
         default="cuda",
         choices=["cpu", "cuda"],
         help="Inference device for in-process detector backends. Default is cuda.",
+    )
+    parser.add_argument("--batch-size", type=int, default=32, help="Batch size for in-process detector inference.")
+    parser.add_argument("--num-workers", type=int, default=2, help="Dataloader workers for in-process backends.")
+    parser.add_argument("--pin-memory", action="store_true", help="Enable DataLoader pin_memory on CUDA.")
+    parser.add_argument(
+        "--amp",
+        action="store_true",
+        help="Enable automatic mixed precision for compatible official detector backends on CUDA.",
     )
     return parser.parse_args()
 
@@ -189,6 +192,41 @@ def validate_runtime(device: str) -> None:
 
 def ensure_dir(path: Path) -> None:
     path.mkdir(parents=True, exist_ok=True)
+
+
+class ImagePathDataset(Dataset):
+    def __init__(self, paths: List[str], transform, crop_even: bool = False):
+        self.paths = paths
+        self.transform = transform
+        self.crop_even = crop_even
+
+    def __len__(self) -> int:
+        return len(self.paths)
+
+    def __getitem__(self, idx: int):
+        path = self.paths[idx]
+        img = Image.open(path).convert("RGB")
+        if self.crop_even:
+            width, height = img.size
+            if width % 2 == 1 or height % 2 == 1:
+                img = img.crop((0, 0, width - (width % 2), height - (height % 2)))
+        tensor = self.transform(img)
+        return path, tensor
+
+
+def build_loader(paths: List[str], transform, args: argparse.Namespace, crop_even: bool = False) -> DataLoader:
+    dataset = ImagePathDataset(paths, transform=transform, crop_even=crop_even)
+    return DataLoader(
+        dataset,
+        batch_size=args.batch_size,
+        shuffle=False,
+        num_workers=args.num_workers,
+        pin_memory=bool(args.pin_memory and args.device == "cuda"),
+    )
+
+
+def amp_enabled(args: argparse.Namespace) -> bool:
+    return bool(args.amp and args.device == "cuda")
 
 
 def run(cmd: List[str], cwd: Path | None = None) -> None:
@@ -709,22 +747,27 @@ def run_f3net(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame:
         ]
     )
 
-    scores: List[float] = []
+    paths = df["file_path"].astype(str).tolist()
+    loader = build_loader(paths, transform, args)
+    scores_by_path: Dict[str, float] = {}
+    use_amp = amp_enabled(args)
+
     with torch.no_grad():
-        for path in df["file_path"].astype(str).tolist():
-            img = Image.open(path).convert("RGB")
-            tensor = transform(img).unsqueeze(0).to(device)
-            outputs = model({"img": tensor})
+        for batch_paths, batch_tensors in tqdm(loader, desc="F3Net inference", leave=False):
+            batch_tensors = batch_tensors.to(device)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+                outputs = model({"img": batch_tensors})
             logits = outputs["logits"]
             if logits.ndim != 2 or logits.shape[1] < 2:
                 raise ValueError("Unexpected F3Net output format.")
             probs = torch.softmax(logits, dim=1)
-            score = float(probs[:, 1].detach().cpu().numpy()[0])
-            scores.append(score)
+            batch_scores = probs[:, 1].detach().cpu().numpy().astype(float).tolist()
+            for path, score in zip(batch_paths, batch_scores):
+                scores_by_path[str(path)] = float(score)
 
     out = df.copy()
     out["detector_name"] = "f3net"
-    out["score"] = scores
+    out["score"] = out["file_path"].astype(str).map(scores_by_path)
     out["y_hat"] = (out["score"] >= 0.5).astype(int)
     out["split"] = "test"
     return out
@@ -752,20 +795,23 @@ def run_npr_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFrame
         ]
     )
 
-    scores: List[float] = []
+    paths = df["file_path"].astype(str).tolist()
+    loader = build_loader(paths, transform, args, crop_even=True)
+    scores_by_path: Dict[str, float] = {}
+    use_amp = amp_enabled(args)
+
     with torch.no_grad():
-        for path in df["file_path"].astype(str).tolist():
-            img = Image.open(path).convert("RGB")
-            width, height = img.size
-            if width % 2 == 1 or height % 2 == 1:
-                img = img.crop((0, 0, width - (width % 2), height - (height % 2)))
-            tensor = transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
-            score = float(model(tensor).sigmoid().flatten()[0].cpu().item())
-            scores.append(score)
+        for batch_paths, batch_tensors in tqdm(loader, desc="NPR inference", leave=False):
+            batch_tensors = batch_tensors.to(device=device, dtype=torch.float32)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+                preds = model(batch_tensors).sigmoid().flatten()
+            batch_scores = preds.detach().cpu().numpy().astype(float).tolist()
+            for path, score in zip(batch_paths, batch_scores):
+                scores_by_path[str(path)] = float(score)
 
     out = df.copy()
     out["detector_name"] = "npr"
-    out["score"] = scores
+    out["score"] = out["file_path"].astype(str).map(scores_by_path)
     out["y_hat"] = (out["score"] >= 0.5).astype(int)
     out["split"] = "test"
     return out
@@ -800,31 +846,42 @@ def run_lgrad_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.DataFra
         ]
     )
 
-    scores: List[float] = []
-    for path in df["file_path"].astype(str).tolist():
-        img = Image.open(path).convert("RGB")
-        grad_input = grad_input_transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
-        grad_input.requires_grad_(True)
+    paths = df["file_path"].astype(str).tolist()
+    grad_loader = build_loader(paths, grad_input_transform, args)
+    scores_by_path: Dict[str, float] = {}
+    use_amp = amp_enabled(args)
 
-        pre = grad_model(grad_input)
+    for batch_paths, grad_inputs in tqdm(grad_loader, desc="LGrad inference", leave=False):
+        grad_inputs = grad_inputs.to(device=device, dtype=torch.float32)
+        grad_inputs.requires_grad_(True)
+
+        with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+            pre = grad_model(grad_inputs)
         grad_model.zero_grad(set_to_none=True)
-        grad = torch.autograd.grad(
+        grads = torch.autograd.grad(
             pre.sum(),
-            grad_input,
+            grad_inputs,
             create_graph=False,
             retain_graph=False,
             allow_unused=False,
-        )[0][0]
+        )[0]
 
-        grad_img = _normalize_grad_uint8(grad)
-        cls_input = classifier_transform(grad_img).unsqueeze(0).to(device=device, dtype=torch.float32)
+        cls_inputs = []
+        for sample_grad in grads:
+            grad_img = _normalize_grad_uint8(sample_grad)
+            cls_inputs.append(classifier_transform(grad_img))
+        cls_batch = torch.stack(cls_inputs, dim=0).to(device=device, dtype=torch.float32)
+
         with torch.no_grad():
-            score = float(cls_model(cls_input).sigmoid().flatten()[0].cpu().item())
-        scores.append(score)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+                preds = cls_model(cls_batch).sigmoid().flatten()
+        batch_scores = preds.detach().cpu().numpy().astype(float).tolist()
+        for path, score in zip(batch_paths, batch_scores):
+            scores_by_path[str(path)] = float(score)
 
     out = df.copy()
     out["detector_name"] = "lgrad"
-    out["score"] = scores
+    out["score"] = out["file_path"].astype(str).map(scores_by_path)
     out["y_hat"] = (out["score"] >= 0.5).astype(int)
     out["split"] = "test"
     return out
@@ -853,17 +910,23 @@ def run_cnndetection_official(df: pd.DataFrame, args: argparse.Namespace) -> pd.
         ]
     )
 
-    scores: List[float] = []
+    paths = df["file_path"].astype(str).tolist()
+    loader = build_loader(paths, transform, args)
+    scores_by_path: Dict[str, float] = {}
+    use_amp = amp_enabled(args)
+
     with torch.no_grad():
-        for path in df["file_path"].astype(str).tolist():
-            img = Image.open(path).convert("RGB")
-            tensor = transform(img).unsqueeze(0).to(device=device, dtype=torch.float32)
-            score = float(model(tensor).sigmoid().flatten()[0].cpu().item())
-            scores.append(score)
+        for batch_paths, batch_tensors in tqdm(loader, desc="CNNDetection inference", leave=False):
+            batch_tensors = batch_tensors.to(device=device, dtype=torch.float32)
+            with torch.autocast(device_type="cuda", dtype=torch.float16, enabled=use_amp):
+                preds = model(batch_tensors).sigmoid().flatten()
+            batch_scores = preds.detach().cpu().numpy().astype(float).tolist()
+            for path, score in zip(batch_paths, batch_scores):
+                scores_by_path[str(path)] = float(score)
 
     out = df.copy()
     out["detector_name"] = "cnndetection"
-    out["score"] = scores
+    out["score"] = out["file_path"].astype(str).map(scores_by_path)
     out["y_hat"] = (out["score"] >= 0.5).astype(int)
     out["split"] = "test"
     return out
