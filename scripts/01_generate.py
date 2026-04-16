@@ -69,16 +69,51 @@ def parse_args() -> argparse.Namespace:
         default=None,
         help="Optional local path for real-source diffusers model (overrides --real-model-id if provided).",
     )
-    parser.add_argument("--width", type=int, default=512)
-    parser.add_argument("--height", type=int, default=512)
-    parser.add_argument("--steps", type=int, default=30)
+    parser.add_argument("--width", type=int, default=768)
+    parser.add_argument("--height", type=int, default=768)
+    parser.add_argument("--steps", type=int, default=35)
+    parser.add_argument(
+        "--batch-size",
+        type=int,
+        default=4,
+        help="Batch size for fake image generation. Increase on high-VRAM GPUs.",
+    )
     parser.add_argument("--guidance", type=float, default=7.5)
+    parser.add_argument(
+        "--torch-dtype",
+        type=str,
+        choices=["auto", "float16", "bfloat16", "float32"],
+        default="float16",
+        help="Torch dtype for diffusion pipeline weights. Default is float16 for faster CUDA generation.",
+    )
     parser.add_argument(
         "--device",
         type=str,
         default="cuda",
         choices=["cpu", "cuda"],
         help="Inference device. Default is cuda; the script will fail fast if CUDA is unavailable.",
+    )
+    parser.add_argument(
+        "--enable-xformers",
+        action="store_true",
+        help="Enable xFormers memory-efficient attention when available.",
+    )
+    parser.add_argument(
+        "--enable-vae-slicing",
+        action="store_true",
+        default=True,
+        help="Enable VAE slicing to reduce memory pressure. Enabled by default.",
+    )
+    parser.add_argument(
+        "--disable-vae-slicing",
+        dest="enable_vae_slicing",
+        action="store_false",
+        help="Disable VAE slicing.",
+    )
+    parser.add_argument(
+        "--enable-vae-tiling",
+        action="store_true",
+        help="Enable VAE tiling for larger images or tighter VRAM budgets.",
     )
     parser.add_argument("--negative-prompt", type=str, default="blurry, low quality, distorted, bad anatomy, deformed eyes, crossed eyes, disfigured, poorly drawn face, ugly, cartoon, plastic, artificial, weird proportions, fake")
     # Fair-Diffusion style controls (from official README usage).
@@ -105,6 +140,61 @@ def validate_runtime(device: str) -> None:
                 "In Colab, switch Runtime -> Change runtime type -> GPU, "
                 "or pass --device cpu if you intentionally want CPU mode."
             )
+
+
+def resolve_torch_dtype(device: str, torch_dtype: str):
+    import torch
+
+    if torch_dtype == "float16":
+        return torch.float16
+    if torch_dtype == "bfloat16":
+        return torch.bfloat16
+    if torch_dtype == "float32":
+        return torch.float32
+
+    if device == "cuda":
+        return torch.float16
+    return torch.float32
+
+
+def optimize_pipeline(pipe, device: str, enable_xformers: bool, enable_vae_slicing: bool, enable_vae_tiling: bool):
+    if device == "cpu":
+        pipe.enable_attention_slicing()
+        return pipe
+
+    # channels_last is a safe low-effort optimization for convolution-heavy pipelines.
+    try:
+        import torch
+
+        if hasattr(pipe, "unet") and pipe.unet is not None:
+            pipe.unet.to(memory_format=torch.channels_last)
+        if hasattr(pipe, "vae") and pipe.vae is not None:
+            pipe.vae.to(memory_format=torch.channels_last)
+    except Exception:
+        pass
+
+    if enable_xformers:
+        try:
+            pipe.enable_xformers_memory_efficient_attention()
+            print("[opt] enabled xFormers memory efficient attention")
+        except Exception as e:
+            print(f"[warn] could not enable xFormers: {e}")
+
+    if enable_vae_slicing:
+        try:
+            pipe.enable_vae_slicing()
+            print("[opt] enabled VAE slicing")
+        except Exception as e:
+            print(f"[warn] could not enable VAE slicing: {e}")
+
+    if enable_vae_tiling:
+        try:
+            pipe.enable_vae_tiling()
+            print("[opt] enabled VAE tiling")
+        except Exception as e:
+            print(f"[warn] could not enable VAE tiling: {e}")
+
+    return pipe
 
 
 def resolve_real_per_group(args: argparse.Namespace) -> int | None:
@@ -234,21 +324,32 @@ def make_mock_image(prompt: str, seed: int, width: int, height: int, kind: str) 
     return img
 
 
-def init_diffusers(model_id: str, device: str):
-    import torch
+def init_diffusers(
+    model_id: str,
+    device: str,
+    torch_dtype: str,
+    enable_xformers: bool,
+    enable_vae_slicing: bool,
+    enable_vae_tiling: bool,
+):
     from diffusers import StableDiffusionPipeline
 
-    dtype = torch.float16 if device == "cuda" else torch.float32
+    dtype = resolve_torch_dtype(device, torch_dtype)
     pipe = StableDiffusionPipeline.from_pretrained(
-        model_id, 
+        model_id,
         torch_dtype=dtype,
         safety_checker=None,
         feature_extractor=None,
         requires_safety_checker=False,
     )
     pipe = pipe.to(device)
-    if device == "cpu":
-        pipe.enable_attention_slicing()
+    pipe = optimize_pipeline(
+        pipe,
+        device=device,
+        enable_xformers=enable_xformers,
+        enable_vae_slicing=enable_vae_slicing,
+        enable_vae_tiling=enable_vae_tiling,
+    )
     return pipe, device
 
 
@@ -277,24 +378,52 @@ def _parse_csv_bool(s: str) -> List[bool]:
     return out
 
 
-def init_fairdiffusion(model_id: str, device: str):
-    try:
-        from semdiffusers import SemanticEditPipeline
-    except ImportError as e:
-        raise RuntimeError(
-            "Fair-Diffusion mode requires semdiffusers. "
-            "Install: pip install -e ./semantic-image-editing-main/semantic-image-editing-main"
-        ) from e
+def init_fairdiffusion(
+    model_id: str,
+    device: str,
+    torch_dtype: str,
+    enable_xformers: bool,
+    enable_vae_slicing: bool,
+    enable_vae_tiling: bool,
+):
+    backend = None
+    pipeline_cls = None
 
-    pipe = SemanticEditPipeline.from_pretrained(
+    try:
+        from diffusers import SemanticStableDiffusionPipeline
+
+        pipeline_cls = SemanticStableDiffusionPipeline
+        backend = "diffusers.SemanticStableDiffusionPipeline"
+    except Exception:
+        try:
+            from semdiffusers import SemanticEditPipeline
+
+            pipeline_cls = SemanticEditPipeline
+            backend = "semdiffusers.SemanticEditPipeline"
+        except ImportError as e:
+            raise RuntimeError(
+                "Fair-Diffusion mode requires either "
+                "`diffusers.SemanticStableDiffusionPipeline` or local `semdiffusers`. "
+                "Recommended fix in Colab: use the official diffusers pipeline."
+            ) from e
+
+    dtype = resolve_torch_dtype(device, torch_dtype)
+
+    pipe = pipeline_cls.from_pretrained(
         model_id,
+        torch_dtype=dtype,
         safety_checker=None,
         feature_extractor=None,
         requires_safety_checker=False,
     ).to(device)
-    if device == "cpu":
-        pipe.enable_attention_slicing()
-    return pipe, device
+    pipe = optimize_pipeline(
+        pipe,
+        device=device,
+        enable_xformers=enable_xformers,
+        enable_vae_slicing=enable_vae_slicing,
+        enable_vae_tiling=enable_vae_tiling,
+    )
+    return pipe, device, backend
 
 
 def resolve_model_source(model_id: str, model_path: Path | None) -> str:
@@ -343,7 +472,7 @@ def make_diffusers_image(
     return out.images[0]
 
 
-def make_fairdiffusion_image(
+def make_fairdiffusion_images(
     pipe,
     device: str,
     prompt: str,
@@ -352,7 +481,7 @@ def make_fairdiffusion_image(
     height: int,
     steps: int,
     guidance: float,
-    seed: int,
+    seeds: List[int],
     editing_prompts: List[str],
     reverse_dirs: List[bool],
     warmup_steps: List[int],
@@ -361,14 +490,16 @@ def make_fairdiffusion_image(
     weights: List[float],
     momentum_scale: float,
     momentum_beta: float,
-) -> Image.Image:
+) -> List[Image.Image]:
     import torch
 
-    generator = torch.Generator(device=device).manual_seed(seed)
+    prompts = [prompt] * len(seeds)
+    negative_prompts = [negative_prompt] * len(seeds)
+    generators = [torch.Generator(device=device).manual_seed(seed) for seed in seeds]
     out = pipe(
-        prompt=prompt,
-        negative_prompt=negative_prompt,
-        generator=generator,
+        prompt=prompts,
+        negative_prompt=negative_prompts,
+        generator=generators,
         num_inference_steps=steps,
         guidance_scale=guidance,
         width=width,
@@ -382,7 +513,7 @@ def make_fairdiffusion_image(
         edit_mom_beta=momentum_beta,
         edit_weights=weights,
     )
-    return out.images[0]
+    return out.images
 
 
 def append_rows(path: Path, rows: List[Dict[str, object]]) -> None:
@@ -455,8 +586,18 @@ def main() -> None:
 
     pipe, device = (None, None)
     fake_source = resolve_model_source(args.model_id, args.model_path)
-    pipe, device = init_fairdiffusion(fake_source, args.device)
-    print(f"[generator] fairdiffusion model={fake_source} device={device}")
+    pipe, device, fair_backend = init_fairdiffusion(
+        fake_source,
+        args.device,
+        args.torch_dtype,
+        args.enable_xformers,
+        args.enable_vae_slicing,
+        args.enable_vae_tiling,
+    )
+    print(
+        f"[generator] fairdiffusion model={fake_source} device={device} "
+        f"backend={fair_backend} dtype={args.torch_dtype}"
+    )
 
     local_real_dir = Path(args.project_root) / "data" / "real_samples"
     print(f"[real-source] local directory: {local_real_dir}")
@@ -469,26 +610,33 @@ def main() -> None:
     fd_thresholds = _parse_csv_float(args.fd_thresholds)
     fd_weights = _parse_csv_float(args.fd_weights)
 
-    for profession in sorted({profession for _, _, profession in groups}):
-        remaining = {gender: args.samples_per_group for gender in ["male", "female"]}
-        counters = {gender: 0 for gender in ["male", "female"]}
-        while remaining["male"] > 0 or remaining["female"] > 0:
-            gender = sample_gender_for_profession(random, args.fd_female_prob, remaining)
-            group = f"{gender}-{profession}"
-            group_raw = raw_dir / group
-            group_real = real_dir / group
-            group_raw.mkdir(parents=True, exist_ok=True)
-            group_real.mkdir(parents=True, exist_ok=True)
+    print(
+        f"[generate] width={args.width} height={args.height} steps={args.steps} "
+        f"batch_size={args.batch_size}"
+    )
 
-            i = counters[gender]
-            t_id = i % len(templates)
-            prompt = build_fairdiffusion_base_prompt(profession)
-            negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
-            image_editing_prompts, image_reverse_dirs = build_fairdiffusion_edit_config(gender)
-            sid = f"fake_{group}_{i:04d}"
-            seed_i = args.seed + sum(counters.values())
-            image_path = group_raw / f"{sid}.png"
-            img = make_fairdiffusion_image(
+    for group, gender, profession in groups:
+        group_raw = raw_dir / group
+        group_real = real_dir / group
+        group_raw.mkdir(parents=True, exist_ok=True)
+        group_real.mkdir(parents=True, exist_ok=True)
+
+        prompt = build_fairdiffusion_base_prompt(profession)
+        negative_prompt = build_group_negative_prompt(args.negative_prompt, gender=gender, profession=profession)
+        image_editing_prompts, image_reverse_dirs = build_fairdiffusion_edit_config(gender)
+
+        generated = 0
+        while generated < args.samples_per_group:
+            batch_n = min(args.batch_size, args.samples_per_group - generated)
+            seeds = [args.seed + generated + j for j in range(batch_n)]
+            start_idx = generated
+
+            print(
+                f"[stage] generating group={group} profession={profession} gender={gender} "
+                f"start={start_idx} batch={batch_n}"
+            )
+
+            images = make_fairdiffusion_images(
                 pipe=pipe,
                 device=device,
                 prompt=prompt,
@@ -497,7 +645,7 @@ def main() -> None:
                 height=args.height,
                 steps=args.steps,
                 guidance=args.guidance,
-                seed=seed_i,
+                seeds=seeds,
                 editing_prompts=image_editing_prompts,
                 reverse_dirs=image_reverse_dirs,
                 warmup_steps=fd_warmup_steps,
@@ -507,32 +655,35 @@ def main() -> None:
                 momentum_scale=args.fd_momentum_scale,
                 momentum_beta=args.fd_momentum_beta,
             )
-            img.save(image_path)
 
-            rows.append(
-                {
-                    "id": sid,
-                    "modality": "image",
-                    "group": group,
-                    "gender": gender,
-                    "profession": profession,
-                    "prompt": prompt,
-                    "seed": seed_i,
-                    "source_model": fake_source,
-                    "source_domain": "generated",
-                    "y_true": 1,
-                    "clip_score": "",
-                    "quality_score": "",
-                    "template_id": t_id,
-                    "file_path": str(image_path),
-                }
-            )
-            counters[gender] += 1
-            remaining[gender] -= 1
-        print(
-            f"[done] profession={profession} fake_male={counters['male']} "
-            f"fake_female={counters['female']}"
-        )
+            for j, img in enumerate(images):
+                i = start_idx + j
+                t_id = i % len(templates)
+                sid = f"fake_{group}_{i:04d}"
+                seed_i = seeds[j]
+                image_path = group_raw / f"{sid}.png"
+                img.save(image_path)
+
+                rows.append(
+                    {
+                        "id": sid,
+                        "modality": "image",
+                        "group": group,
+                        "gender": gender,
+                        "profession": profession,
+                        "prompt": prompt,
+                        "seed": seed_i,
+                        "source_model": fake_source,
+                        "source_domain": "generated",
+                        "y_true": 1,
+                        "clip_score": "",
+                        "quality_score": "",
+                        "template_id": t_id,
+                        "file_path": str(image_path),
+                    }
+                )
+            generated += batch_n
+        print(f"[done] group={group} fake={generated}")
 
     # Create/register "real" control samples (same semantic groups) for fairness evaluation.
     for group, gender, profession in groups:

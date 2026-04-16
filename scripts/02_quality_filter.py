@@ -19,6 +19,7 @@ import numpy as np
 import pandas as pd
 import torch
 from PIL import Image
+from tqdm.auto import tqdm
 from transformers import CLIPModel, CLIPProcessor
 
 
@@ -58,6 +59,18 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--min-quality", type=float, default=None)
     parser.add_argument("--align-on", type=str, choices=["clip", "quality", "random"], default="clip")
     parser.add_argument("--target-n", type=int, default=None, help="Force balance each group to this exact count.")
+    parser.add_argument(
+        "--reuse-scored",
+        action="store_true",
+        default=True,
+        help="Reuse data/metadata_scored.csv when it matches current input rows and file paths.",
+    )
+    parser.add_argument(
+        "--no-reuse-scored",
+        dest="reuse_scored",
+        action="store_false",
+        help="Force recomputing quality and CLIP scores from scratch.",
+    )
     return parser.parse_args()
 
 
@@ -111,8 +124,14 @@ def compute_clip_scores(
 
     scores: List[float] = []
 
+    total_batches = (len(image_paths) + batch_size - 1) // batch_size
     with torch.no_grad():
-        for i in range(0, len(image_paths), batch_size):
+        for i in tqdm(
+            range(0, len(image_paths), batch_size),
+            total=total_batches,
+            desc="CLIP text-image scoring",
+            leave=False,
+        ):
             batch_paths = image_paths[i : i + batch_size]
             batch_texts = texts[i : i + batch_size]
             images = [Image.open(p).convert("RGB") for p in batch_paths]
@@ -181,8 +200,14 @@ def compute_semantic_consistency(
         text_feat = text_feat / text_feat.norm(dim=-1, keepdim=True)
 
     sims_all: List[np.ndarray] = []
+    total_batches = (len(image_paths) + batch_size - 1) // batch_size
     with torch.no_grad():
-        for i in range(0, len(image_paths), batch_size):
+        for i in tqdm(
+            range(0, len(image_paths), batch_size),
+            total=total_batches,
+            desc="CLIP semantic consistency",
+            leave=False,
+        ):
             batch_paths = image_paths[i : i + batch_size]
             images = [Image.open(p).convert("RGB") for p in batch_paths]
             inputs = processor(images=images, return_tensors="pt", padding=True)
@@ -309,34 +334,84 @@ def main() -> None:
     if len(df) == 0:
         raise ValueError(f"Empty metadata: {args.metadata_in}")
 
-    # 1) quality score
-    df["quality_score"] = [image_quality_score(str(p)) for p in df["file_path"].tolist()]
+    print(f"[stage] loaded metadata rows={len(df)} from {args.metadata_in}")
+    reused = False
+    if args.reuse_scored and scored_path.exists():
+        print(f"[stage] checking reusable scored cache: {scored_path}")
+        cached = pd.read_csv(scored_path)
+        same_len = len(cached) == len(df)
+        same_paths = same_len and cached["file_path"].astype(str).tolist() == df["file_path"].astype(str).tolist()
+        if same_len and same_paths:
+            required_cols = {"quality_score"}
+            if args.use_clip:
+                required_cols.update(
+                    {
+                        "clip_score",
+                        "target_group_score",
+                        "pred_group",
+                        "pred_group_score",
+                        "group_margin",
+                        "human_photo_score",
+                        "toy_score",
+                        "cartoon_score",
+                        "object_score",
+                        "deformed_face_score",
+                        "low_quality_score",
+                    }
+                )
+            missing_cols = [c for c in required_cols if c not in cached.columns]
+            if not missing_cols:
+                df = cached
+                reused = True
+                print(f"[done] reused scored cache with {len(df)} rows")
+            else:
+                print(f"[warn] scored cache missing columns: {missing_cols}; recomputing")
+        else:
+            print("[warn] scored cache does not match current metadata; recomputing")
 
-    # 2) clip score
-    if args.use_clip:
-        df["clip_score"] = compute_clip_scores(
-            image_paths=[str(p) for p in df["file_path"].tolist()],
-            texts=df["prompt"].astype(str).tolist(),
-            model_id=args.clip_model_id,
-            batch_size=args.clip_batch_size,
-            device=args.device,
-        )
-        semantic_df = compute_semantic_consistency(
-            image_paths=[str(p) for p in df["file_path"].tolist()],
-            groups=df["group"].astype(str).tolist(),
-            model_id=args.clip_model_id,
-            batch_size=args.clip_batch_size,
-            device=args.device,
-        )
-        df = pd.concat([df.reset_index(drop=True), semantic_df.reset_index(drop=True)], axis=1)
-    elif "clip_score" not in df.columns:
-        df["clip_score"] = np.nan
+    if not reused:
+        # 1) quality score
+        print("[stage] computing quality_score for all images")
+        df["quality_score"] = [
+            image_quality_score(str(p))
+            for p in tqdm(df["file_path"].tolist(), desc="Quality scoring", leave=False)
+        ]
+        print("[done] quality_score computed")
+
+        # 2) clip score
+        if args.use_clip:
+            print(
+                f"[stage] computing CLIP scores model={args.clip_model_id} "
+                f"batch_size={args.clip_batch_size}"
+            )
+            df["clip_score"] = compute_clip_scores(
+                image_paths=[str(p) for p in df["file_path"].tolist()],
+                texts=df["prompt"].astype(str).tolist(),
+                model_id=args.clip_model_id,
+                batch_size=args.clip_batch_size,
+                device=args.device,
+            )
+            print("[done] CLIP text-image scores computed")
+
+            print("[stage] computing CLIP semantic consistency scores")
+            semantic_df = compute_semantic_consistency(
+                image_paths=[str(p) for p in df["file_path"].tolist()],
+                groups=df["group"].astype(str).tolist(),
+                model_id=args.clip_model_id,
+                batch_size=args.clip_batch_size,
+                device=args.device,
+            )
+            df = pd.concat([df.reset_index(drop=True), semantic_df.reset_index(drop=True)], axis=1)
+            print("[done] CLIP semantic consistency computed")
+        elif "clip_score" not in df.columns:
+            df["clip_score"] = np.nan
 
     before_summary = summarize_by_group(df)
     before_path = fair_dir / "quality_clip_summary_before.csv"
     before_summary.to_csv(before_path, index=False, encoding="utf-8")
     df.to_csv(scored_path, index=False, encoding="utf-8")
 
+    print("[stage] applying threshold filters")
     # 3) threshold filter
     filt = df.copy()
     if args.min_quality is not None:
@@ -358,11 +433,16 @@ def main() -> None:
     if len(filt) == 0:
         raise ValueError("All samples removed by filters. Lower thresholds.")
     filt.to_csv(filtered_prebalance_path, index=False, encoding="utf-8")
+    print(f"[done] threshold filtering kept {len(filt)} / {len(df)} rows")
 
     # 4) group alignment + balance
+    print(f"[stage] aligning and balancing by {args.align_on}")
     balanced = align_and_balance(filt, seed=args.seed, align_on=args.align_on, target_n=args.target_n)
+    print(f"[done] balancing produced {len(balanced)} rows")
     if args.copy_files:
+        print(f"[stage] copying balanced files to {args.balanced_dir}")
         balanced = maybe_copy_files(balanced, args.balanced_dir)
+        print("[done] balanced files copied")
 
     after_summary = summarize_by_group(balanced)
     after_path = fair_dir / "quality_clip_summary_after.csv"
