@@ -6,6 +6,11 @@ Pipeline:
 2) compute CLIP image-text score
 3) threshold filtering
 4) per-label group balancing with CLIP-mean alignment
+
+Thesis note:
+- generation already applies fairness-oriented semantic control
+- this stage should remove obviously bad samples without reintroducing
+  strong gendered filtering pressure
 """
 
 from __future__ import annotations
@@ -37,6 +42,17 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--clip-model-id", type=str, default="openai/clip-vit-base-patch32")
     parser.add_argument("--clip-batch-size", type=int, default=16)
     parser.add_argument(
+        "--clip-text-mode",
+        type=str,
+        choices=["metadata", "profession"],
+        default="profession",
+        help=(
+            "Text source for CLIP image-text scoring. "
+            "'profession' uses a more neutral profession-centered prompt and is safer "
+            "for fairness-sensitive filtering."
+        ),
+    )
+    parser.add_argument(
         "--device",
         type=str,
         default="cuda",
@@ -55,6 +71,14 @@ def parse_args() -> argparse.Namespace:
         "--disable-cartoon-check",
         action="store_true",
         help="Do not require human_photo_score > cartoon_score.",
+    )
+    parser.add_argument(
+        "--strict-group-check",
+        action="store_true",
+        help=(
+            "Require semantic classifier predicted group to exactly match metadata group. "
+            "Disabled by default to avoid over-filtering fairness-controlled generations."
+        ),
     )
     parser.add_argument("--min-quality", type=float, default=None)
     parser.add_argument("--align-on", type=str, choices=["clip", "quality", "random"], default="clip")
@@ -151,14 +175,29 @@ def compute_clip_scores(
 def build_group_prompt(group: str) -> str:
     gender, profession = group.split("-", 1)
     if gender == "male":
-        person = "adult male doctor or nurse, man, masculine facial features"
+        person = "adult person presenting as male"
     else:
-        person = "adult female doctor or nurse, woman, feminine facial features"
+        person = "adult person presenting as female"
     if profession == "doctor":
         role = "doctor, physician, white coat, stethoscope"
     else:
         role = "nurse, hospital nurse, medical scrubs"
-    return f"a realistic photo of a {person}, working as a {role} in a hospital"
+    return f"a realistic single-person hospital portrait of a {person}, working as a {role}"
+
+
+def build_profession_prompt(group: str) -> str:
+    _, profession = group.split("-", 1)
+    if profession == "doctor":
+        role = "doctor, physician, white coat, stethoscope"
+    else:
+        role = "nurse, hospital nurse, medical scrubs"
+    return f"a realistic single-person portrait photo of a {role} in a hospital"
+
+
+def build_clip_score_texts(df: pd.DataFrame, clip_text_mode: str) -> List[str]:
+    if clip_text_mode == "metadata":
+        return df["prompt"].astype(str).tolist()
+    return [build_profession_prompt(group) for group in df["group"].astype(str).tolist()]
 
 
 def compute_semantic_consistency(
@@ -266,6 +305,38 @@ def summarize_by_group(df: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows).sort_values(["y_true", "group"]).reset_index(drop=True)
 
 
+def build_filter_audit(df_before: pd.DataFrame, df_filtered: pd.DataFrame, df_balanced: pd.DataFrame) -> pd.DataFrame:
+    def count_df(df: pd.DataFrame, col_name: str) -> pd.DataFrame:
+        if len(df) == 0:
+            return pd.DataFrame(columns=["group", "y_true", col_name])
+        out = (
+            df.groupby(["group", "y_true"], dropna=False)["id"]
+            .count()
+            .reset_index()
+            .rename(columns={"id": col_name})
+        )
+        out["y_true"] = out["y_true"].astype(int)
+        return out
+
+    before = count_df(df_before, "n_before")
+    filtered = count_df(df_filtered, "n_after_filter")
+    balanced = count_df(df_balanced, "n_balanced")
+
+    audit = before.merge(filtered, on=["group", "y_true"], how="outer")
+    audit = audit.merge(balanced, on=["group", "y_true"], how="outer")
+    audit[["n_before", "n_after_filter", "n_balanced"]] = (
+        audit[["n_before", "n_after_filter", "n_balanced"]].fillna(0).astype(int)
+    )
+
+    before_nonzero = audit["n_before"].replace(0, np.nan)
+    after_filter_nonzero = audit["n_after_filter"].replace(0, np.nan)
+    audit["filter_keep_rate"] = (audit["n_after_filter"] / before_nonzero).fillna(0.0)
+    audit["filter_drop_rate"] = 1.0 - audit["filter_keep_rate"]
+    audit["balance_keep_rate_from_filtered"] = (audit["n_balanced"] / after_filter_nonzero).fillna(0.0)
+    audit["balance_keep_rate_from_raw"] = (audit["n_balanced"] / before_nonzero).fillna(0.0)
+    return audit.sort_values(["y_true", "group"]).reset_index(drop=True)
+
+
 def align_and_balance(df: pd.DataFrame, seed: int, align_on: str, target_n: int = None) -> pd.DataFrame:
     out_parts = []
     rng = np.random.default_rng(seed)
@@ -329,6 +400,10 @@ def main() -> None:
     scored_path = args.project_root / "data" / "metadata_scored.csv"
     filtered_prebalance_path = args.project_root / "data" / "metadata_filtered_prebalance.csv"
     print(f"[info] running on device: {args.device}")
+    print(
+        f"[info] clip_text_mode={args.clip_text_mode} strict_group_check={args.strict_group_check} "
+        f"align_on={args.align_on}"
+    )
 
     df = pd.read_csv(args.metadata_in)
     if len(df) == 0:
@@ -384,9 +459,10 @@ def main() -> None:
                 f"[stage] computing CLIP scores model={args.clip_model_id} "
                 f"batch_size={args.clip_batch_size}"
             )
+            clip_texts = build_clip_score_texts(df, args.clip_text_mode)
             df["clip_score"] = compute_clip_scores(
                 image_paths=[str(p) for p in df["file_path"].tolist()],
-                texts=df["prompt"].astype(str).tolist(),
+                texts=clip_texts,
                 model_id=args.clip_model_id,
                 batch_size=args.clip_batch_size,
                 device=args.device,
@@ -419,7 +495,8 @@ def main() -> None:
     if args.use_clip and args.clip_min_score is not None:
         filt = filt[filt["clip_score"] >= args.clip_min_score].copy()
     if args.use_clip and "target_group_score" in filt.columns:
-        filt = filt[filt["pred_group"] == filt["group"]].copy()
+        if args.strict_group_check:
+            filt = filt[filt["pred_group"] == filt["group"]].copy()
         filt = filt[filt["group_margin"] >= args.group_margin_min].copy()
         filt = filt[filt["human_photo_score"] >= args.human_photo_min].copy()
         if not args.disable_toy_check:
@@ -447,6 +524,9 @@ def main() -> None:
     after_summary = summarize_by_group(balanced)
     after_path = fair_dir / "quality_clip_summary_after.csv"
     after_summary.to_csv(after_path, index=False, encoding="utf-8")
+    audit_summary = build_filter_audit(df_before=df, df_filtered=filt, df_balanced=balanced)
+    audit_path = fair_dir / "quality_clip_filter_audit.csv"
+    audit_summary.to_csv(audit_path, index=False, encoding="utf-8")
     balanced.to_csv(args.metadata_out, index=False, encoding="utf-8")
 
     print(f"[saved] balanced metadata: {args.metadata_out}")
@@ -454,6 +534,7 @@ def main() -> None:
     print(f"[saved] filtered prebalance metadata: {filtered_prebalance_path}")
     print(f"[saved] before summary: {before_path}")
     print(f"[saved] after summary: {after_path}")
+    print(f"[saved] filter audit: {audit_path}")
     print(f"[info] samples before={len(df)} after_filter={len(filt)} balanced={len(balanced)}")
 
 

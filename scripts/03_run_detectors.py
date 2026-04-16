@@ -1,14 +1,14 @@
 """
 Stage 03: Run detector inference with released pretrained checkpoints.
 
-Current thesis default detector set:
+Current thesis detector set:
 - cnndetection
 - lgrad
 - npr
 
-This script still keeps optional compatibility backends (for example f3net,
-gram, univfd, dire), but they are not part of the current default experiment
-path unless explicitly requested via --detector.
+This script still keeps legacy compatibility backends (for example f3net,
+gram, univfd, dire), but they are not part of the current thesis path unless
+explicitly requested via --detector.
 
 Notes
 -----
@@ -120,6 +120,9 @@ DETECTOR_CONFIGS: Dict[str, DetectorConfig] = {
     ),
 }
 
+CURRENT_THESIS_DETECTORS: Tuple[str, ...] = ("cnndetection", "lgrad", "npr")
+LEGACY_COMPATIBILITY_DETECTORS: Tuple[str, ...] = ("gram", "univfd", "dire", "f3net")
+
 
 def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parents[1]
@@ -133,7 +136,8 @@ def parse_args() -> argparse.Namespace:
         default="cnndetection",
         help=(
             "Detector name, comma-separated list, or 'all'. "
-            "Current thesis default set is cnndetection,lgrad,npr."
+            "'all' means the current thesis detector set only: cnndetection,lgrad,npr. "
+            "Legacy compatibility detectors (gram, univfd, dire, f3net) must be requested explicitly."
         ),
     )
     parser.add_argument("--input-dir", type=Path, default=None,
@@ -163,7 +167,7 @@ def parse_args() -> argparse.Namespace:
 def parse_detector_names(detector_arg: str) -> List[str]:
     token = detector_arg.strip().lower()
     if token == "all":
-        return list(DETECTOR_CONFIGS.keys())
+        return list(CURRENT_THESIS_DETECTORS)
 
     names = [part.strip().lower() for part in detector_arg.split(",") if part.strip()]
     if not names:
@@ -945,6 +949,11 @@ def main() -> None:
         run_args.detector = detector_name
         cfg = DETECTOR_CONFIGS[detector_name]
         print(f"\n[info] running detector: {detector_name}")
+        if detector_name in LEGACY_COMPATIBILITY_DETECTORS:
+            print(
+                "[warn] This detector is kept only as a legacy compatibility backend. "
+                "It is not part of the current thesis mainline."
+            )
 
         if cfg.backend == "sidbench":
             out = run_sidbench(df, run_args, cfg)

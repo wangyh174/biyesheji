@@ -23,7 +23,6 @@ def parse_args() -> argparse.Namespace:
     root = Path(__file__).resolve().parents[1]
     parser = argparse.ArgumentParser()
     parser.add_argument("--project-root", type=Path, default=root)
-    parser.add_argument("--prompt-file", type=Path, default=root / "data" / "prompts" / "prompt_templates.txt")
     parser.add_argument("--metadata-out", type=Path, default=root / "data" / "metadata_raw.csv")
     parser.add_argument("--samples-per-group", type=int, default=50)
     parser.add_argument(
@@ -101,8 +100,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--enable-vae-slicing",
         action="store_true",
-        default=True,
-        help="Enable VAE slicing to reduce memory pressure. Enabled by default.",
+        default=False,
+        help="Enable VAE slicing to reduce memory pressure.",
     )
     parser.add_argument(
         "--disable-vae-slicing",
@@ -212,11 +211,6 @@ def list_local_real_files(group_dir: Path) -> List[Path]:
     for ext in ("*.png", "*.jpg", "*.jpeg", "*.webp", "*.bmp"):
         files.extend(sorted(group_dir.glob(ext)))
     return files
-
-
-def read_templates(path: Path) -> List[str]:
-    lines = [line.strip() for line in path.read_text(encoding="utf-8").splitlines()]
-    return [line for line in lines if line]
 
 
 def build_group_prompt(template: str, gender: str, profession: str) -> str:
@@ -580,7 +574,6 @@ def main() -> None:
     raw_dir.mkdir(parents=True, exist_ok=True)
     real_dir.mkdir(parents=True, exist_ok=True)
 
-    templates = read_templates(args.prompt_file)
     groups = build_groups(args.genders, args.professions)
     ensure_csv(args.metadata_out, overwrite=args.overwrite)
 
@@ -658,7 +651,6 @@ def main() -> None:
 
             for j, img in enumerate(images):
                 i = start_idx + j
-                t_id = i % len(templates)
                 sid = f"fake_{group}_{i:04d}"
                 seed_i = seeds[j]
                 image_path = group_raw / f"{sid}.png"
@@ -678,7 +670,7 @@ def main() -> None:
                         "y_true": 1,
                         "clip_score": "",
                         "quality_score": "",
-                        "template_id": t_id,
+                        "template_id": -1,
                         "file_path": str(image_path),
                     }
                 )

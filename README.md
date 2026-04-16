@@ -1,91 +1,86 @@
-﻿# AIGC Fairness Evaluation and Attribution Framework
+# AIGC Fairness Evaluation and Attribution Framework
 
-This project is a thesis-oriented pipeline for evaluating whether AI-image detectors behave unfairly across four controlled medical-worker groups:
+This repository contains the current thesis mainline for evaluating detector fairness across four controlled medical-worker groups:
 
 - `male-doctor`
 - `female-doctor`
 - `male-nurse`
 - `female-nurse`
 
-The pipeline combines controlled image generation, real-image collection, semantic and quality filtering, detector evaluation, fairness metrics, and attribution analysis.
+Current mainline assumptions:
 
-## Stages
+- fake images are generated with `FairDiffusion + Stable Diffusion 1.5`
+- real images are manually collected under `data/real_samples/`
+- Stage 02 uses fairness-sensitive CLIP filtering with profession-centered text
+- current thesis detector set is `CNNDetection + LGrad + NPR`
 
-1. `Stage 01` Generate fake images and organize real images by group.
+## Current Mainline Stages
+
+1. `Stage 01` Generate fake images and register local real images.
 2. `Stage 01b` Audit generation-side imbalance before detector evaluation.
-3. `Stage 02` Filter samples with CLIP, quality control, and group-consistency checks.
-4. `Stage 03` Run pretrained detector inference for `CNNDetection`, `UnivFD`, `DIRE`, `LGrad`, and any additional enabled detectors.
+3. `Stage 02` Apply quality filtering, CLIP-based semantic checks, and balanced sample selection.
+4. `Stage 03` Run pretrained detector inference for `cnndetection`, `lgrad`, and `npr`.
 5. `Stage 04` Compute fairness metrics and stratified-bootstrap confidence intervals.
-6. `Stage 05` Produce model-based Grad-CAM heatmaps.
+6. `Stage 05` Produce Grad-CAM attribution maps for the current detector set.
 7. `Stage 06` Run patch-shuffling structural attribution experiments.
-8. `Stage 07` Measure second-order physical consistency statistics.
-9. `Stage 08` Run high-pass residual decoupling experiments.
-10. `Stage 09` Aggregate results into a master report.
+8. `Stage 07` Measure physical consistency statistics.
+9. `Stage 08` Run high-pass residual experiments.
+10. `Stage 09` Aggregate outputs into a master report.
 
-## Current Implementation Notes
+## Mainline Notes
 
-- `scripts/03_run_detectors.py` uses pretrained detector inference instead of the old handcrafted-feature + LogisticRegression proxy.
+- `scripts/01_generate.py` is thesis-locked to `fairdiffusion` generation and `local` real-image registration.
+- `scripts/02_quality_filter.py` uses profession-centered CLIP texts by default, applies conservative semantic filtering, and balances samples within each `group x y_true` slice.
+- `scripts/03_run_detectors.py` keeps some legacy detector compatibility code, but the current thesis detector set is only `cnndetection,lgrad,npr`.
+- `scripts/05_gradcam_analysis.py` is aligned to the same detector mainline. Legacy fallback paths are kept only for explicit compatibility use.
 - `scripts/04_fairness_eval.py` estimates confidence intervals with stratified bootstrap over `group x y_true`.
-- `scripts/05_gradcam_analysis.py` uses true model-backpropagation Grad-CAM rather than residual pseudo-heatmaps.
-- `scripts/01_generate.py` uses two behaviors: in normal diffusion mode it strengthens prompts for `male/female x doctor/nurse`, while in `fairdiffusion` mode it keeps the occupation prompt concise and shifts gender control into Fair-Diffusion-style editing directions.
-- In `fairdiffusion` mode, gender directions are sampled probabilistically per profession and images are routed into the corresponding `male-*` / `female-*` groups. The sampling prior can be controlled by `--fd-female-prob`.
-- `scripts/02_quality_filter.py` checks more than prompt similarity: it also verifies target-group consistency, group margin, and whether an image is more like a real human photo than a toy, cartoon, object, deformed face, or low-quality image.
-- `scripts/download_real_samples.py` now supports Google Programmable Search in addition to Unsplash, Pexels, Openverse, and Pixabay, and prioritizes single-person real-photo queries.
-- Real-image crawling keeps both accepted images and a candidate-review pool under `_candidates/` with a `_candidate_scores.csv` file for manual review.
-- In Colab, it is recommended to map `data/real_samples`, `data/generated_raw`, and `results` into Google Drive for persistence.
 
 ## Quick Start
 
-Run the full local pipeline:
+Run the current local mainline:
 
 ```bash
-python scripts/00_run_local_pipeline.py --real-source local --samples 50 --buffer-extra 100 --detectors cnndetection,univfd,dire,lgrad
+python scripts/00_run_local_pipeline.py --real-source local --samples 50 --buffer-extra 100 --detectors cnndetection,lgrad,npr
 ```
 
-Generate 150 fake candidates per group, but use 50 existing local real images per group from `data/real_samples/`:
+Generate fake images and register existing local real images:
 
 ```bash
 python scripts/01_generate.py --project-root . --real-source local --samples-per-group 150 --real-per-group 50 --model-id runwayml/stable-diffusion-v1-5 --generator fairdiffusion --seed 42
 ```
 
-Crawl real images with Google-enabled search (leave the Google values empty until you have them):
+Run Stage 02 filtering:
 
 ```bash
-set GOOGLE_API_KEY=
-set GOOGLE_CSE_ID=
-python scripts/download_real_samples.py --samples-per-group 100 --clip-threshold 0.22
+python scripts/02_quality_filter.py --project-root . --metadata-in data/metadata_raw.csv --metadata-out data/metadata_balanced.csv --balanced-dir data/generated_balanced --use-clip --clip-text-mode profession --align-on clip --copy-files
 ```
 
 Important outputs are written under `data/` and `results/`.
 
 ## Detector Weights
 
-The current pipeline prefers official implementations for detectors when practical.
+Current mainline detector checkpoints:
 
-`CNNDetection` official sources:
-
+- `CNNDetection`
 - Official repo: `https://github.com/PeterWang512/CNNDetection`
-- Recommended checkpoint path: `.external_models/weights/cnndetect/blur_jpg_prob0.5.pth`
+- Expected local checkpoint: `.external_models/weights/cnndetect/blur_jpg_prob0.5.pth`
 
-`LGrad` is supported in the current detector pipeline. Public checkpoints should come from the official source:
-
+- `LGrad`
 - Official repo: `https://github.com/chuangchuangtan/LGrad`
-- Official README weights folder: `https://drive.google.com/drive/folders/17-MAyCpMqyn4b_DFP2LekrmIgRovwoix?usp=share_link`
-Supported local LGrad checkpoint filenames include:
-
+- Supported checkpoint filenames:
 - `LGrad-4class-Trainon-Progan_car_cat_chair_horse.pth`
 - `LGrad-2class-Trainon-Progan_chair_horse.pth`
 - `LGrad-1class-Trainon-Progan_horse.pth`
+- Expected local directory: `.external_models/weights/lgrad/`
 
-Place them under either of these directories:
-
-- `.external_models/weights/lgrad/`
+- `NPR`
+- Official repo: `https://github.com/chuangchuangtan/NPR-DeepfakeDetection`
+- Expected local checkpoint: `.external_models/weights/npr/NPR.pth`
 
 ## Practical Advice
 
-- When `--real-source local` is used, `scripts/01_generate.py` does not mock or regenerate real images. It directly registers the existing files under `data/real_samples/<group>/` into the metadata.
-- Use `--real-per-group` to cap how many local real images per group are included in Stage 01. If omitted, all available local real files in that group are used.
-- If real-image crawling or fake-image generation produces poor samples, delete the bad group folder and rerun Stage 01 or the specific script.
-- For best fake-image quality, over-generate candidates and let Stage 02 keep only the most semantically consistent samples.
-- If a group cannot reach the requested sample count automatically, review `_candidates/` and `_candidate_scores.csv`, then manually move correct images into the group folder.
-- If a group still cannot reach the requested count, Stage 02 will cap balancing to the smallest surviving group.
+- Keep manually collected real images under `data/real_samples/<group>/`.
+- Use `--real-per-group` to cap how many local real images per group are registered in Stage 01.
+- Over-generate fake candidates, then let Stage 02 perform conservative filtering and equalized retention.
+- Inspect `results/fairness_tables/quality_clip_summary_before.csv`, `quality_clip_summary_after.csv`, and `quality_clip_filter_audit.csv` after Stage 02 to verify that post-processing has not disproportionately removed one group.
+- If a group cannot reach the requested count, Stage 02 will cap balancing to the smallest surviving group.

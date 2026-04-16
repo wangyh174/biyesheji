@@ -3,9 +3,15 @@ Stage 05: Model-based Grad-CAM attribution.
 
 This script generates actual gradient-based activation maps from the pretrained
 detectors used in Stage 03, instead of the previous residual-visualization
-proxy. It supports:
+proxy.
 
-- CNNDetection / LGrad / NPR via the current official Stage 03 backends
+Current thesis detector set:
+- CNNDetection
+- LGrad
+- NPR
+
+Legacy compatibility backends still available when explicitly requested via the
+detector CSV:
 - Gram via SIDBench-backed pretrained models
 - F3Net via the PyDeepFakeDet pretrained F3Net checkpoint
 """
@@ -69,6 +75,9 @@ TARGET_LAYER_CANDIDATES = {
         "xception.conv2.conv1",
     ],
 }
+
+CURRENT_THESIS_DETECTORS = {"cnndetection", "lgrad", "npr"}
+LEGACY_COMPATIBILITY_DETECTORS = {"gram", "f3net"}
 
 
 def parse_args() -> argparse.Namespace:
@@ -169,7 +178,7 @@ def infer_detector_name(df: pd.DataFrame, detector_csv: Path) -> str:
         if name:
             return name
     stem = detector_csv.stem.lower()
-    for name in ("cnndetection", "f3net", "gram", "lgrad", "npr"):
+    for name in ("cnndetection", "lgrad", "npr", "gram", "f3net"):
         if name in stem:
             return name
     raise ValueError(f"Could not infer detector name from {detector_csv}")
@@ -529,6 +538,11 @@ def main() -> None:
 
     df = pd.read_csv(args.detector_csv)
     detector_name = infer_detector_name(df, args.detector_csv)
+    if detector_name in LEGACY_COMPATIBILITY_DETECTORS:
+        print(
+            f"[warn] detector={detector_name} is kept only as a legacy compatibility backend "
+            "and is not part of the current thesis mainline."
+        )
     target_df = select_target_df(df, args.analyze_all, args.only_false_negative, args.max_per_group)
     target_df.to_csv(args.output_dir / "analyzed_samples.csv", index=False, encoding="utf-8")
 
