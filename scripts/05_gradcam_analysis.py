@@ -568,13 +568,14 @@ def main() -> None:
             input_tensor = preprocess_fn(image, device)
             cam, score_value = gradcam.generate(input_tensor, score_selector)
 
-            heatmap_color, overlay = overlay_heatmap_on_image(image.resize((cam.shape[1], cam.shape[0])), cam)
+            cropped_image = transforms.CenterCrop(cam.shape[0])(image)
+            heatmap_color, overlay = overlay_heatmap_on_image(cropped_image, cam)
             group = row.get("group", "unknown")
             actual = "Fake" if int(row["y_true"]) == 1 else "Real"
             sid = image_path.stem
             out_name = f"{group}_Actual{actual}_{sid}_gradcam.png"
             save_gradcam_triptych(
-                image.resize((cam.shape[1], cam.shape[0])),
+                cropped_image,
                 cam,
                 overlay,
                 heatmap_dir / out_name,
