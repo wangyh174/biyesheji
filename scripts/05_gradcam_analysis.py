@@ -314,6 +314,7 @@ def build_sidbench_components(stage03, detector_name: str, external_root: Path, 
 def build_official_preprocess(detector_name: str, lgrad_model: nn.Module | None = None):
     base_transform = transforms.Compose(
         [
+            transforms.CenterCrop(256),
             transforms.ToTensor(),
             transforms.Normalize(mean=IMAGENET_MEAN, std=IMAGENET_STD),
         ]
