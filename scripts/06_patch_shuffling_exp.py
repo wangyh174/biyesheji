@@ -84,6 +84,10 @@ def generate_shuffled_images(data_dir, patch_n, seed):
                     continue
                 if img.shape[0] != 512 or img.shape[1] != 512:
                     img = cv2.resize(img, (512, 512))
+                h, w = img.shape[:2]
+                top = (h - 256) // 2
+                left = (w - 256) // 2
+                img = img[top:top+256, left:left+256]
 
                 shuffled = patch_shuffle(img, patch_n)
                 out_name = os.path.basename(img_path)
